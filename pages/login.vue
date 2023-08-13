@@ -1,36 +1,28 @@
-<script setup lang="ts">
-	const supabase = useSupabaseClient();
-	const email = ref("");
-
-	const signInWithOAuth = async () => {
-		const { data, error } = await supabase.auth.signInWithOAuth({
-			provider: "google",
-			options: {
-				redirectTo: "http://localhost:3000/confirm"
-			}
-		});
-		console.log(data);
-		if (error) console.log(error);
-	};
-	const signInWithOtp = async () => {
-		const { error } = await supabase.auth.signInWithOtp({
-			email: email.value,
-			options: {
-				emailRedirectTo: "http://localhost:3000/confirm"
-			}
-		});
-		if (error) console.log(error);
-	};
-</script>
 <template>
-	<div>
-		<button @click="signInWithOAuth">Sign In with Google</button>
-		<div>
-			<button @click="signInWithOtp">Sign In with magic link</button>
-			<input
-				v-model="email"
-				type="email"
-			/>
-		</div>
-	</div>
+    <div class="bg-light">
+        <div class="login">
+            <h2 class="headingXL">Sign In</h2>
+            <AuthOTP />
+            <AuthGoogle />
+        </div>
+    </div>
 </template>
+
+<script setup lang="ts"></script>
+
+<style scoped lang="scss">
+    .login {
+        padding: 5em;
+        display: flex;
+        flex-direction: column;
+        align-content: center;
+        justify-content: center;
+        margin: auto;
+        gap: 40px;
+        min-width: 250px;
+        background-color: $lightgrey;
+        border: 1px solid rgba(204, 204, 204, 0.4);
+        box-shadow: rgba(0, 0, 0, 0.02) 0px 1px 2px;
+        border-radius: 4px;
+    }
+</style>

@@ -1,9 +1,12 @@
-<script></script>
+<template>
 
-<template></template>
+	
+</template>
+
+<script setup lang="ts"></script>
 
 <style lang="scss" scoped>
-	.test {
-		font-size: 40px;
-	}
+    .test {
+        font-size: 40px;
+    }
 </style>
