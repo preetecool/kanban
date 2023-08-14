@@ -13,13 +13,10 @@
 		"@nuxtjs/supabase": "^1.0.2",
 		"@types/node": "^18.17.3",
 		"nuxt": "^3.6.5",
-		"prisma": "^5.1.1",
 		"sass": "^1.65.1"
 	},
 	"dependencies": {
 		"@pinia/nuxt": "^0.4.11",
-		"@prisma/client": "^5.1.1",
-		"mongodb": "^5.7.0",
 		"pinia": "^2.1.4"
 	},
 	"overrides": {
