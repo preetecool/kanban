@@ -34,7 +34,7 @@
 <style lang="scss" scoped>
 	.button {
 		width: 100%;
-		max-width: 255px;
+		// max-width: 255px;
 
 		background-color: $purple;
 		color: $white;

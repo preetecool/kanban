@@ -14,7 +14,6 @@
 						.eq("id", user.value.id)
 						.single();
 				});
-				console.log("profile data", data);
 
 				try {
 					if (data) {

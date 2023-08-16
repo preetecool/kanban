@@ -11,7 +11,7 @@
 				</ul>
 				<div
 					class="pt-16"
-					@click="toggleModdle()"
+					@click="store.toggleModal()"
 				>
 					<ul class="headingM">
 						<Icon name="circle-plus-solid" />
@@ -33,11 +33,6 @@
 <script setup lang="ts">
 	import { useMainStore } from "@/store/main";
 	const store = useMainStore();
-	const sendData = store.updateSupabase();
-
-	const toggleModdle = () => {
-		console.log("toggleModdle");
-	};
 </script>
 
 <style scoped lang="scss">

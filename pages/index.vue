@@ -1,4 +1,5 @@
 <template>
+	<Modal v-if="store.modal === true" />
 	<div class="main-grid">
 		<Sidebar class="sidebar" />
 		<Header class="header" />
@@ -13,7 +14,16 @@
 	</div>
 </template>
 
-<script setup lang="ts"></script>
+<script setup lang="ts">
+	import { useMainStore } from "@/store/main";
+	const store = useMainStore();
+	function hideModal() {
+		if (store.modal) {
+			console.log(store.modal);
+			store.modal = !store.modal;
+		}
+	}
+</script>
 
 <style lang="scss" scoped>
 	span {
