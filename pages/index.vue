@@ -4,7 +4,9 @@
 		<Header class="header" />
 		<div class="body">
 			<div class="body__new-column">
-				<span>This board is empty. Create a new column to get started</span>
+				<span class="headingL"
+					>This board is empty. Create a new column to get started</span
+				>
 				<UIButton label="+ Add New Column"></UIButton>
 			</div>
 		</div>
@@ -14,11 +16,14 @@
 <script setup lang="ts"></script>
 
 <style lang="scss" scoped>
+	span {
+		color: $medgrey;
+	}
 	.main-grid {
 		background-color: $lightgrey;
 		position: relative;
 		display: grid;
-		grid-template-columns: 25% 75%;
+		grid-template-columns: 20% 80%;
 		grid-template-rows: 10% 85%;
 		grid-template-areas:
 			"sidebar header"
@@ -36,6 +41,7 @@
 			flex-direction: column;
 			justify-content: center;
 			align-items: center;
+			gap: 32px;
 		}
 	}
 </style>

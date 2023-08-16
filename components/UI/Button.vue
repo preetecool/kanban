@@ -33,9 +33,9 @@
 
 <style lang="scss" scoped>
 	.button {
-		// max-width: 255px;
-		width: fit-content;
-		// width: 100%;
+		width: 100%;
+		max-width: 255px;
+
 		background-color: $purple;
 		color: $white;
 		text-align: center;

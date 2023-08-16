@@ -1,62 +1,62 @@
 @font-face {
-    font-family: "Plus Jakarta Sans";
-    font-style: "normal";
-    font-weight: 400;
-    src: url("/assets/fonts/PlusJakartaSans-VariableFont_wght.ttf");
+	font-family: "Plus Jakarta Sans";
+	font-style: "normal";
+	font-weight: 400;
+	src: url("/assets/fonts/PlusJakartaSans-VariableFont_wght.ttf");
 }
 
 body {
-    font-family: "Plus Jakarta Sans";
+	font-family: "Plus Jakarta Sans";
 }
 
 input {
-    width: 350px;
-    height: 40px;
-    border: 1px solid #828fa325;
-    padding: 8px 16px;
-    border-radius: 4px;
-    font-size: 16px;
+	width: 350px;
+	height: 40px;
+	border: 1px solid #828fa325;
+	padding: 8px 16px;
+	border-radius: 4px;
+	font-size: 16px;
 }
 
 .headingXL {
-    font-size: 24px;
-    font-weight: bold;
-    line-height: 30px;
+	font-size: 24px;
+	font-weight: bold;
+	line-height: 30px;
 }
 
 .headingL {
-    font-size: 18px;
-    font-weight: bold;
-    line-height: 23px;
+	font-size: 18px;
+	font-weight: bold;
+	line-height: 23px;
 }
 
 .headingM {
-    font-size: 15px;
-    font-weight: bold;
-    line-height: 19px;
+	font-size: 15px;
+	font-weight: bold;
+	line-height: 19px;
 }
 
 .headingS {
-    font-size: 12px;
-    font-weight: bold;
-    line-height: 15px;
-    kerning: 2.4px;
+	font-size: 12px;
+	font-weight: bold;
+	line-height: 15px;
+	kerning: 2.4px;
 }
 
 .bodyL {
-    font-weight: medium;
-    font-size: 13px;
-    line-height: 23px;
+	font-weight: medium;
+	font-size: 13px;
+	line-height: 23px;
 }
 
 .bodyM {
-    font-weight: bold;
-    font-size: 12px;
-    line-height: 15px;
+	font-weight: bold;
+	font-size: 12px;
+	line-height: 15px;
 }
 
 .bg-light {
-    background-color: $lightgrey;
-    height: 100vh;
-    display: flex;
+	background-color: $lightgrey;
+	height: 100vh;
+	display: flex;
 }

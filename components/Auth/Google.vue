@@ -10,6 +10,7 @@
 
 <script setup lang="ts">
 	const supabase = useSupabaseClient();
+	const user = useSupabaseClient();
 
 	const signInWithOAuth = async (event: MouseEvent) => {
 		const { data, error } = await supabase.auth.signInWithOAuth({
@@ -18,7 +19,7 @@
 				redirectTo: "http://localhost:3000/confirm"
 			}
 		});
-		console.log(data);
+		// console.log(data);
 		if (error) console.log(error);
 	};
 </script>
