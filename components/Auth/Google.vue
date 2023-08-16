@@ -19,6 +19,7 @@
 				redirectTo: "http://localhost:3000/confirm"
 			}
 		});
+
 		// console.log(data);
 		if (error) console.log(error);
 	};

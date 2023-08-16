@@ -1,26 +1,41 @@
-<script setup>
+<script setup lang="ts">
+	import { off } from "process";
+
 	const user = useSupabaseUser();
 	const supabase = useSupabaseClient();
-
 	watch(
 		user,
 		async () => {
 			if (user.value) {
+				const { data } = await useAsyncData("user", async () => {
+					return supabase
+						.from("profiles")
+						.select("email")
+						.eq("id", user.value.id)
+						.single();
+				});
+				console.log("profile data", data);
+
+				try {
+					if (data) {
+						if (!data.value?.data?.email) {
+							const updates = {
+								id: user.value.id,
+								email: user.value.email,
+								updated_at: new Date()
+							};
+
+							let { error } = await supabase.from("profiles").upsert(updates, {
+								returning: "minimal"
+							});
+							if (error) throw error;
+						}
+					}
+				} catch (error: any) {
+					alert(error.message);
+				}
 				return navigateTo("/");
 			}
-			const { data } = await useAsyncData("user", async () => {
-				supabase.from("profiles").select("id, email").eq("id", user.value.id);
-			});
-			if (data) {
-				const update = {
-					email: user.value.email
-				};
-				await supabase.from("profiles").upsert(update, {
-					returning: "minimal"
-				});
-				console.log(data.value);
-			}
-			console.log("USER DATA", data.value);
 		},
 		{ immediate: true }
 	);
@@ -28,3 +43,8 @@
 <template>
 	<div>Waiting for login...</div>
 </template>
+<!-- 61884054-fd90-4d79-891c-f6645bc81b56 -->
+<!-- 61884054-fd90-4d79-891c-f6645bc81b56 -->
+
+<!-- 2023-08-16 16:55:31.97+00 -->
+<!-- 2023-08-16 16:55:31.97+00 -->

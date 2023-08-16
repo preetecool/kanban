@@ -7,11 +7,20 @@
 			<span class="allboards">ALL BOARDS (3)</span>
 			<div>
 				<ul>
-					<SidebarItem />
+					<SidebarItem name="Marketing" />
 				</ul>
+				<div
+					class="pt-16"
+					@click="toggleModdle()"
+				>
+					<ul class="headingM">
+						<Icon name="circle-plus-solid" />
+						<span>Create New Board</span>
+					</ul>
+				</div>
 			</div>
 		</div>
-		<div>
+		<div class="sidebar-settings">
 			<div class="theme-toggle"></div>
 			<div>
 				<img src="#" />
@@ -21,7 +30,15 @@
 	</div>
 </template>
 
-<script setup lang="ts"></script>
+<script setup lang="ts">
+	import { useMainStore } from "@/store/main";
+	const store = useMainStore();
+	const sendData = store.updateSupabase();
+
+	const toggleModdle = () => {
+		console.log("toggleModdle");
+	};
+</script>
 
 <style scoped lang="scss">
 	.sidebar {
@@ -48,8 +65,20 @@
 	}
 	ul {
 		padding: 0;
+		display: flex;
+		align-items: center;
+		gap: 16px;
+		color: $medgrey;
+		cursor: pointer;
 	}
-	.theme-toggle {
+
+	.sidebar-settings {
+		display: flex;
 		align-items: flex-end;
+		margin-top: auto;
+		padding-bottom: 32px;
+	}
+
+	.theme-toggle {
 	}
 </style>
