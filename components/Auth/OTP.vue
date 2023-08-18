@@ -15,7 +15,7 @@
         const { error } = await supabase.auth.signInWithOtp({
             email: email.value,
             options: {
-                emailRedirectTo: "http://localhost:3000/confirm",
+                emailRedirectTo: "http://localhost:3000/",
             },
         });
         await $fetch("/api/user", {

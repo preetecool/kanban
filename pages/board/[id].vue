@@ -21,7 +21,6 @@
             store.modal = !store.modal;
         }
     }
-    console.log(store.firstBoardRoute.toString());
 </script>
 
 <style lang="scss" scoped>
