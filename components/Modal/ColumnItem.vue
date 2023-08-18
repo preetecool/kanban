@@ -3,15 +3,11 @@
 		<input
 			type="text"
 			placeholder="What is your column called?"
-			:value="columnName"
-			@input="$emit('update:columnValue', $event.target.value)"
+			:v-model="columnName"
+			@input="emits('update:columnName', $event.target.value)"
 		/>
 		<div class="cross">
-			<Icon
-				:@click="remove"
-				name="icon-cross"
-				class="cross"
-			/>
+			<slot></slot>
 		</div>
 	</div>
 </template>
@@ -25,6 +21,7 @@
 			type: Function
 		}
 	});
+	const emits = defineEmits("update:columnName");
 </script>
 <style lang="scss" scoped>
 	.wrap {

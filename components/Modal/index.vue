@@ -20,16 +20,23 @@
 						<input
 							type="text"
 							placeholder="Enter a name for your board"
+							v-model="boardName"
 						/>
 					</div>
 					<div class="input-block">
 						<span class="bodyM light-text">Column</span>
 
-						<div v-for="column in columns">
+						<div v-for="(column, index) in columns">
 							<ModalColumnItem
 								:columnName="column.name"
-								:remove="removeColumn(column.id)"
-							/>
+								v-model="column.name"
+							>
+								<Icon
+									@click="removeColumn(index)"
+									name="icon-cross"
+									class="cross"
+								/>
+							</ModalColumnItem>
 						</div>
 						<UIButton
 							label="+ Add New Column"
@@ -42,7 +49,7 @@
 			<div class="modal__content__footer">
 				<UIButton
 					label="Create Board"
-					@click="store.toggleModal()"
+					@click="sendData()"
 				></UIButton>
 			</div>
 		</div>
@@ -51,14 +58,16 @@
 
 <script lang="ts" setup>
 	import { useMainStore } from "@/store/main";
+	import { Database } from "~~/types/database.types";
 	const store = useMainStore();
 	const modal = ref(false);
 	const boardName = ref("");
-	let numColumns = ref(0);
+	const user = useSupabaseUser();
+	const supabase = useSupabaseClient<Database>();
+	console.log(boardName.value);
 	let columns = ref([
 		{
-			id: await numColumns,
-			name: ref("")
+			name: ref("To DO")
 		}
 	]);
 
@@ -66,14 +75,52 @@
 		columns.value.push({
 			name: ref("")
 		});
-		await numColumns.value++;
+		console.log(columns.value);
+		return columns;
 	}
 
-	function removeColumn(id) {
-		columns.value.slice(0, id);
-		numColumns.value--;
+	function removeColumn(id: number) {
+		columns.value.splice(id, 1);
 	}
-	console.log(numColumns.value);
+
+	async function sendData() {
+		const boardId = BigInt(Math.floor(Math.random() * 1000000000)).toString();
+
+		try {
+			const { data, error } = await supabase
+				.from("boards")
+				.insert({
+					id: boardId,
+					creator: user.value.email,
+					created_at: new Date(),
+					title: boardName.value,
+					user_id: user.value.id,
+					categories: JSON.stringify(columns.value)
+				})
+				.select("creator, id, created_at, title, categories")
+				.single();
+			if (error) throw error;
+		} catch (error: any) {
+			alert(error.message);
+		}
+
+		// const { data, error } = await useAsyncData("board", async () => {
+		// 	return supabase
+		// 		.from("boards")
+		// 		.insert([
+		// 			{
+		// 				creator: user.value.id,
+		// 				id: BigInt(Math.floor(Math.random() * 1000000000)),
+		// 				created_at: new Date(),
+		// 				name: boardName
+		// 				// categories: JSON.stringify(columns)
+		// 			}
+		// 		])
+		// 		.select();
+		// });
+
+		// Error adding policy: failed to create pg.policies: operator does not exist: text = uuid
+	}
 </script>
 
 <style lang="scss" scoped>
