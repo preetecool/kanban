@@ -47,7 +47,7 @@
             name: "",
         },
     ]);
-    console.log(columns.value);
+
     async function addNewColumn() {
         columns.value.push({
             name: "",

@@ -17,7 +17,6 @@
             },
         });
 
-        // console.log(data);
         if (error) console.log(error);
     };
 </script>

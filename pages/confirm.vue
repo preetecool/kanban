@@ -5,7 +5,7 @@
     const user = useSupabaseUser();
     const supabase = useSupabaseClient();
     const store = useMainStore();
-    const firstBoardRoute = store.firstBoardRoute;
+
     watch(
         user,
         async () => {
@@ -31,13 +31,18 @@
                     }
                 } catch (error: any) {
                     alert(error.message);
-                }
-                let firstBoard = await $fetch("/api/board/first");
-                firstBoard = firstBoard[0].id.toString();
-                let route = `/board/${firstBoard}`;
-                return navigateTo(route);
+                } finally {
+                    let boards = await $fetch("/api/boards/get");
+                    let firstBoard = boards[0].id.toString();
+                    let route = `/board/${firstBoard}`;
 
-                // return router.push(route);
+                    store.$patch({
+                        boards: boards,
+                    });
+                    localStorage.setItem("cart", JSON.stringify(store.boards));
+
+                    return navigateTo(route);
+                }
             }
         },
         { immediate: true }

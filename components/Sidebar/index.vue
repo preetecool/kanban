@@ -54,7 +54,6 @@
     });
 
     // const boards = ref(data);
-    console.log(boards.value);
 </script>
 
 <style scoped lang="scss">
