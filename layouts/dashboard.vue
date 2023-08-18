@@ -4,14 +4,14 @@
         <Sidebar class="sidebar" />
         <Header class="header" />
         <div class="body">
-            <div class="body__new-column">
+            <div v-if="!hasColumns" class="body__new-column">
                 <span class="headingL">This board is empty. Create a new column to get started</span>
                 <UIButton label="+ Add New Column"></UIButton>
             </div>
+            <div class="columns-grid">
+                <slot />
+            </div>
         </div>
-    </div>
-    <div>
-        <slot />
     </div>
 </template>
 
@@ -19,6 +19,10 @@
     import { useMainStore } from "@/store/main";
 
     const store = useMainStore();
+
+    let hasColumns = computed(() => {
+        return store.activeBoard[0];
+    });
 </script>
 
 <style lang="scss" scoped>
@@ -49,5 +53,9 @@
             align-items: center;
             gap: 32px;
         }
+    }
+    .columns-grid{
+        background-color: black;
+        
     }
 </style>

@@ -12,10 +12,9 @@
 
 <script setup lang="ts">
     import { useMainStore } from "@/store/main";
-    import { storeToRefs } from "pinia";
     const store = useMainStore();
-    let { activeBoard } = storeToRefs(store);
-    console.log(activeBoard.value);
+    let activeBoard = (await store.activeBoard[0].title) || "";
+    // console.log(activeboard);
 </script>
 
 <style scoped lang="scss">
