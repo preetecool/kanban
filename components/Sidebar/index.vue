@@ -54,9 +54,9 @@
                             refreshBoards()
                         );
                     channel.subscribe();
-                    if (boards.value) {
-                        store.firstBoardRoute = boards.value[0].id;
-                    }
+                    // if (boards.value) {
+                    //     store.firstBoardRoute = boards.value[0].id;
+                    // }
                 }
             } catch (error) {
                 throw error;
@@ -64,7 +64,7 @@
                 // console.log(boards.value);
                 let activeBoard = boards.value.filter((board) => board.id.toString() === params);
                 store.activeBoard = activeBoard;
-                console.log(store.activeBoard[0].title);
+                // console.log(store.activeBoard[0].title);
             }
         },
         { immediate: true }

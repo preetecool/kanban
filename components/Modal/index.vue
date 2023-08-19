@@ -2,9 +2,11 @@
     <div class="modal" @click="store.toggleModal()">
         <div class="modal__content" @click.stop>
             <div class="modal__content__header">
+                <slot name="header"/>
                 <span class="headingL">Create a new board</span>
                 <span class="bodyM-thin light-text">Organize your tasks by creating columns!</span>
             </div>
+            
             <div class="modal__content__body">
                 <div class="modal__content__body__input">
                     <div class="input-block">
@@ -73,7 +75,7 @@
                     created_at: new Date(),
                     title: boardName.value,
                     user_id: user.value.id,
-                    categories: JSON.stringify(columns.value),
+                    categories: columns.value,
                 })
                 .select("creator, id, created_at, title, categories")
                 .single();

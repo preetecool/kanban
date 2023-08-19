@@ -2,7 +2,11 @@
     <Modal v-if="store.modal === true" />
     <div class="main-grid">
         <Sidebar class="sidebar" />
-        <Header class="header" />
+
+        <client-only>
+            <Header class="header" />
+        </client-only>
+
         <div class="body">
             <div v-if="!hasColumns" class="body__new-column">
                 <span class="headingL">This board is empty. Create a new column to get started</span>
@@ -50,12 +54,15 @@
             display: flex;
             flex-direction: column;
             justify-content: center;
-            align-items: center;
+            // align-items: center;
             gap: 32px;
         }
     }
-    .columns-grid{
-        background-color: black;
-        
+    .columns-grid {
+        // background-color: black;
+        display: flex;
+        // gap: 24px;
+        justify-content: flex-start;
+        width: 100%;
     }
 </style>

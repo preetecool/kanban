@@ -2,7 +2,7 @@ export const useMainStore = defineStore("main", {
     state: () => {
         return {
             modal: false,
-            activeBoard: {},
+            activeBoard: [{}],
         };
     },
     actions: {

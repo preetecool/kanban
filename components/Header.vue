@@ -1,6 +1,6 @@
 <template>
     <div class="header">
-        <div class="headingXL">{{ activeBoard }}</div>
+        <div class="headingXL">{{ boardTitle }}</div>
         <div class="settings">
             <div class="wrap">
                 <UIButton label="+ Add New Task" />
@@ -12,9 +12,10 @@
 
 <script setup lang="ts">
     import { useMainStore } from "@/store/main";
+    import { storeToRefs } from "pinia";
     const store = useMainStore();
-    let activeBoard = (await store.activeBoard[0].title) || "";
-    // console.log(activeboard);
+
+    let boardTitle = store.activeBoard[0].title;
 </script>
 
 <style scoped lang="scss">

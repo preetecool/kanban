@@ -1,27 +1,36 @@
 <template>
-    <div v-for="column in board.categories">
-        <div class="column"></div>
-    </div>
+    <client-only>
+        <div v-for="column in categories">
+            <div class="column">
+                <span class="headingS light-text">{{ column.name.toUpperCase() }} ({{ numTasks }})</span>
+            </div>
+        </div>
+    </client-only>
 </template>
 
 <script setup lang="ts">
     import { useMainStore } from "@/store/main";
-
     definePageMeta({
         layout: "dashboard",
     });
 
     let store = useMainStore();
-    let board = store.activeBoard[0];
+    let categories = ref([{}]);
+    let numTasks = ref(0);
 
-    let userBoards = ref([{}]);
-    const route = useRoute();
-    const params = route.params.id;
+    try {
+        categories = store.activeBoard[0].categories;
+    } catch (error) {
+        throw error;
+    }
 </script>
 
 <style lang="scss" scoped>
     .column {
-        background-color: black;
+        // background-color: black;
         height: 100%;
+        width: 200px;
+        padding: 24px;
+        width: 280px;
     }
 </style>
