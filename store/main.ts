@@ -1,13 +1,32 @@
+import { Modal } from "~~/types/app.types";
 export const useMainStore = defineStore("main", {
     state: () => {
         return {
-            modal: false,
+            modal: {
+                newBoard: false,
+                editBoard: false,
+                newTask: false,
+                editTask: false,
+                closeModal: false,
+            },
             activeBoard: [{}],
         };
     },
     actions: {
-        toggleModal() {
-            this.modal = !this.modal;
+        toggleModal(board: keyof Modal) {
+            if (board === "closeModal") {
+                return this.closeModal();
+            }
+            this.modal[board] = !this.modal[board];
+        },
+        closeModal() {
+            for (let key in this.modal) {
+                if (this.modal[key as keyof Modal] === true) {
+                    this.modal[key as keyof Modal] = false;
+                    break;
+                }
+            }
+            this.modal["closeModal"] = false;
         },
     },
 });

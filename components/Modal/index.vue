@@ -1,25 +1,18 @@
 <template>
-    <div class="modal" @click="store.toggleModal()">
+    <div class="modal" @click="store.toggleModal('closeModal')">
         <div class="modal__content" @click.stop>
             <div class="modal__content__header">
-                <slot name="header"/>
-                <span class="headingL">Create a new board</span>
-                <span class="bodyM-thin light-text">Organize your tasks by creating columns!</span>
+                <slot name="header" />
             </div>
-            
+
             <div class="modal__content__body">
                 <div class="modal__content__body__input">
                     <div class="input-block">
-                        <span class="bodyM light-text">Name</span>
-                        <input
-                            type="text"
-                            placeholder="Enter a name for your board"
-                            v-model="boardName"
-                        />
+                        <slot name="form-content-title" />
                     </div>
+                    <slot name="description" />
                     <div class="input-block">
-                        <span class="bodyM light-text">Column</span>
-
+                        <slot name="form-content-input" />
                         <div v-for="(column, index) in columns">
                             <ModalColumnItem v-model:column-name="column.name">
                                 <Icon @click="removeColumn(index)" name="icon-cross" class="cross" />
@@ -30,7 +23,7 @@
                 </div>
             </div>
             <div class="modal__content__footer">
-                <UIButton label="Create Board" @click="sendData()"></UIButton>
+                <slot name="submit-button" />
             </div>
         </div>
     </div>
@@ -39,10 +32,8 @@
 <script lang="ts" setup>
     import { useMainStore } from "@/store/main";
     import { Database } from "~~/types/database.types";
+
     const store = useMainStore();
-    const boardName = ref("");
-    const user = useSupabaseUser();
-    const supabase = useSupabaseClient<Database>();
 
     let columns = ref([
         {
@@ -61,30 +52,6 @@
     function removeColumn(id: number) {
         columns.value.splice(id, 1);
         return columns;
-    }
-
-    async function sendData() {
-        const boardId = BigInt(Math.floor(Math.random() * 1000000000)).toString();
-
-        try {
-            const { data, error } = await supabase
-                .from("boards")
-                .insert({
-                    id: boardId,
-                    creator: user.value.email,
-                    created_at: new Date(),
-                    title: boardName.value,
-                    user_id: user.value.id,
-                    categories: columns.value,
-                })
-                .select("creator, id, created_at, title, categories")
-                .single();
-            if (error) throw error;
-        } catch (error: any) {
-            alert(error.message);
-        } finally {
-            store.toggleModal();
-        }
     }
 </script>
 

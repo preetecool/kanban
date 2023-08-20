@@ -1,5 +1,7 @@
 <template>
-    <Modal v-if="store.modal === true" />
+    <!-- <Modal v-if="store.modal === true" /> -->
+    <ModalBoard v-if="store.modal['newBoard'] === true" />
+    <ModalTask v-if="store.modal['newTask'] === true" />
     <div class="main-grid">
         <Sidebar class="sidebar" />
 

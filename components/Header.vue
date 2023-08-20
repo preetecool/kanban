@@ -3,7 +3,7 @@
         <div class="headingXL">{{ boardTitle }}</div>
         <div class="settings">
             <div class="wrap">
-                <UIButton label="+ Add New Task" />
+                <UIButton label="+ Add New Task" @click="store.toggleModal('newTask')" />
                 <div>...</div>
             </div>
         </div>

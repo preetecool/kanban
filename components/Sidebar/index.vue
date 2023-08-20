@@ -9,7 +9,7 @@
                 <ul v-for="board in boards">
                     <SidebarItem :name="board.title" />
                 </ul>
-                <div class="pt-16" @click="store.toggleModal()">
+                <div class="pt-16" @click="store.toggleModal('newBoard')">
                     <ul class="headingM">
                         <Icon name="circle-plus-solid" />
                         <span>Create New Board</span>
