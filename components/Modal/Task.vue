@@ -11,7 +11,7 @@
 
         <template #description>
             <span class="bodyM light-text">Description</span>
-            <input type="textarea" placeholder="Enter a name for your board" v-model="subTasks" />
+            <input type="textarea" placeholder="Enter a name for your board" v-model="description" />
         </template>
 
         <template #form-content-input>
@@ -27,6 +27,7 @@
 <script lang="ts" setup>
     const taskName = ref("");
     const description = ref("");
+
     const sendData = () => {
         console.log("hello world");
     };

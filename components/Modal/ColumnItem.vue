@@ -2,9 +2,9 @@
     <div class="wrap">
         <input
             type="text"
-            placeholder="What is your column called?"
-            :v-model="columnName"
-            @input="$emit('update:columnName', $event.target.value)"
+            :placeholder="placeholder"
+            :v-model="itemName"
+            @input="$emit('update:itemName', $event.target.value)"
         />
         <div class="cross">
             <slot></slot>
@@ -14,14 +14,17 @@
 
 <script lang="ts" setup>
     const props = defineProps({
-        columnName: {
+        itemName: {
             type: String,
         },
         remove: {
             type: Function,
         },
+        placeHolder: {
+            type: String,
+        },
     });
-    const emit = defineEmits(["update:columnName"]);
+    const emit = defineEmits(["update:itemName"]);
 </script>
 <style lang="scss" scoped>
     .wrap {

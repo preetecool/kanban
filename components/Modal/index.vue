@@ -13,8 +13,8 @@
                     <slot name="description" />
                     <div class="input-block">
                         <slot name="form-content-input" />
-                        <div v-for="(column, index) in columns">
-                            <ModalColumnItem v-model:column-name="column.name">
+                        <div v-for="(item, index) in items">
+                            <ModalColumnItem v-model:item-name="item.name">
                                 <Icon @click="removeColumn(index)" name="icon-cross" class="cross" />
                             </ModalColumnItem>
                         </div>
@@ -35,23 +35,23 @@
 
     const store = useMainStore();
 
-    let columns = ref([
+    let items = ref([
         {
             name: "",
         },
     ]);
 
     async function addNewColumn() {
-        columns.value.push({
+        items.value.push({
             name: "",
         });
 
-        return columns;
+        return items;
     }
 
     function removeColumn(id: number) {
-        columns.value.splice(id, 1);
-        return columns;
+        items.value.splice(id, 1);
+        return items;
     }
 </script>
 
