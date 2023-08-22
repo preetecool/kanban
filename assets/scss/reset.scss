@@ -66,10 +66,11 @@ article > * + * {
 /* Inherit fonts for inputs and buttons */
 
 // button,
-// textarea,
-// select {
-//     font: inherit;
-// }
+input,
+textarea,
+select {
+	font: inherit;
+}
 
 /* Remove all animations and transitions for people that prefer not to see them */
 @media (prefers-reduced-motion: reduce) {
