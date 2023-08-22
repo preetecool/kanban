@@ -1,4 +1,8 @@
 <template></template>
 
-<script setup lang="ts"></script>
+<script setup lang="ts">
+    definePageMeta({
+        layout: "dashboard",
+    });
+</script>
 <style lang="scss" scoped></style>

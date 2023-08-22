@@ -19,7 +19,7 @@
     let numTasks = ref(0);
 
     try {
-        categories = store.activeBoard[0].categories;
+        categories = store.activeBoard[0].categories_and_tasks;
     } catch (error) {
         throw error;
     }

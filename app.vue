@@ -1,9 +1,9 @@
 <script setup>
-	const user = useSupabaseUser();
+    const user = useSupabaseUser();
 </script>
 
 <template>
-	<NuxtLayout>
-	<NuxtPage />
-	</NuxtLayout>
+    <NuxtLayout>
+        <NuxtPage />
+    </NuxtLayout>
 </template>
