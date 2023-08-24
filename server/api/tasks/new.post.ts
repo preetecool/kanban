@@ -6,27 +6,23 @@ export default defineEventHandler(async (event) => {
 	const user = await serverSupabaseUser(event);
 	const client = await serverSupabaseClient<Database>(event);
 	const body = await readBody(event);
+	let channel: RealtimeChannel;
 
 	try {
 		const { data, error } = await client
-			.from("boards")
+			.from("task")
 			.insert({
-				id: body.id,
-				title: body.title,
-				user_id: user?.id
-			})
-			.select("id, title")
-			.single();
+				category: body.categoryId,
+				board: body.board,
 
-		// const { data: categories } = await client.from("categories").insert({
-		// 	id: BigInt(Math.floor(Math.random() * 1000000000)).toString(),
-		// 	user_id: user?.id,
-		// 	board: body.id,
-		// 	titles: body.categories
-		// });
+				title: body.id,
+				description: body.description,
+				completed: false
+			})
+			.select("id, category, title, board, description, completed")
+			.single();
 		if (error) throw error;
 	} catch (error: any) {
 		alert(error.message);
-		return createError({ statusMessage: error.message });
 	}
 });

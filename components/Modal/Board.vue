@@ -30,37 +30,43 @@
 
 <script lang="ts" setup>
 	import { useMainStore } from "@/store/main";
-	import { Database } from "~~/types/database.types";
+
 	const store = useMainStore();
 	const boardName = ref("");
 	const user = useSupabaseUser();
-	// const supabase = useSupabaseClient<Database>();
-
+	let titles = ref([]);
 	async function sendData() {
-		const route = useRoute();
-		const params = route.params.id;
-		const boardId = BigInt(Math.floor(Math.random() * 1000000000)).toString();
-		const categories = store.items.map((item, index) => {
-			return {
-				name: item.name,
-				id: `${boardId}_${index}`,
-				tasks: []
-			};
+		store.items.forEach((item) => {
+			titles.value.push(item.title);
 		});
-		const { data } = useAsyncData("board", async () => {
+
+		const boardId = BigInt(Math.floor(Math.random() * 1000000000)).toString();
+
+		const { data: board } = useAsyncData("board", async () => {
 			await $fetch("/api/boards/new", {
 				method: "POST",
 				body: {
 					id: boardId,
-					creator: user.value.email,
-					created_at: new Date(),
-					title: boardName.value,
-					user_id: user.value.id,
-					categories_and_tasks: categories
+					title: boardName.value
 				}
 			});
 		});
-		console.log(data);
+		console.log("TITLES", titles.value);
+
+		const categoryPromises = titles.value.forEach(async (title) => {
+			await $fetch("/api/category/new", {
+				method: "POST",
+				body: {
+					board: boardId,
+					title: title
+				}
+			});
+		});
+		// try {
+		// 	const req = await Promise.all(categoryPromises);
+		// } catch (e) {
+		// 	throw new Error("Something went wrong while creating the categories");
+		// }
 
 		store.toggleModal("newBoard");
 	}

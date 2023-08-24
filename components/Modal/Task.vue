@@ -67,16 +67,8 @@
 	let params = route.params.id;
 	const store = useMainStore();
 	const user = useSupabaseUser();
+	// let boardData = await getBoardData();
 
-	async function getCategories() {
-		try {
-			const { data } = await useFetch(`/api/boards/${params}`);
-			return data.value[0].categories_and_tasks;
-		} catch (error) {
-			console.error("Error fetching categories:", error);
-			return [];
-		}
-	}
 	function setOptionValue(index: number) {
 		selectedValue.value = index;
 		return index;
@@ -86,8 +78,9 @@
 		// const taskId = JSON.stringify(BigInt(Math.floor(Math.random() * 1000000000)));
 		try {
 			const data = $fetch(`/api/tasks/new`, {
-				method: "PUT",
+				method: "POST",
 				body: {
+					category: selected.value,
 					params: params,
 					user_id: user.value.id,
 					name: taskName.value,
@@ -102,7 +95,8 @@
 		}
 	}
 	onMounted(async () => {
-		categories.value = await getCategories();
+		categories.value = await getBoadCategories();
+		console.log(categories.value);
 	});
 </script>
 

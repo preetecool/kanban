@@ -6,22 +6,24 @@ export default defineEventHandler(async (event) => {
 	const user = await serverSupabaseUser(event);
 	const client = await serverSupabaseClient<Database>(event);
 	let channel: RealtimeChannel;
+	let params = event?.context?.params?.id;
+	console.log(params);
 	const {
-		data: boards,
-		refresh: refreshBoards,
+		data: categories,
+		refresh: refreshCategories,
 		error
-	} = await client.from("boards").select("*").eq("user_id", user?.id);
+	} = await client.from("category").select("*").eq("board", params);
 	channel = client
-		.channel("public:boards")
-		.on("postgres_changes", { event: "*", schema: "public", table: "boards" }, () =>
-			refreshBoards()
+		.channel("public:category")
+		.on("postgres_changes", { event: "*", schema: "public", table: "category" }, () =>
+			refreshCategories()
 		);
 
 	channel.subscribe();
 
 	if (error) {
-		throw createError({ statusMessage: error.message });
+		return createError({ statusMessage: error.message });
 	}
 
-	return boards;
+	return categories;
 });

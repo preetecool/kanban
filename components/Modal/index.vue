@@ -23,7 +23,7 @@
 							:items="items"
 						/>
 						<div v-for="(item, index) in items">
-							<ModalColumnItem v-model:item-name="item.name">
+							<ModalColumnItem v-model:item-name="item.title">
 								<Icon
 									@click="removeColumn(index)"
 									name="icon-cross"
@@ -58,7 +58,7 @@
 
 	async function addNewColumn() {
 		items.push({
-			name: ""
+			title: ""
 		});
 
 		return items;

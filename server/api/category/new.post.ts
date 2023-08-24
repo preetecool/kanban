@@ -9,24 +9,19 @@ export default defineEventHandler(async (event) => {
 
 	try {
 		const { data, error } = await client
-			.from("boards")
+			.from("category")
 			.insert({
-				id: body.id,
-				title: body.title,
-				user_id: user?.id
+				board: body.board,
+				title: body.title
 			})
-			.select("id, title")
+			.select("title, board")
 			.single();
-
-		// const { data: categories } = await client.from("categories").insert({
-		// 	id: BigInt(Math.floor(Math.random() * 1000000000)).toString(),
-		// 	user_id: user?.id,
-		// 	board: body.id,
-		// 	titles: body.categories
-		// });
 		if (error) throw error;
 	} catch (error: any) {
-		alert(error.message);
+		// alert(error.message);
 		return createError({ statusMessage: error.message });
 	}
+	return {
+		statusCode: 200
+	};
 });
