@@ -11,7 +11,11 @@
         async () => {
             if (user.value) {
                 const { data } = await useAsyncData("user", async () => {
-                    return supabase.from("profiles").select("email").eq("id", user.value.id).single();
+                    return supabase
+                        .from("profiles")
+                        .select("email")
+                        .eq("id", user.value.id)
+                        .single();
                 });
 
                 try {
@@ -23,18 +27,20 @@
                                 updated_at: new Date(),
                             };
 
-                            let { error } = await supabase.from("profiles").upsert(updates, {
-                                returning: "minimal",
-                            });
+                            let { error } = await supabase
+                                .from("profiles")
+                                .upsert(updates, {
+                                    returning: "minimal",
+                                });
                             if (error) throw error;
                         }
                     }
                 } catch (error: any) {
                     alert(error.message);
                 } finally {
-                    let boards = await $fetch("/api/boards/get");
+                    let boards = await $fetch("/api/boards/all");
                     let firstBoard = boards[0].id.toString();
-                    let route = `/board/${firstBoard}`;
+                    let route = `/board/${firstBoard}`; 
 
                     return navigateTo(route);
                 }
