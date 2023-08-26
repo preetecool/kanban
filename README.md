@@ -5,6 +5,29 @@ The Kanban Task Management App is designed to help users manage their tasks usin
 
 ## 2. Architecture Overview
 
++-----------------------+     +-------------------------------------+
+|       User            |     |       Front-end (Nuxt 3)            |
+|                       |     |                                     |
+|   Logs In/Uses    +---------->   Renders UI                       |
++-----------------------+     |                                     |
+                             |                                     |
+                             +------------------+------------------+
+                                                |
+                                                | Auth Calls
+                                                V
+                             +-------------------------------------+
+                             |       Authentication (Supabase)     |
+                             |                                     |
+                             |       Returns user_id                |
+                             +------------------+------------------+
+                                                |
+                                                | 
+                             +-------------------------------------+
+                             |       Back-end (Nuxt 3)              |
+                             |                                     |
+                             |   API Calls     +-----------------------> Database (Supabase/PostgreSQL)
+                             |                                     |     Stores user data using user_id
+                             +-------------------------------------+
 ### 2.1 Front-end
 - **Framework**: Nuxt 3
 - **Assets**: Figma file and icons from front-end-mentor.com
