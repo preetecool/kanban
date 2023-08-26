@@ -53,15 +53,15 @@
 		});
 		console.log("TITLES", titles.value);
 
-		const categoryPromises = titles.value.forEach(async (title) => {
-			await $fetch("/api/category/new", {
-				method: "POST",
-				body: {
-					board: boardId,
-					title: title
-				}
-			});
+		await $fetch("/api/category/new", {
+			method: "POST",
+			body: {
+				board: boardId,
+				titles: titles.value
+				// title: title,
+			}
 		});
+
 		// try {
 		// 	const req = await Promise.all(categoryPromises);
 		// } catch (e) {

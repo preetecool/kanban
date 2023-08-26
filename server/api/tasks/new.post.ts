@@ -12,17 +12,16 @@ export default defineEventHandler(async (event) => {
 		const { data, error } = await client
 			.from("task")
 			.insert({
+				id: body.taskId,
 				category: body.categoryId,
-				board: body.board,
-
-				title: body.id,
+				title: body.title,
 				description: body.description,
 				completed: false
 			})
-			.select("id, category, title, board, description, completed")
+			.select()
 			.single();
 		if (error) throw error;
 	} catch (error: any) {
-		alert(error.message);
+		return createError({ statusMessage: error.message });
 	}
 });

@@ -1,9 +1,9 @@
 <template>
 	<client-only>
-		<div v-for="column in columns">
+		<div v-for="column in categories">
 			<div class="column">
 				<span class="headingS light-text"
-					>{{ column.toUpperCase() }} ({{ numTasks }})</span
+					>{{ column.title.toUpperCase() }} ({{ numTasks }})</span
 				>
 			</div>
 		</div>
@@ -12,6 +12,7 @@
 
 <script setup lang="ts">
 	import { useMainStore } from "@/store/main";
+	import { Category } from "~~/types/app.types";
 	definePageMeta({
 		layout: "dashboard"
 	});
@@ -21,15 +22,7 @@
 	let numTasks = ref(0);
 	let route = useRoute();
 	let params = route.params.id;
-	let categories = await $fetch(`/api/category/${params}`);
-	let columns = ref([]);
-
-	watchEffect(() => {
-		// categories[0].titles.forEach((title) => {
-		// 	columns.value.push(title.title);
-		// });
-		// console.log(columns);
-	});
+	let categories: Category[] = await $fetch(`/api/category/${params}`);
 </script>
 
 <style lang="scss" scoped>

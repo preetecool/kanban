@@ -38,9 +38,8 @@
 					v-for="(category, index) in categories"
 					:key="index"
 					:value="index"
-					@click="setOptionValue(index)"
 				>
-					{{ category.name }}
+					{{ category.title }}
 				</option>
 			</select>
 		</template>
@@ -56,37 +55,46 @@
 
 <script lang="ts" setup>
 	import { useMainStore } from "@/store/main";
-	import { userInfo } from "os";
+
+	import { Category } from "~~/types/app.types";
+
+	import { uuid } from "vue-uuid";
+
+	let taskId = uuid.v4();
+	console.log(typeof taskId);
+
 	const taskName = ref("");
 	const description = ref("");
-	const subTasks = ref([]);
-	const categories = ref([]);
-	let selected = ref("");
-	let selectedValue = ref(0);
+	const subTasks = ref([""]);
+	let selected = ref(0);
+
 	let route = useRoute();
 	let params = route.params.id;
 	const store = useMainStore();
 	const user = useSupabaseUser();
-	// let boardData = await getBoardData();
 
-	function setOptionValue(index: number) {
-		selectedValue.value = index;
-		return index;
-	}
-
+	const categories: Category[] = await $fetch(`/api/category/${params}`);
+	const selectedCategory = categories[selected.value].id;
 	async function sendData() {
-		// const taskId = JSON.stringify(BigInt(Math.floor(Math.random() * 1000000000)));
+		store.items.forEach((item) => {
+			subTasks.value.push(item.title);
+		});
 		try {
-			const data = $fetch(`/api/tasks/new`, {
+			const tasks = $fetch(`/api/tasks/new`, {
 				method: "POST",
 				body: {
-					category: selected.value,
-					params: params,
-					user_id: user.value.id,
-					name: taskName.value,
-					description: description.value,
-					subtasks: store.items,
-					status: selected.value
+					taskId: taskId,
+					categoryId: selectedCategory,
+					board: params,
+					title: taskName.value,
+					description: description.value
+				}
+			});
+			const subtask = $fetch("/api/subtask/new", {
+				method: "POST",
+				body: {
+					task: taskId,
+					subtasks: subTasks.value
 				}
 			});
 		} catch (error) {
@@ -94,10 +102,6 @@
 			throw new Error();
 		}
 	}
-	onMounted(async () => {
-		categories.value = await getBoadCategories();
-		console.log(categories.value);
-	});
 </script>
 
 <style lang="scss" scoped>

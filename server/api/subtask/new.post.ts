@@ -1,28 +1,28 @@
 import { createError } from "h3";
 import { Database } from "~~/types/database.types";
+import { Subtask } from "~~/types/app.types";
 import { serverSupabaseUser, serverSupabaseClient } from "#supabase/server";
 
 export default defineEventHandler(async (event) => {
 	const user = await serverSupabaseUser(event);
 	const client = await serverSupabaseClient<Database>(event);
 	const body = await readBody(event);
+	let channel: RealtimeChannel;
 
 	try {
-		body.titles.forEach(async (title: string) => {
+		body.subtasks.forEach(async (subtask: Subtask) => {
 			const { data, error } = await client
-				.from("category")
+				.from("subtask")
 				.insert({
-					board: body.board,
-					title: title
+					task: body.task,
+					title: subtask,
+					completed: false
 				})
-				.select("title, board")
+				.select()
 				.single();
 			if (error) throw error;
 		});
 	} catch (error: any) {
-		return createError({ statusMessage: error.message });
+		alert(error.message);
 	}
-	return {
-		statusCode: 200
-	};
 });
