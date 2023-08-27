@@ -33,6 +33,7 @@ The Kanban Task Management App is designed to help users manage their tasks usin
 
 ### 3.2 Category
 - **GET** `/api/category/[id]`: Fetches a specific category by ID.
+- **GET** `/api/category/[id]/tasks`: Fetches all tasks by category ID.
 - **POST** `/api/category/new`: Creates a new category.
 - **PUT** `/api/category/[id]/update`: Updates a specific category by ID.
 - **DELETE** `/api/category/[id]/delete`: Deletes a specific category by ID.

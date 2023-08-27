@@ -2,6 +2,7 @@
     <!-- <Modal v-if="store.modal === true" /> -->
     <ModalBoard v-if="store.modal['newBoard'] === true" />
     <ModalTask v-if="store.modal['newTask'] === true" />
+    
     <div class="main-grid">
         <Sidebar class="sidebar" />
 
@@ -11,7 +12,9 @@
 
         <div class="body">
             <div v-if="!hasColumns" class="body__new-column">
-                <span class="headingL">This board is empty. Create a new column to get started</span>
+                <span class="headingL">
+                    This board is empty. Create a new column to get started
+                </span>
                 <UIButton label="+ Add New Column"></UIButton>
             </div>
             <div class="columns-grid">

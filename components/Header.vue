@@ -12,7 +12,7 @@
 
 <script setup lang="ts">
     import { useMainStore } from "@/store/main";
-    import { storeToRefs } from "pinia";
+
     const store = useMainStore();
 
     let boardTitle = store.activeBoard[0].title;

@@ -11,6 +11,7 @@
 
 	let store = useMainStore();
 	let numTasks = ref(0);
+	
 </script>
 
 <style lang="scss" scoped></style>
