@@ -1,162 +1,104 @@
-Kanban Task Management System Design Document
+# Kanban Task Management App - System Design Document
+
 ## 1. Introduction
-This document describes the system architecture for a Kanban-style task management application. The application will support third-party authentication using Supabase and will utilize MongoDB Atlas for data storage. The front-end and back-end services will be developed using Nuxt 3.
+The Kanban Task Management App is designed to help users manage their tasks using the Kanban methodology. Users can create boards, categories within those boards, tasks within categories, and subtasks within tasks. The system also incorporates third-party authentication for user management.
 
-## 2. System Components
-# 2.1 Front-End
-Framework: Nuxt 3
-Features:
-User authentication via Supabase (third-party login).
-Board, list, and task creation.
-Drag-and-drop functionality for tasks.
-Real-time board and task updates.
-# 2.2 Back-End
-Framework: Nuxt 3 (server-side)
-Features:
-API endpoints for CRUD operations on boards, lists, and tasks.
-Authentication and authorization middleware.
-Integration with MongoDB Atlas for data storage.
-# 2.3 Database
-Database: MongoDB Atlas
-Schemas:
-User:
-UserID
-Email
-AuthToken (from Supabase)
-Boards (array of BoardIDs)
-Board:
-BoardID
-Name
-Lists (array of ListIDs)
-Owner (UserID)
-List:
-ListID
-Name
-Tasks (array of TaskIDs)
-Task:
-TaskID
-Name
-Description
-Status (e.g., Todo, In Progress, Done)
-# 2.4 Authentication
-Provider: Supabase
-Features:
-Third-party login support (e.g., Google, GitHub).
-Generation of JWT tokens for authenticated sessions.
-Middleware for validating JWT tokens and securing API endpoints.
-## 3. System Workflow
-User Authentication:
+## 2. Architecture Overview
 
-The user logs in via a third-party provider using Supabase.
-On successful authentication, Supabase returns a JWT token.
-The token is stored client-side for authenticated sessions and is passed to the server for authenticated requests.
-Board Operations:
+### 2.1 Front-end
+- **Framework**: Nuxt 3
+- **Assets**: Figma file and icons from front-end-mentor.com
 
-Users can create boards, which are then stored in MongoDB Atlas.
-Each board can have multiple lists, and each list can have multiple tasks.
-Task Management:
+### 2.2 Back-end
+- **Framework**: Nuxt 3
+- **Database**: Supabase (PostgreSQL)
+- **Authentication**: Supabase Authentication with Google or OTP.
 
-Users can add, edit, or delete tasks within a list.
-Tasks can be dragged and dropped between lists, updating their status.
-All task operations are stored and retrieved from MongoDB Atlas.
-## 4. Scalability and Performance
-Database Scaling: MongoDB Atlas supports horizontal scaling through sharding, ensuring the application remains performant as data grows.
-Caching: Implement caching mechanisms to speed up frequent data retrieval operations, possibly using Redis or a similar caching solution.
-CDN: Use a Content Delivery Network for serving static assets to reduce load times for global users.
-## 5. Security Considerations
-Data Encryption: Ensure data at rest and in transit is encrypted.
-Input Validation: Implement server-side input validation to protect against malicious input.
-Rate Limiting: Implement rate limiting on the API to prevent abuse.
-## 6. Future Enhancements
-Notifications: Implement a notification system to alert users about task updates.
-Collaboration: Add features for users to collaborate on boards in real-time.
+### 2.3 Data Flow
 
-## Kanban Task Management System Architecture
-#User Interface (UI)
-Represents the frontend built with Nuxt 3.
-Connects to the backend API for data operations.
-Connects to Supabase for user authentication.
+1. User logs in via third-party providers (Google) or OTP (link for login session sent to email address).
+2. User creates a board.
+3. Within a board, the user can create multiple categories.
+4. Within a category, the user can create tasks.
+5. Within a task, the user can create subtasks.
 
-#Backend API (Nuxt 3 Server)
-Provides endpoints for CRUD operations on boards, lists, and tasks.
-Connects to MongoDB Atlas for data storage.
-Authenticates requests using JWT tokens from Supabase.
+## 3. API Endpoints
 
-#Supabase
-Handles third-party user authentication.
-Generates JWT tokens for user sessions.
-Connected to by both the frontend for login and the backend for token verification.
+### 3.1 Boards
+- **GET** `/api/boards/[id]`: Fetches a specific board by ID.
+- **GET** `/api/all`: Fetches all boards.
+- **POST** `/api/boards/new`: Creates a new board.
+- **PUT** `/api/boards/[id]/update`: Updates a specific board by ID.
+- **DELETE** `/api/boards/[id]/delete`: Deletes a specific board by ID.
 
-#MongoDB Atlas
-Stores user data, boards, lists, and tasks.
-Communicates directly with the backend API.
+### 3.2 Category
+- **GET** `/api/category/[id]`: Fetches a specific category by ID.
+- **POST** `/api/category/new`: Creates a new category.
+- **PUT** `/api/category/[id]/update`: Updates a specific category by ID.
+- **DELETE** `/api/category/[id]/delete`: Deletes a specific category by ID.
 
+### 3.3 Tasks
+- **GET** `/api/task/[id]`: Fetches a specific task by ID.
+- **POST** `/api/task/new`: Creates a new task.
+- **PUT** `/api/task/[id]/update`: Updates a specific task by ID.
+- **DELETE** `/api/task/[id]/delete`: Deletes a specific task by ID.
 
+### 3.4 Subtask
+- **GET** `/api/subtask/[id]`: Fetches a specific subtask by ID.
+- **POST** `/api/subtask/new`: Creates a new subtask.
+- **PUT** `/api/subtask/[id]/update`: Updates a specific subtask by ID.
+- **DELETE** `/api/subtask/[id]/delete`: Deletes a specific subtask by ID.
 
+## 4. Data Schema
 
+### 4.1 Subtask
+- `id`: uuid
+- `created_at`: timestamptz
+- `updated_at`: timestamptz
+- `task`: uuid (relation to `task.id`)
+- `title`: text
+- `completed`: boolean
 
+### 4.2 Task
+- `id`: uuid
+- `created_at`: timestamptz
+- `updated_at`: timestamptz
+- `category`: uuid (relation to `category.id`)
+- `title`: text
+- `description`: text
+- `completed`: boolean
 
+### 4.3 Category
+- `id`: uuid
+- `created_at`: timestamptz
+- `title`: text
+- `board`: int8 (relation to `board.id`)
 
-# Nuxt 3 Minimal Starter
+### 4.4 Board
+- `id`: int8
+- `created_at`: timestamptz
+- `title`: text
+- `user_id`: uuid (relation to `profiles.id`)
 
-Look at the [Nuxt 3 documentation](https://nuxt.com/docs/getting-started/introduction) to learn more.
+### 4.5 Profiles
+- `id`: uuid (relation to `auth.users.id` from Supabase Auth module)
+- `updated_at`: timestamptz
+- `email`: text
+- `full_name`: text
+- `avatar_url`: text
 
-## Setup
+## 5. High-Level Overview
 
-Make sure to install the dependencies:
+The Kanban Task Management app provides users with a way to visualize and manage their tasks using the Kanban methodology. The app is built on the Nuxt 3 framework for both front-end and back-end. 
 
-```bash
-# npm
-npm install
+The app's core functionality revolves around the creation and management of boards. Each board can contain multiple categories, with each category housing multiple tasks. Tasks can further have subtasks. All these entities have CRUD operations associated with them, available through RESTful APIs.
 
-# pnpm
-pnpm install
+The data is stored in a PostgreSQL database managed by Supabase. Supabase also handles authentication, allowing users to sign in with third-party providers such as Google and GitHub. 
 
-# yarn
-yarn install
-```
+Users first need to authenticate, after which they can create and manage their boards and the associated entities. The design of the application, including the UI/UX components, is sourced from assets provided by front-end-mentor.com.
 
-## Development Server
+In terms of scalability and future enhancements, the app can incorporate more third-party providers for authentication and can also expand its feature set to include features like task priority, notifications, collaborations, etc.
 
-Start the development server on `http://localhost:3000`:
+---
 
-```bash
-# npm
-npm run dev
-
-# pnpm
-pnpm run dev
-
-# yarn
-yarn dev
-```
-
-## Production
-
-Build the application for production:
-
-```bash
-# npm
-npm run build
-
-# pnpm
-pnpm run build
-
-# yarn
-yarn build
-```
-
-Locally preview production build:
-
-```bash
-# npm
-npm run preview
-
-# pnpm
-pnpm run preview
-
-# yarn
-yarn preview
-```
-
-Check out the [deployment documentation](https://nuxt.com/docs/getting-started/deployment) for more information.
+This document provides a high-level design of the Kanban Task Management App. Further details, such as error handling, scalability considerations, security measures, etc., would need to be addressed in a more detailed system design or technical specification document.
