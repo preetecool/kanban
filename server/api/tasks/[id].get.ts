@@ -6,17 +6,17 @@ export default defineEventHandler(async (event) => {
 	const user = await serverSupabaseUser(event);
 	const client = await serverSupabaseClient<Database>(event);
 	let channel: RealtimeChannel;
-	let params = event?.context?.params?.id;
+	let categoryId = getRouterParam(event, "id");
 
 	const {
-		data: categories,
-		refresh: refreshCategories,
+		data: tasks,
+		refresh: refreshTasks,
 		error
-	} = await client.from("category").select("*").eq("board", params);
+	} = await client.from("task").select("*").eq("category", categoryId);
 	channel = client
-		.channel("public:category")
-		.on("postgres_changes", { event: "*", schema: "public", table: "category" }, () =>
-			refreshCategories()
+		.channel("public:task")
+		.on("postgres_changes", { event: "*", schema: "public", table: "task" }, () =>
+			refreshTasks()
 		);
 
 	channel.subscribe();
@@ -25,5 +25,5 @@ export default defineEventHandler(async (event) => {
 		return createError({ statusMessage: error.message });
 	}
 
-	return categories;
+	return tasks;
 });
