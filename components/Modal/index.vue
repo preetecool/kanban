@@ -13,6 +13,7 @@
 
 			<div class="modal__content__body">
 				<div class="modal__content__body__input">
+					<slot name="subtasks" />
 					<div class="input-block">
 						<slot name="form-content-title" />
 					</div>
