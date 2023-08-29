@@ -5,8 +5,9 @@ export default defineEventHandler(async (event) => {
 	const user = await serverSupabaseUser(event);
 	const client = await serverSupabaseClient<Database>(event);
 	let channel: RealtimeChannel;
-	let body = readBody(event);
-	let subtaskId = getRouterParam(event, "taskId");
+	let body = await readBody(event);
+	let subtaskId = getRouterParam(event, "id");
+
 	let response;
 
 	try {
@@ -16,11 +17,13 @@ export default defineEventHandler(async (event) => {
 				completed: body.completed,
 				updated_at: new Date()
 			})
-			.eq("id", body.subtaskId)
-			.select();
+			.eq("id", subtaskId)
+			.select("id, title, completed");
+
 		if (error) throw error;
+		response = data;
 	} catch (error: any) {
-		alert(error.message);
+		return createError({ statusMessage: error.message });
 	}
 
 	return response;

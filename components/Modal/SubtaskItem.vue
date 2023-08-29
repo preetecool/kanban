@@ -2,22 +2,24 @@
 	<div class="subtask">
 		<input
 			type="checkbox"
-			v-model="isCompleted"
-			@click="updateSubtask"
+			:checked="taskCompleted"
+			@change="updateSubtask"
 			id="isCompleted"
 			name="isCompleted"
-			:checked="isCompleted"
 		/>
 		<label
 			for="isCompleted"
 			class="subtask__text"
+			:class="{ subtask__completed: taskCompleted }"
 			>{{ subtask.title }}</label
 		>
 	</div>
 </template>
+
 <script setup lang="ts">
-	import { notEqual } from "assert";
+	import { ref } from "vue";
 	import { Subtask } from "~~/types/app.types";
+
 	const props = defineProps({
 		subtask: {
 			type: Object,
@@ -28,18 +30,23 @@
 			default: ""
 		}
 	});
-	let isCompleted: boolean = props.subtask.completed;
+
+	let taskCompleted = ref(props.subtask.completed);
+	let subtaskId = props.subtask.id;
 
 	async function updateSubtask() {
-		isCompleted = !isCompleted;
-		console.log(isCompleted);
-		let updatedSubtask: Subtask = await $fetch(`/api/subtask/${props.subtask.id}/`, {
-			method: "PATCH",
-			body: {
-				completed: isCompleted,
-				subtaskId: props.subtask.id
-			}
-		});
+		taskCompleted.value = !taskCompleted.value;
+		try {
+			await $fetch(`/api/subtask/update/${subtaskId}/`, {
+				method: "PATCH",
+				body: {
+					completed: taskCompleted.value
+				}
+			});
+		} catch (e) {
+			console.error(e);
+			taskCompleted.value = !taskCompleted.value;
+		}
 	}
 </script>
 
@@ -61,7 +68,7 @@
 			font-size: 12px;
 			font-weight: bold;
 		}
-		--completed {
+		&__completed {
 			text-decoration: line-through;
 			color: #00000050;
 		}

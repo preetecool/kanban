@@ -51,7 +51,6 @@
 				}
 			});
 		});
-		console.log("TITLES", titles.value);
 
 		await $fetch("/api/category/new", {
 			method: "POST",

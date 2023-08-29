@@ -50,6 +50,7 @@ authentication for user management.
 ### 3.3 Tasks
 
 - **GET** `/api/task/[id]`: Fetches a specific task by ID.
+- **GET** `/api/task/[id]/subtasks`: Fetches all subtasks by task ID.
 - **POST** `/api/task/new`: Creates a new task.
 - **PATCH** `/api/task/[id]/update`: Updates a specific task by ID.
 - **DELETE** `/api/task/[id]/delete`: Deletes a specific task by ID.

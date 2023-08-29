@@ -13,10 +13,11 @@ export default defineEventHandler(async (event) => {
 		refresh: refreshTasks,
 		error
 	} = await client.from("task").select("*").eq("id", taskId);
+
 	channel = client
 		.channel("public:task")
-		.on("postgres_changes", { event: "*", schema: "public", table: "task" }, () =>
-			refreshTasks()
+		.on("postgres_changes", { event: "*", schema: "public", table: "task" }, (payload) =>
+			refreshTasks(payload)
 		);
 
 	channel.subscribe();

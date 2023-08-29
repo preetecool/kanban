@@ -12,7 +12,7 @@ export default defineEventHandler(async (event) => {
 		data: categories,
 		refresh: refreshCategories,
 		error
-	} = await client.from("category").select("*").eq("board", params);
+	} = await client.from("category").select("*").eq("board", params).order("created_at");
 	channel = client
 		.channel("public:category")
 		.on("postgres_changes", { event: "*", schema: "public", table: "category" }, () =>

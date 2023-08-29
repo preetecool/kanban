@@ -6,27 +6,32 @@ export default defineEventHandler(async (event) => {
 	const user = await serverSupabaseUser(event);
 	const client = await serverSupabaseClient<Database>(event);
 	let channel: RealtimeChannel;
-	let subtaskId = getRouterParams(event);
+	let taskId = getRouterParam(event, "id");
+
 	let response;
 	try {
-		const {
-			data: tasks,
-			refresh: refreshTasks,
-			error
-		} = await client.from("subtask").select("*").eq("id", subtaskId.id);
+		const { data: tasks, error } = await client
+			.from("subtask")
+			.select("*")
+			.eq("task", taskId);
 		channel = client
 			.channel("public:subtask")
-			.on("postgres_changes", { event: "*", schema: "public", table: "subtask" }, () =>
-				refreshTasks()
+			.on(
+				"postgres_changes",
+				{ event: "*", schema: "public", table: "subtask" },
+				(payload) => {
+					console.log("changes made", payload);
+				}
 			);
 		channel.subscribe();
+
 		if (tasks) {
 			response = tasks;
 		}
 		if (error) {
 			return createError({ statusMessage: error.message });
 		}
-	} catch (e) {
+	} catch (e: any) {
 		return createError({ statusMessage: e.message });
 	}
 

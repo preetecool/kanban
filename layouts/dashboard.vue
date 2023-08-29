@@ -3,8 +3,8 @@
 	<ModalBoard v-if="store.modal['newBoard'] === true" />
 	<ModalTask v-if="store.modal['newTask'] === true" />
 	<ModalEditTask
-		v-if="store.modal['editTask'] === true"
-		:task="DBStore.selectedTask"
+		v-if="store.modal['editTask'] === true && !store.isLoadingData"
+		:task="store.selectedTask"
 	/>
 
 	<div class="main-grid">

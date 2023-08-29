@@ -1,4 +1,4 @@
-import { Modal } from "~~/types/app.types";
+import { Modal, Task } from "~~/types/app.types";
 import { useDB } from "./db";
 export const useMainStore = defineStore("main", {
 	state: () => {
@@ -16,7 +16,9 @@ export const useMainStore = defineStore("main", {
 					title: "",
 					id: 0
 				}
-			]
+			],
+			selectedTask: [{}],
+			isLoadingData: true
 		};
 	},
 	actions: {
@@ -25,7 +27,8 @@ export const useMainStore = defineStore("main", {
 				return this.closeModal();
 			}
 			if (board === "editTask") {
-				useDB().getTaskById(taskId);
+				this.getTaskById(taskId);
+				// console.log(taskId);
 			}
 			this.modal[board] = !this.modal[board];
 		},
@@ -37,6 +40,18 @@ export const useMainStore = defineStore("main", {
 				}
 			}
 			this.modal["closeModal"] = false;
+		},
+		async getTaskById(id?: string) {
+			this.isLoadingData = true;
+			try {
+				let task: Task[] = await $fetch(`/api/task/${id}`);
+
+				this.selectedTask = task;
+			} catch (err) {
+				console.error("Error fetching task by Id", err);
+			} finally {
+				this.isLoadingData = false;
+			}
 		}
 	}
 });

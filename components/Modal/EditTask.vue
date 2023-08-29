@@ -9,10 +9,11 @@
 		</template>
 		<template #subtasks>
 			<span class="bodyM light-text">Subtasks({{ " 0 of 3" }})</span>
-			<div v-for="subtask in subtasks">
+			<div v-for="(subtask, index) in subtasks">
 				<ModalSubtaskItem
 					:subtask="subtask"
 					:taskId="taskId"
+					:key="index"
 				/>
 			</div>
 		</template>
@@ -22,20 +23,20 @@
 
 <script lang="ts" setup>
 	import { Task, Subtask } from "~~/types/app.types";
-	const props = defineProps({
-		task: {
-			type: Object
-		}
-	});
+	import { useMainStore } from "@/store/main";
+
+	let store = useMainStore();
+
+	let task = store.selectedTask;
 
 	let taskId: string | undefined;
 	let subtasks: Subtask[];
-	if (props.task) {
-		taskId = props.task[0].id;
-	} else taskId = await props.task[0].id;
+	if (task) {
+		taskId = task[0].id;
+	}
 	if (taskId != undefined) {
 		try {
-			subtasks = await $fetch(`/api/subtask/${taskId}`);
+			subtasks = await $fetch(`/api/task/${task[0].id}/subtasks`);
 		} catch (e) {
 			console.log("Error fetching subtasks", e);
 		}
