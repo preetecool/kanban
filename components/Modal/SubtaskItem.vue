@@ -2,18 +2,45 @@
 	<div class="subtask">
 		<input
 			type="checkbox"
-			v-model="subtask.completed"
+			v-model="isCompleted"
+			@click="updateSubtask"
+			id="isCompleted"
+			name="isCompleted"
+			:checked="isCompleted"
 		/>
-		<div class="subtask__text">{{ subtask.title }}</div>
+		<label
+			for="isCompleted"
+			class="subtask__text"
+			>{{ subtask.title }}</label
+		>
 	</div>
 </template>
-<script setup>
+<script setup lang="ts">
+	import { notEqual } from "assert";
+	import { Subtask } from "~~/types/app.types";
 	const props = defineProps({
 		subtask: {
 			type: Object,
 			default: {}
+		},
+		taskId: {
+			type: String,
+			default: ""
 		}
 	});
+	let isCompleted: boolean = props.subtask.completed;
+
+	async function updateSubtask() {
+		isCompleted = !isCompleted;
+		console.log(isCompleted);
+		let updatedSubtask: Subtask = await $fetch(`/api/subtask/${props.subtask.id}/`, {
+			method: "PATCH",
+			body: {
+				completed: isCompleted,
+				subtaskId: props.subtask.id
+			}
+		});
+	}
 </script>
 
 <style lang="scss" scpoped>

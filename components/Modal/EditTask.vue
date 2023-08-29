@@ -10,7 +10,10 @@
 		<template #subtasks>
 			<span class="bodyM light-text">Subtasks({{ " 0 of 3" }})</span>
 			<div v-for="subtask in subtasks">
-				<ModalSubtaskItem :subtask="subtask" />
+				<ModalSubtaskItem
+					:subtask="subtask"
+					:taskId="taskId"
+				/>
 			</div>
 		</template>
 		<template #status> </template>
@@ -23,7 +26,6 @@
 		task: {
 			type: Object
 		}
-		subtaskId:
 	});
 
 	let taskId: string | undefined;
@@ -32,8 +34,11 @@
 		taskId = props.task[0].id;
 	} else taskId = await props.task[0].id;
 	if (taskId != undefined) {
-		subtasks = await $fetch(`/api/subtask/${taskId}`);
-		console.log(subtasks);
+		try {
+			subtasks = await $fetch(`/api/subtask/${taskId}`);
+		} catch (e) {
+			console.log("Error fetching subtasks", e);
+		}
 	}
 </script>
 

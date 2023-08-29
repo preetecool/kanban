@@ -1,6 +1,9 @@
 <template>
 	<li class="item">
-		<div class="wrap">
+		<div
+			class="wrap"
+			@click="navigateTo(`/board/${url}`)"
+		>
 			<Icon name="icon-board" />
 			<span class="headingM"> {{ name }} </span>
 		</div>
@@ -10,6 +13,10 @@
 <script setup lang="ts">
 	const props = defineProps({
 		name: {
+			type: String,
+			required: true
+		},
+		url: {
 			type: String,
 			required: true
 		}
