@@ -15,7 +15,7 @@ export default defineEventHandler(async (event) => {
 					board: body.board,
 					title: title
 				})
-				.select("title, board")
+				.select()
 				.single();
 			if (error) throw error;
 		});

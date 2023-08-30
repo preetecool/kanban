@@ -3,31 +3,33 @@ import { Database } from "~~/types/database.types";
 import { serverSupabaseUser, serverSupabaseClient } from "#supabase/server";
 
 export default defineEventHandler(async (event) => {
-    const user = await serverSupabaseUser(event);
-    const client = await serverSupabaseClient<Database>(event);
-    let channel: RealtimeChannel;
-    let params = event?.context?.params?.id;
+	const user = await serverSupabaseUser(event);
+	const client = await serverSupabaseClient<Database>(event);
+	let channel: RealtimeChannel;
+	let params = event?.context?.params?.id;
 
-    const {
-        data: categories,
-        refresh: refreshCategories,
-        error,
-    } = await client
-        .from("category")
-        .select("*, task(id, description, completed, title, category)")
-        .eq("board", params)
-        .order("created_at");
-    channel = client
-        .channel("public:category")
-        .on("postgres_changes", { event: "*", schema: "public", table: "category" }, () =>
-            refreshCategories()
-        );
+	const {
+		data: categories,
 
-    channel.subscribe();
+		error
+	} = await client
+		.from("category")
+		.select("*, task(id, description, completed, title, category)")
+		.eq("board", params)
+		.order("created_at");
+	channel = client
+		.channel("public:category")
+		.on(
+			"postgres_changes",
+			{ event: "*", schema: "public", table: "category" },
+			(payload) => "updated"
+		);
 
-    if (error) {
-        return createError({ statusMessage: error.message });
-    }
+	channel.subscribe();
 
-    return categories;
+	if (error) {
+		return createError({ statusMessage: error.message });
+	}
+
+	return categories;
 });

@@ -62,7 +62,6 @@
 	import { uuid } from "vue-uuid";
 
 	let taskId = uuid.v4();
-	console.log(typeof taskId);
 
 	const taskName = ref("");
 	const description = ref("");

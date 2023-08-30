@@ -7,7 +7,10 @@
 					label="+ Add New Task"
 					@click="store.toggleModal('newTask')"
 				/>
-				<div>...</div>
+				<Icon
+					name="icon-vertical-ellipsis"
+					width="5px"
+				/>
 			</div>
 		</div>
 	</div>

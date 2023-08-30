@@ -17,8 +17,8 @@ export default defineEventHandler(async (event) => {
 		.eq("category", categoryId);
 	channel = client
 		.channel("public:task")
-		.on("postgres_changes", { event: "*", schema: "public", table: "task" }, () =>
-			refreshTasks()
+		.on("postgres_changes", { event: "*", schema: "public", table: "task" }, (payload) =>
+			refreshTasks(payload)
 		);
 
 	channel.subscribe();
