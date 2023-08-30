@@ -31,13 +31,13 @@
 		}
 	});
 
-	let taskCompleted = ref(props.subtask.completed);
-	let subtaskId = props.subtask.id;
+	let taskCompleted: Ref<boolean> = ref(props.subtask.completed);
+	let subtaskId: string = props.subtask.id;
 
 	async function updateSubtask() {
 		taskCompleted.value = !taskCompleted.value;
 		try {
-			await $fetch(`/api/subtask/update/${subtaskId}/`, {
+			let udpatedTask: Subtask = await $fetch(`/api/subtask/update/${subtaskId}/`, {
 				method: "PATCH",
 				body: {
 					completed: taskCompleted.value

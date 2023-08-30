@@ -1,4 +1,4 @@
-import { Modal, Task } from "~~/types/app.types";
+import { Modal, Task, Subtask } from "~~/types/app.types";
 import { useDB } from "./db";
 export const useMainStore = defineStore("main", {
 	state: () => {
@@ -18,7 +18,8 @@ export const useMainStore = defineStore("main", {
 				}
 			],
 			selectedTask: [{}],
-			isLoadingData: true
+			isLoadingData: true,
+			tasksByBoard: [{}]
 		};
 	},
 	actions: {
@@ -51,6 +52,22 @@ export const useMainStore = defineStore("main", {
 				console.error("Error fetching task by Id", err);
 			} finally {
 				this.isLoadingData = false;
+			}
+		},
+		async getAllSubtasks(id: number) {
+			let task = this.selectedTask;
+
+			let taskId: string | undefined;
+			let subtasks: Subtask[];
+			if (task) {
+				taskId = task[0].id;
+			}
+			if (taskId != undefined) {
+				try {
+					subtasks = await $fetch(`/api/task/${task[0].id}/subtasks`);
+				} catch (e) {
+					console.log("Error fetching subtasks", e);
+				}
 			}
 		}
 	}

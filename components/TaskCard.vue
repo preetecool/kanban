@@ -9,6 +9,7 @@
 		>
 			{{ task.title }}
 		</div>
+		<!-- <div>{{ `${numSubtaskCompleted} of ${numTotalSubTasks}` }}</div> -->
 	</div>
 </template>
 
@@ -25,6 +26,16 @@
 		}
 	});
 	const tasks: Task[] = await $fetch(`/api/category/${props.categoryId}/tasks/`);
+
+	tasks.forEach((task) => {
+		store.tasksByBoard = [
+			{
+				id: task.id
+			}
+		];
+	});
+
+	//map all tasks for current board and store the state
 </script>
 
 <style lang="scss" scpoped>

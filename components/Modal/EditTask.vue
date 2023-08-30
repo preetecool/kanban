@@ -26,7 +26,9 @@
 	import { useMainStore } from "@/store/main";
 
 	let store = useMainStore();
-
+	// onMounted(() => {
+	// 	store.getAllSubtasks();
+	// });
 	let task = store.selectedTask;
 
 	let taskId: string | undefined;

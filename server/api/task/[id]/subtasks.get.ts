@@ -13,15 +13,14 @@ export default defineEventHandler(async (event) => {
 		const { data: tasks, error } = await client
 			.from("subtask")
 			.select("*")
-			.eq("task", taskId);
+			.eq("task", taskId)
+			.order("created_at");
 		channel = client
 			.channel("public:subtask")
 			.on(
 				"postgres_changes",
 				{ event: "*", schema: "public", table: "subtask" },
-				(payload) => {
-					console.log("changes made", payload);
-				}
+				(payload) => {}
 			);
 		channel.subscribe();
 
