@@ -4,11 +4,11 @@
 			type="checkbox"
 			:checked="taskCompleted"
 			@change="updateSubtask"
-			id="isCompleted"
+			:id="subtask.id"
 			name="isCompleted"
 		/>
 		<label
-			for="isCompleted"
+			:for="subtask.id"
 			class="subtask__text"
 			:class="{ subtask__completed: taskCompleted }"
 			>{{ subtask.title }}</label
@@ -18,8 +18,7 @@
 
 <script setup lang="ts">
 	import { ref } from "vue";
-	import { Subtask } from "~~/types/app.types";
-
+	import { useDB } from "@/store/db";
 	const props = defineProps({
 		subtask: {
 			type: Object,
@@ -31,18 +30,13 @@
 		}
 	});
 
+	let db = useDB();
 	let taskCompleted: Ref<boolean> = ref(props.subtask.completed);
 	let subtaskId: string = props.subtask.id;
-
 	async function updateSubtask() {
 		taskCompleted.value = !taskCompleted.value;
 		try {
-			let udpatedTask: Subtask = await $fetch(`/api/subtask/update/${subtaskId}/`, {
-				method: "PATCH",
-				body: {
-					completed: taskCompleted.value
-				}
-			});
+			await db.updateSubtask(subtaskId, taskCompleted.value);
 		} catch (e) {
 			console.error(e);
 			taskCompleted.value = !taskCompleted.value;

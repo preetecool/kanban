@@ -26,8 +26,7 @@ export default defineEventHandler(async (event) => {
 
 		if (tasks) {
 			response = tasks;
-		}
-		if (error) {
+		} else if (error) {
 			return createError({ statusMessage: error.message });
 		}
 	} catch (e: any) {

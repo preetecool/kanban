@@ -1,11 +1,8 @@
 <template>
 	<!-- <Modal v-if="store.modal === true" /> -->
 	<ModalBoard v-if="store.modal['newBoard'] === true" />
-	<ModalTask v-if="store.modal['newTask'] === true" />
-	<ModalViewTask
-		v-if="store.modal['viewTask'] === true && !store.isLoadingData"
-		:task="store.selectedTask"
-	/>
+	<ModalCreateTask v-if="store.modal['newTask'] === true" />
+	<ModalViewTask v-if="store.modal['viewTask'] === true && !db.isLoadingData" />
 
 	<div class="main-grid">
 		<Sidebar class="sidebar" />
@@ -36,7 +33,7 @@
 	import { useDB } from "@/store/db";
 
 	const store = useMainStore();
-	const DBStore = useDB();
+	const db = useDB();
 
 	let hasColumns = computed(() => {
 		return store.activeBoard[0];

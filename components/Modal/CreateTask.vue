@@ -56,13 +56,12 @@
 
 <script lang="ts" setup>
 	import { useMainStore } from "@/store/main";
+	import { useDB } from "@/store/db";
 
 	import { Category } from "~~/types/app.types";
-
 	import { uuid } from "vue-uuid";
 
 	let taskId = uuid.v4();
-
 	const taskName = ref("");
 	const description = ref("");
 	const subTasks = ref([""]);
@@ -71,7 +70,7 @@
 	let route = useRoute();
 	let params = route.params.id;
 	const store = useMainStore();
-	const user = useSupabaseUser();
+	const db = useDB();
 
 	const categories: Category[] = await $fetch(`/api/category/${params}`);
 
@@ -80,23 +79,14 @@
 			subTasks.value.push(item.title);
 		});
 		try {
-			const tasks = $fetch(`/api/task/new`, {
-				method: "POST",
-				body: {
-					taskId: taskId,
-					categoryId: categories[selected.value].id,
-					board: params,
-					title: taskName.value,
-					description: description.value
-				}
-			});
-			const subtask = $fetch("/api/subtask/new", {
-				method: "POST",
-				body: {
-					task: taskId,
-					subtasks: subTasks.value
-				}
-			});
+			await db.createTask(
+				taskId,
+				categories[selected.value].id,
+				params,
+				taskName.value,
+				description.value
+			);
+			await db.createSubtask(taskId, subTasks.value);
 		} catch (error) {
 			console.error("Error Creating Task:", error);
 			throw new Error();
