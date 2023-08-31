@@ -31,15 +31,21 @@
 	});
 	let tasks: Ref<Task[]> = ref([]);
 
-	try {
-		const response = await db.fetchTasksByCategory(props.categoryId);
-		if (Array.isArray(response) && response.every((item) => "id" in item)) {
-			tasks.value = response;
-			console.log(tasks.value);
-		}
-	} catch (err) {
-		console.error("Failed to fetch Tasks. Invalid format", err);
-	}
+	watch(
+		() => props.categoryId,
+		async (newCategoryId) => {
+			try {
+				const response = await db.fetchTasksByCategory(newCategoryId);
+				if (Array.isArray(response) && response.every((item) => "id" in item)) {
+					tasks.value = response;
+					console.log(tasks.value);
+				}
+			} catch (err) {
+				console.error("Failed to fetch Tasks. Invalid format", err);
+			}
+		},
+		{ immediate: true }
+	);
 </script>
 
 <style lang="scss" scpoped>

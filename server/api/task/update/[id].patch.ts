@@ -7,8 +7,7 @@ export default defineEventHandler(async (event) => {
 	let channel: RealtimeChannel;
 	let body = await readBody(event);
 	let taskId = getRouterParam(event, "id");
-	let categoryId = body.category;
-
+	console.log(body.category);
 	let response;
 
 	try {
@@ -19,16 +18,7 @@ export default defineEventHandler(async (event) => {
 				updated_at: new Date()
 			})
 			.eq("id", taskId)
-			.eq("category", categoryId)
 			.select("*, subtask(id, title, completed)");
-		// channel = client
-		// 	.channel("public:task")
-		// 	.on(
-		// 		"postgres_changes",
-		// 		{ event: "*", schema: "public", table: "task" },
-		// 		(payload) => payload
-		// 	)
-		// 	.subscribe();
 
 		const task = client
 			.channel("custom-update-channel")
@@ -36,7 +26,8 @@ export default defineEventHandler(async (event) => {
 				"postgres_changes",
 				{ event: "UPDATE", schema: "public", table: "task" },
 				(payload) => {
-					console.log("Change received!", payload);
+					payload;
+					console.log("Changes made", payload);
 				}
 			)
 			.subscribe();

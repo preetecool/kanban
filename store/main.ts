@@ -20,7 +20,6 @@ export const useMainStore = defineStore("main", {
 			],
 			selectedTask: {} as Task,
 
-			tasksByBoard: [{}],
 			categoriesByBoard: {}
 		};
 	},

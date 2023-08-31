@@ -11,10 +11,7 @@ export default defineEventHandler(async (event) => {
 		data: tasks,
 
 		error
-	} = await client
-		.from("task")
-		.select("* , subtask (id, title, completed) ")
-		.eq("category", categoryId);
+	} = await client.from("task").select("*").eq("category", categoryId);
 	channel = client
 		.channel("public:task")
 		.on(
