@@ -8,23 +8,27 @@ export default defineEventHandler(async (event) => {
 	let channel: RealtimeChannel;
 	let taskId = getRouterParam(event, "id");
 
-	const {
-		data: tasks,
-		refresh: refreshTasks,
-		error
-	} = await client.from("task").select("*").eq("id", taskId);
+	const { data: task, error } = await client
+		.from("task")
+		.select("*, subtask(id, title, completed)")
+		.eq("id", taskId)
+		.single();
 
 	channel = client
 		.channel("public:task")
-		.on("postgres_changes", { event: "*", schema: "public", table: "task" }, (payload) =>
-			refreshTasks(payload)
-		);
+		.on(
+			"postgres_changes",
+			{ event: "*", schema: "public", table: "task" },
+			(payload) => payload
+		)
+		.subscribe();
 
-	channel.subscribe();
+	// channel
+	// channel.unsubscribe();
 
 	if (error) {
 		return createError({ statusMessage: error.message });
 	}
 
-	return tasks;
+	return task;
 });

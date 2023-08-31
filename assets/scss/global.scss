@@ -31,6 +31,9 @@ select {
 .pt-16 {
 	padding-top: 16px;
 }
+.pb-16 {
+	padding-bottom: 16px;
+}
 
 .light-text {
 	color: $medgrey;
@@ -84,4 +87,39 @@ select {
 	background-color: $lightgrey;
 	height: 100vh;
 	display: flex;
+}
+
+.danger {
+	color: $red;
+}
+
+.edit-delete {
+	position: relative;
+
+	&__menu {
+		position: absolute;
+		background-color: $white;
+		width: 160px;
+		display: flex;
+		gap: 16px;
+		border-radius: 8px;
+		box-shadow: rgba(0, 0, 0, 0.05) 0px 1px 4px;
+		flex-direction: column;
+	}
+	&__item {
+		padding: 0px 16px;
+		display: flex;
+		align-items: center;
+
+		&:hover {
+			background-color: $lightgrey;
+			cursor: pointer;
+		}
+	}
+	&__item:first-child {
+		padding-top: 16px;
+	}
+	&__item:last-child {
+		padding-bottom: 16px;
+	}
 }

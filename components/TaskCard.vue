@@ -1,6 +1,7 @@
 <template>
 	<div
 		v-for="(task, index) in tasks"
+		:key="task.id"
 		class="tasks"
 	>
 		<div
@@ -34,6 +35,7 @@
 		const response = await db.fetchTasksByCategory(props.categoryId);
 		if (Array.isArray(response) && response.every((item) => "id" in item)) {
 			tasks.value = response;
+			console.log(tasks.value);
 		}
 	} catch (err) {
 		console.error("Failed to fetch Tasks. Invalid format", err);

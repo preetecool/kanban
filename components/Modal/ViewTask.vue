@@ -2,16 +2,34 @@
 	<Modal>
 		<template #header>
 			<div class="task-heading">
-				<span class="headingL">{{ task[0].title }}</span>
-				<Icon
-					class="edit-task"
-					name="icon-vertical-ellipsis"
-					width="5px"
-					@click="store.toggleModal('editTask')"
-				/>
+				<span class="headingL">{{ task.title }}</span>
+				<div
+					@mouseenter="menu = true"
+					@mouseleave="menu = false"
+				>
+					<Icon
+						class="edit-task-icon"
+						name="icon-vertical-ellipsis"
+						width="5px"
+					/>
+					<div
+						v-if="menu"
+						class="edit-delete"
+					>
+						<ul class="edit-delete__menu bodyL">
+							<li
+								class="edit-delete__item light-text"
+								@click="changeToEditView()"
+							>
+								Edit Task
+							</li>
+							<li class="edit-delete__item danger">Delete Task</li>
+						</ul>
+					</div>
+				</div>
 			</div>
 			<p class="bodyL light-text">
-				{{ task[0].description }}
+				{{ task.description }}
 			</p>
 		</template>
 
@@ -41,23 +59,15 @@
 
 	let store = useMainStore();
 	let db = useDB();
+	let task: Task = store.selectedTask;
+	const taskId = ref(task ? task.id : "");
+	const subtasks: Subtask[] = db.setSubtasksForTask();
+	let menu = ref(false);
 
-	let task: Task[] = store.selectedTask;
-
-	// console.log(task);
-
-	const taskId = ref(task ? task[0].id : "");
-	const subtasks: Ref<Subtask[]> | Error = ref([]);
-
-	if (taskId.value) {
-		try {
-			const result = await db.fetchSubtasksForTask(taskId.value);
-			if (Array.isArray(result) && result.every((item) => "id" in item)) {
-				subtasks.value = result;
-			}
-		} catch (error) {
-			console.error("Received unexpected data format:", error);
-		}
+	function changeToEditView() {
+		// menu.value = true;
+		store.toggleModal("editTask");
+		store.modal.viewTask = !store.modal.viewTask;
 	}
 </script>
 <style lang="scss" scpoped>
@@ -65,10 +75,11 @@
 		display: flex;
 		justify-content: space-between;
 	}
-	.edit-task {
+	.edit-task-icon {
 		:hover {
 			cursor: pointer;
 			transform: scale(1.2);
 		}
+		width: 40px;
 	}
 </style>

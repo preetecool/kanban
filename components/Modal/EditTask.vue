@@ -1,5 +1,8 @@
 <template>
-	<Modal v-if="store.modal.editTask">
+	<Modal
+		v-if="store.modal.editTask"
+		:items="subtasks"
+	>
 		<template #header>
 			<div class="task-heading">
 				<span class="headingL">Edit Task</span>
@@ -17,6 +20,9 @@
 
 		<template #form-content-input>
 			<span class="bodyM light-text">Subtasks</span>
+			<div v-for="subtask in subtasks">
+				<input :value="subtask.title" />
+			</div>
 		</template>
 
 		<template #description>
@@ -37,8 +43,8 @@
 
 		<template #submit-button>
 			<UIButton
-				label="Create Task"
-				@click="sendData()"
+				label="Save Task"
+				@click="updateTask()"
 			></UIButton>
 		</template>
 	</Modal>
@@ -51,19 +57,17 @@
 
 	let store = useMainStore();
 	let task = store.selectedTask;
+	let subtasks: Subtask[] = store.selectedTask.subtask;
 	let db = useDB();
 
-	const taskId = ref(task ? task[0].id : "");
-	const selected = ref(task ? task[0].category : "");
-	const taskName = ref(task ? task[0].title : "");
-	const description = ref(task ? task[0].description : "");
+	const taskId = ref(task ? task.id : "");
+	const selected = ref(task ? task.category : "");
+	const taskName = ref(task ? task.title : "");
+	const description = ref(task ? task.description : "");
 
 	async function setNewStatus() {
-		await db.updateTaskCategory(taskId.value, selected.value);
+		await db.updateTask(taskId.value, selected.value);
 	}
 
-	async function sendData() {
-		// Logic to send the updated data, such as taskName and description, to the server.
-		// This can be added to the modalService and called here.
-	}
+	async function updateTask() {}
 </script>

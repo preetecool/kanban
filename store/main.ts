@@ -18,7 +18,7 @@ export const useMainStore = defineStore("main", {
 					id: 0
 				}
 			],
-			selectedTask: [{}] as Task[],
+			selectedTask: {} as Task,
 
 			tasksByBoard: [{}],
 			categoriesByBoard: {}
@@ -31,7 +31,7 @@ export const useMainStore = defineStore("main", {
 				return this.closeModal();
 			}
 			if (board === "viewTask") {
-				db.fetchTaskById(taskId);
+				db.fetchTaskById(taskId as Task["id"]);
 			}
 			this.modal[board] = !this.modal[board];
 		},
@@ -46,6 +46,6 @@ export const useMainStore = defineStore("main", {
 		}
 	}
 });
-if (import.meta.hot) {
-	import.meta.hot.accept(acceptHMRUpdate(useMainStore, import.meta.hot));
-}
+// if (import.meta.hot) {
+// 	import.meta.hot.accept(acceptHMRUpdate(useMainStore, import.meta.hot));
+// }

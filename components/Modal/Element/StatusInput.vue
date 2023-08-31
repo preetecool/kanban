@@ -22,10 +22,11 @@
 	const store = useMainStore();
 	const db = useDB();
 	let task = store.selectedTask;
-	const taskId = ref(task ? task[0].id : "");
-	const selected = ref(task ? task[0].category : "");
+
+	const taskId = ref(task ? task.id : "");
+	const selected = ref(task ? task.category : "");
 
 	async function setNewStatus() {
-		await db.updateTaskCategory(taskId.value, selected.value);
+		await db.updateTask(taskId.value, selected.value);
 	}
 </script>

@@ -9,7 +9,7 @@ export default defineEventHandler(async (event) => {
 	let categoryId = getRouterParam(event, "id");
 	const {
 		data: tasks,
-		refresh: refreshTasks,
+
 		error
 	} = await client
 		.from("task")
@@ -17,11 +17,12 @@ export default defineEventHandler(async (event) => {
 		.eq("category", categoryId);
 	channel = client
 		.channel("public:task")
-		.on("postgres_changes", { event: "*", schema: "public", table: "task" }, (payload) =>
-			refreshTasks(payload)
-		);
-
-	channel.subscribe();
+		.on(
+			"postgres_changes",
+			{ event: "*", schema: "public", table: "task" },
+			(payload) => payload
+		)
+		.subscribe();
 
 	if (error) {
 		return createError({ statusMessage: error.message });

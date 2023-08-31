@@ -3,6 +3,7 @@
 	<ModalBoard v-if="store.modal['newBoard'] === true" />
 	<ModalCreateTask v-if="store.modal['newTask'] === true" />
 	<ModalViewTask v-if="store.modal['viewTask'] === true && !db.isLoadingData" />
+	<ModalEditTask v-if="store.modal['editTask'] === true && !db.isLoadingData" />
 
 	<div class="main-grid">
 		<Sidebar class="sidebar" />
