@@ -18,11 +18,15 @@
 			/>
 		</template>
 
-		<template #form-content-input>
+		<template
+			#form-content-input
+			:items="subtasks"
+		>
 			<span class="bodyM light-text">Subtasks</span>
-			<div v-for="subtask in subtasks">
+
+			<!-- <div v-for="subtask in store.inputItems">
 				<input :value="subtask.title" />
-			</div>
+			</div> -->
 		</template>
 
 		<template #description>
@@ -57,7 +61,10 @@
 
 	let store = useMainStore();
 	let task = store.selectedTask;
-	let subtasks: Subtask[] = store.selectedTask.subtask;
+
+	(store.inputItems as Subtask[]) = store.selectedTask.subtask;
+
+	let subtasks: Ref<Subtask[]> = ref(store.inputItems);
 	let db = useDB();
 
 	const taskId = ref(task ? task.id : "");
@@ -65,9 +72,22 @@
 	const taskName = ref(task ? task.title : "");
 	const description = ref(task ? task.description : "");
 
-	async function setNewStatus() {
-		await db.updateTask(taskId.value, selected.value);
-	}
+	console.log("ITEMS", store.inputItems);
 
-	async function updateTask() {}
+	// store.inputItems.forEach((item) => {
+	// 		subTasks.value.push(item.title);
+	// 	});
+	// async function setNewStatus() {
+
+	// }
+
+	async function updateTask() {
+		let isSubtasksChanged = subtasks.value.length !== store.selectedTask.subtask.length;
+
+		await db.updateTask(taskId.value, selected.value);
+
+		if (isSubtasksChanged) {
+			db.postSubtask(taskId.value, subtasks.value);
+		}
+	}
 </script>

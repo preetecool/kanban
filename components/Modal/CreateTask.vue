@@ -29,6 +29,7 @@
 		<template #form-content-input>
 			<span class="bodyM light-text">Subtasks</span>
 		</template>
+
 		<template #status>
 			<span class="bodyM light-text">Status</span>
 			<select
@@ -61,34 +62,48 @@
 	import { Category } from "~~/types/app.types";
 	import { uuid } from "vue-uuid";
 
+	const store = useMainStore();
+	const db = useDB();
+
 	let taskId = uuid.v4();
 	const taskName = ref("");
 	const description = ref("");
-	const subTasks = ref([""]);
+	const subtasks = ref(store.inputItems);
 	let selected = ref(0);
 
 	let route = useRoute();
 	let params = route.params.id;
-	const store = useMainStore();
-	const db = useDB();
 
 	const categories: Category[] = await $fetch(`/api/category/${params}`);
 
+	store.inputItems = [];
+	console.log("CATEGORIES", store.categoriesByBoard);
 	async function sendData() {
-		store.items.forEach((item) => {
-			subTasks.value.push(item.title);
-		});
+		// store.inputItems.forEach((item) => {
+		// 	subTasks.value.push(item.title);
+		// });
+		console.log(taskId);
+
 		try {
-			await db.createTask(
+			let data = await db.createTask(
 				taskId,
 				categories[selected.value].id,
 				params,
 				taskName.value,
 				description.value
 			);
-			await db.createSubtask(taskId, subTasks.value);
+
+			store.categoriesByBoard[categories[selected.value].id].task.push(data);
+			console.log("CATEGORIES", store.categoriesByBoard);
 		} catch (error) {
 			console.error("Error Creating Task:", error);
+			throw new Error();
+		}
+
+		try {
+			await db.postSubtask(taskId, store.inputItems);
+		} catch (error) {
+			console.error("Error Creating subtask:", error);
 			throw new Error();
 		}
 	}

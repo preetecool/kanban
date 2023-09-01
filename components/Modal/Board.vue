@@ -36,7 +36,7 @@
 	const user = useSupabaseUser();
 	let titles = ref([]);
 	async function sendData() {
-		store.items.forEach((item) => {
+		store.inputItems.forEach((item) => {
 			titles.value.push(item.title);
 		});
 

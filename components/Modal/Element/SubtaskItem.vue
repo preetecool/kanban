@@ -51,6 +51,10 @@
 		padding: 13px;
 		background-color: $lightgrey;
 		border-radius: 4px;
+		&:hover {
+			background-color: $purplehover;
+			color: black;
+		}
 		input {
 			width: 16px;
 			height: 16px;
@@ -61,6 +65,9 @@
 		&__text {
 			font-size: 12px;
 			font-weight: bold;
+			&:hover {
+				cursor: pointer;
+			}
 		}
 		&__completed {
 			text-decoration: line-through;

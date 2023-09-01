@@ -15,7 +15,8 @@ export default defineEventHandler(async (event) => {
 			.from("task")
 			.update({
 				category: body.category,
-				updated_at: new Date()
+				updated_at: new Date(),
+				subtask: body.subtasks
 			})
 			.eq("id", taskId)
 			.select("*, subtask(id, title, completed)");

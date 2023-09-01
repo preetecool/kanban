@@ -27,7 +27,10 @@
 							:items="items"
 						/>
 
-						<div v-for="(item, index) in items">
+						<div
+							v-for="(item, index) in items"
+							:key="index"
+						>
 							<ModalElementColumnItem v-model:item-name="item.title">
 								<Icon
 									@click="removeColumn(index)"
@@ -59,7 +62,7 @@
 	import { Database } from "~~/types/database.types";
 
 	const store = useMainStore();
-	let items = store.items;
+	let items = store.inputItems;
 
 	async function addNewColumn() {
 		items.push({

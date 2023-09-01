@@ -5,6 +5,7 @@
 			:placeholder="placeholder"
 			:v-model="itemName"
 			@input="$emit('update:itemName', $event.target.value)"
+			:value="itemName"
 		/>
 		<div class="cross">
 			<slot></slot>
