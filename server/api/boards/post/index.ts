@@ -25,6 +25,7 @@ export default defineEventHandler(async (event) => {
 		// 	titles: body.categories
 		// });
 		if (error) throw error;
+		return data;
 	} catch (error: any) {
 		alert(error.message);
 		return createError({ statusMessage: error.message });

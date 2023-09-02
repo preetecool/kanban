@@ -70,11 +70,12 @@
 				}
 			} catch (error) {
 				throw error;
-			} finally {
-				let activeBoard = boards.value.filter((board) => board.id.toString() === params);
-
-				store.activeBoard = activeBoard;
 			}
+			// finally {
+			// 	let activeBoard = boards.value.filter((board) => board.id.toString() === params);
+
+			// 	store.activeBoard = activeBoard;
+			// }
 		},
 		{ immediate: true }
 	);

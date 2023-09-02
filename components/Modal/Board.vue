@@ -36,10 +36,16 @@
 	const user = useSupabaseUser();
 	let titles = ref([]);
 
+	console.log(store.inputItems);
 	async function sendData() {
 		store.inputItems.forEach((item) => {
 			titles.value.push(item.title);
 		});
+		console.log(titles.value);
+
+		if (!boardName.value) {
+			return console.error("Board name is Empty");
+		}
 
 		const boardId = BigInt(Math.floor(Math.random() * 1000000000)).toString();
 
