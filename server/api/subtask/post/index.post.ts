@@ -16,7 +16,7 @@ export default defineEventHandler(async (event) => {
 				.insert({
 					task: body.task,
 					title: subtask.title,
-					completed: false
+					completed: subtask.completed ? true : false
 				})
 				.select()
 				.single();
