@@ -17,20 +17,23 @@
 <script setup lang="ts">
 	import { Category } from "~~/types/app.types";
 	import { useMainStore } from "@/store/main";
+	import { useDB } from "@/store/db";
 
-	let store = useMainStore();
-
+	const store = useMainStore();
+	const db = useDB();
 	let numTasks = ref(0);
 	let route = useRoute();
 	let params = route.params.id;
-	let data: Category[] = await $fetch(`/api/category/${params}`);
-	// categories.forEach((category) => store.categoriesByBoard.push(category));
+
+	let data: Category[] = await db.fetchCategoriesByBoard(params as string);
+
 	data.forEach((category: Category) => {
 		let id = category.id;
 		store.categoriesByBoard[id] = {
 			...category
 		};
 	});
+
 	let categories = ref(store.categoriesByBoard);
 </script>
 

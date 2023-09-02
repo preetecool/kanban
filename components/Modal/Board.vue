@@ -35,6 +35,7 @@
 	const boardName = ref("");
 	const user = useSupabaseUser();
 	let titles = ref([]);
+
 	async function sendData() {
 		store.inputItems.forEach((item) => {
 			titles.value.push(item.title);
@@ -43,7 +44,7 @@
 		const boardId = BigInt(Math.floor(Math.random() * 1000000000)).toString();
 
 		const { data: board } = useAsyncData("board", async () => {
-			await $fetch("/api/boards/new", {
+			await $fetch("/api/boards/post/", {
 				method: "POST",
 				body: {
 					id: boardId,
@@ -52,20 +53,16 @@
 			});
 		});
 
-		await $fetch("/api/category/new", {
-			method: "POST",
-			body: {
-				board: boardId,
-				titles: titles.value
-				// title: title,
-			}
+		const { data: categories } = useAsyncData("board", async () => {
+			await $fetch("/api/category/post/", {
+				method: "POST",
+				body: {
+					board: boardId,
+					titles: titles.value
+					// title: title,
+				}
+			});
 		});
-
-		// try {
-		// 	const req = await Promise.all(categoryPromises);
-		// } catch (e) {
-		// 	throw new Error("Something went wrong while creating the categories");
-		// }
 
 		store.toggleModal("newBoard");
 	}

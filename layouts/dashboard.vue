@@ -12,16 +12,18 @@
 			<Header class="header" />
 		</client-only>
 
-		<div class="body">
-			<div
-				v-if="!hasColumns"
-				class="body__new-column"
-			>
+		<div
+			class="body"
+			v-if="!hasColumns && !db.isLoadingData"
+		>
+			<div class="body__new-column">
 				<span class="headingL">
 					This board is empty. Create a new column to get started
 				</span>
 				<UIButton label="+ Add New Column"></UIButton>
 			</div>
+		</div>
+		<div class="body">
 			<div class="columns-grid">
 				<slot />
 			</div>
@@ -35,7 +37,7 @@
 
 	const store = useMainStore();
 	const db = useDB();
-
+	console.log(store.activeBoard[0]);
 	let hasColumns = computed(() => {
 		return store.activeBoard[0];
 	});

@@ -2,7 +2,7 @@
 	<li class="item">
 		<div
 			class="wrap"
-			@click="navigateTo(`/board/${url}`)"
+			@click="changeBoardView"
 		>
 			<Icon name="icon-board" />
 			<span class="headingM"> {{ name }} </span>
@@ -11,6 +11,7 @@
 </template>
 
 <script setup lang="ts">
+	import { useMainStore } from "@/store/main";
 	const props = defineProps({
 		name: {
 			type: String,
@@ -21,6 +22,11 @@
 			required: true
 		}
 	});
+	function changeBoardView() {
+		let store = useMainStore();
+		store.$reset();
+		navigateTo(`/board/${props.url}`);
+	}
 </script>
 <style scoped lang="scss">
 	.item {

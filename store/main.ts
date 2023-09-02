@@ -11,7 +11,7 @@ export const useMainStore = defineStore("main", {
 				viewTask: false,
 				closeModal: false
 			},
-			activeBoard: [{}] as Board[],
+			activeBoard: {} as Board,
 			inputItems: [],
 			selectedTask: {} as Task,
 

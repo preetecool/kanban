@@ -21,8 +21,7 @@
 	import { Board } from "~~/types/app.types";
 
 	const store = useMainStore();
-
-	let boardTitle: Board["title"] = store.activeBoard[0].title;
+	let boardTitle: Board["title"] = store.activeBoard.title;
 </script>
 
 <style scoped lang="scss">

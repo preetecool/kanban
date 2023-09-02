@@ -9,16 +9,36 @@ export const useDB = defineStore("db", {
 		registerUser() {
 			return "";
 		},
-		async fetchBoardData(id: Board["id"]) {},
+		async fetchAllBoards() {
+			this.isLoadingData = true;
+			try {
+				let data = await $fetch("/api/boards/get/all");
+			} catch (err) {
+				console.error("Error fetching all boards", err);
+			} finally {
+				this.isLoadingData = false;
+			}
+		},
 		async fetchTaskById(id: Task["id"]) {
 			let store = useMainStore();
 
 			this.isLoadingData = true;
 			try {
-				let task: Task = await $fetch(`/api/task/${id}/`);
-				store.selectedTask = task;
+				let task = await $fetch(`/api/task/${id}/`);
+				store.selectedTask = task as Task;
 			} catch (err) {
 				console.error("Error fetching task by Id", err);
+			} finally {
+				this.isLoadingData = false;
+			}
+		},
+		async fetchCategoriesByBoard(boardId: string) {
+			this.isLoadingData = true;
+			try {
+				let data = await $fetch(`/api/category/${boardId}`);
+				return data as Category[];
+			} catch (error) {
+				return console.error("Error fetching categories by board", error);
 			} finally {
 				this.isLoadingData = false;
 			}
@@ -77,7 +97,7 @@ export const useDB = defineStore("db", {
 			});
 		},
 		async updateSubtask(id: Subtask["id"], isComplete: boolean, title?: string) {
-			let udpatedTask: Subtask = await $fetch(`/api/subtask/update/${id}/`, {
+			let udpatedTask = await $fetch(`/api/subtask/update/${id}/`, {
 				method: "PATCH",
 				body: {
 					completed: isComplete
