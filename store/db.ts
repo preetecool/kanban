@@ -61,12 +61,18 @@ export const useDB = defineStore("db", {
 			});
 		},
 
-		async updateTask(taskId: string, categoryId: string, title?: string) {
+		async updateTask(
+			taskId: string,
+			categoryId: string,
+			title?: string,
+			description?: string
+		) {
 			await $fetch(`/api/task/update/${taskId}`, {
 				method: "PATCH",
 				body: {
 					category: categoryId,
-					title: title
+					title: title,
+					description: description
 				}
 			});
 		},
@@ -77,6 +83,9 @@ export const useDB = defineStore("db", {
 					completed: isComplete
 				}
 			});
+		},
+		async deleteSubtask(id: Subtask["id"]) {
+			await $fetch(`/api/subtask/delete/${id}`);
 		}
 	}
 });

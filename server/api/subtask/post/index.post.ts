@@ -8,7 +8,7 @@ export default defineEventHandler(async (event) => {
 	const client = await serverSupabaseClient<Database>(event);
 	const body = await readBody(event);
 	let channel: RealtimeChannel;
-
+	let response;
 	try {
 		body.subtasks.forEach(async (subtask: Subtask) => {
 			const { data, error } = await client
@@ -31,9 +31,10 @@ export default defineEventHandler(async (event) => {
 				)
 				.subscribe();
 
-			return data;
+			response = data;
 		});
 	} catch (error: any) {
 		return createError({ statusMessage: error.message });
 	}
+	return response;
 });

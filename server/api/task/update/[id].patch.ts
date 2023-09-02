@@ -16,7 +16,8 @@ export default defineEventHandler(async (event) => {
 			.update({
 				category: body.category,
 				updated_at: new Date(),
-				title: body.title
+				title: body.title,
+				description: body.description
 			})
 			.eq("id", taskId)
 			.select("*");

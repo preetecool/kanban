@@ -18,11 +18,20 @@
 			/>
 		</template>
 
-		<template
-			#form-content-input
-			:items="subtasks"
-		>
+		<template #form-content-input>
 			<span class="bodyM light-text">Subtasks</span>
+			<div
+				v-for="(item, index) in store.selectedTask.subtask"
+				:key="index"
+			>
+				<ModalElementColumnItem v-model:item-name="item.title">
+					<Icon
+						@click="removeColumn(index)"
+						name="icon-cross"
+						class="cross"
+					/>
+				</ModalElementColumnItem>
+			</div>
 		</template>
 
 		<template #description>
@@ -56,21 +65,40 @@
 	import { useDB } from "@/store/db";
 
 	let store = useMainStore();
-	let task = store.selectedTask;
-	let subtasksCopy = [...store.selectedTask.subtask];
-	let subtasks: Subtask[] = task.subtask;
-	(store.inputItems as Subtask[]) = subtasks;
-
 	let db = useDB();
-
+	store.inputItems = [];
+	let task = store.selectedTask;
 	const taskId = ref(task ? task.id : "");
 	const selected = ref(task ? task.category : "");
 	const taskName = ref(task ? task.title : "");
 	const description = ref(task ? task.description : "");
+	let findTaskOnBoard = store.categoriesByBoard[task.category].task.filter(
+		(item) => item.id === taskId.value
+	);
 
+	watch(taskName || description, async () => {
+		if (task.title !== taskName.value) {
+			findTaskOnBoard[0].title = taskName.value;
+		}
+		if (task.description !== description.value) {
+			findTaskOnBoard[0].description = description.value;
+		}
+	});
+	function removeColumn(index: number) {
+		if (store.selectedTask.subtask[index].id) {
+			db.deleteSubtask(store.selectedTask.subtask[index].id);
+		}
+		store.selectedTask.subtask.splice(index, 1);
+		return store.selectedTask.subtask;
+	}
 	async function updateTask() {
 		try {
-			await db.updateTask(taskId.value, selected.value, taskName.value);
+			await db.updateTask(
+				taskId.value,
+				selected.value,
+				taskName.value,
+				description.value
+			);
 			if (task.title !== taskName.value) {
 				store.selectedTask.title = taskName.value;
 			}
@@ -78,23 +106,8 @@
 			console.error("Error updating task:", error);
 			throw new Error();
 		}
-
-		let updatedSubtasks: Subtask[] = [];
-
-		for (let i = 0; i < store.inputItems.length; ++i) {
-			if (store.inputItems[i].completed) {
-				store.selectedTask.subtask[i].completed = true;
-			} else {
-				store.selectedTask.subtask[i].completed = false;
-			}
-
-			if (store.selectedTask.subtask[i] !== subtasksCopy[i]) {
-				updatedSubtasks.push(store.selectedTask.subtask[i]);
-			}
-		}
-
 		try {
-			await db.postSubtask(taskId.value, updatedSubtasks);
+			await db.postSubtask(taskId.value, store.inputItems);
 		} catch (error) {
 			console.error("Error updating task:", error);
 			throw new Error();
