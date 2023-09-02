@@ -39,7 +39,7 @@ export const useDB = defineStore("db", {
 			title: string,
 			description: string
 		) {
-			await $fetch(`/api/task/post/`, {
+			let data = await $fetch(`/api/task/post/`, {
 				method: "POST",
 				body: {
 					taskId: taskId,
@@ -49,6 +49,7 @@ export const useDB = defineStore("db", {
 					description: description
 				}
 			});
+			return data;
 		},
 		async postSubtask(taskId: string, subtasks: Subtask[]) {
 			await $fetch("/api/subtask/post/", {
@@ -60,17 +61,16 @@ export const useDB = defineStore("db", {
 			});
 		},
 
-		async updateTask(taskId: string, categoryId: string, subtasks?: Subtask[]) {
+		async updateTask(taskId: string, categoryId: string, title?: string) {
 			await $fetch(`/api/task/update/${taskId}`, {
 				method: "PATCH",
 				body: {
 					category: categoryId,
-					subtasks: subtasks
+					title: title
 				}
 			});
 		},
-
-		async updateSubtask(id: Subtask["id"], isComplete: boolean) {
+		async updateSubtask(id: Subtask["id"], isComplete: boolean, title?: string) {
 			let udpatedTask: Subtask = await $fetch(`/api/subtask/update/${id}/`, {
 				method: "PATCH",
 				body: {

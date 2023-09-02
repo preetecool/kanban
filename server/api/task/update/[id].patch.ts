@@ -16,10 +16,10 @@ export default defineEventHandler(async (event) => {
 			.update({
 				category: body.category,
 				updated_at: new Date(),
-				subtask: body.subtasks
+				title: body.title
 			})
 			.eq("id", taskId)
-			.select("*, subtask(id, title, completed)");
+			.select("*");
 
 		const task = client
 			.channel("custom-update-channel")

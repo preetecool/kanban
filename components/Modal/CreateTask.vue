@@ -59,7 +59,7 @@
 	import { useMainStore } from "@/store/main";
 	import { useDB } from "@/store/db";
 
-	import { Category } from "~~/types/app.types";
+	import { Category, Task, CategoriesByBoard } from "~~/types/app.types";
 	import { uuid } from "vue-uuid";
 
 	const store = useMainStore();
@@ -77,13 +77,10 @@
 	const categories: Category[] = await $fetch(`/api/category/${params}`);
 
 	store.inputItems = [];
-	console.log("CATEGORIES", store.categoriesByBoard);
-	async function sendData() {
-		// store.inputItems.forEach((item) => {
-		// 	subTasks.value.push(item.title);
-		// });
-		console.log(taskId);
 
+	let tasksByCategoryByBoard: Ref<CategoriesByBoard> = ref(store.categoriesByBoard);
+
+	async function sendData() {
 		try {
 			let data = await db.createTask(
 				taskId,
@@ -94,17 +91,19 @@
 			);
 
 			store.categoriesByBoard[categories[selected.value].id].task.push(data);
-			console.log("CATEGORIES", store.categoriesByBoard);
+
+			console.log(store.categoriesByBoard);
 		} catch (error) {
 			console.error("Error Creating Task:", error);
 			throw new Error();
 		}
-
 		try {
 			await db.postSubtask(taskId, store.inputItems);
 		} catch (error) {
 			console.error("Error Creating subtask:", error);
 			throw new Error();
+		} finally {
+			store.closeModal();
 		}
 	}
 </script>

@@ -23,10 +23,6 @@
 			:items="subtasks"
 		>
 			<span class="bodyM light-text">Subtasks</span>
-
-			<!-- <div v-for="subtask in store.inputItems">
-				<input :value="subtask.title" />
-			</div> -->
 		</template>
 
 		<template #description>
@@ -64,7 +60,7 @@
 
 	(store.inputItems as Subtask[]) = store.selectedTask.subtask;
 
-	let subtasks: Ref<Subtask[]> = ref(store.inputItems);
+	let subtasks: Subtask[] = store.inputItems;
 	let db = useDB();
 
 	const taskId = ref(task ? task.id : "");
@@ -72,22 +68,24 @@
 	const taskName = ref(task ? task.title : "");
 	const description = ref(task ? task.description : "");
 
-	console.log("ITEMS", store.inputItems);
-
-	// store.inputItems.forEach((item) => {
-	// 		subTasks.value.push(item.title);
-	// 	});
-	// async function setNewStatus() {
-
-	// }
-
 	async function updateTask() {
-		let isSubtasksChanged = subtasks.value.length !== store.selectedTask.subtask.length;
+		try {
+			await db.updateTask(taskId.value, selected.value, taskName.value);
+			if (task.title !== taskName.value) {
+				store.selectedTask.title = taskName.value;
+			}
+		} catch (error) {
+			console.error("Error updating task:", error);
+			throw new Error();
+		}
 
-		await db.updateTask(taskId.value, selected.value);
-
-		if (isSubtasksChanged) {
-			db.postSubtask(taskId.value, subtasks.value);
+		if (subtasks !== store.inputItems) {
+			try {
+				await db.postSubtask(taskId.value, store.inputItems);
+			} catch (error) {
+				console.error("Error updating task:", error);
+				throw new Error();
+			}
 		}
 	}
 </script>
