@@ -49,7 +49,9 @@
     });
     function removeColumn(index: number) {
         if (store.activeBoard.category[index].id) {
-            // db.deleteSubboard(store.selectedboard.subboard[index].id);
+            
+            db.deleteCategory(store.activeBoard.category[index].id);
+            
         }
         store.activeBoard.category.splice(index, 1);
         return store.activeBoard.category;

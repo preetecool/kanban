@@ -17,11 +17,7 @@
 
                         <div v-for="(item, index) in items" :key="index">
                             <ModalElementColumnItem v-model:item-name="item.title">
-                                <Icon
-                                    @click="removeColumn(index)"
-                                    name="icon-cross"
-                                    class="cross"
-                                />
+                                <Icon @click="removeColumn(index)" name="icon-cross" />
                             </ModalElementColumnItem>
                         </div>
                         <UIButton
@@ -32,7 +28,7 @@
                     </div>
                 </div>
             </div>
-            <div class="modal__content__body status">
+            <div class="modal__content__body status" v-if="hasStatus">
                 <slot name="status" />
             </div>
             <div class="modal__content__footer">
@@ -44,6 +40,7 @@
 
 <script lang="ts" setup>
     import { useMainStore } from "@/store/main";
+    import { off } from "process";
     import { Database } from "~~/types/database.types";
 
     const store = useMainStore();
@@ -64,6 +61,12 @@
 
     const AddButtonLabel = computed(() => {
         return store.modal.editTask ? "Add New Subtask" : "Add New Column";
+    });
+
+    const hasStatus = computed(() => {
+        if (store.modal.editTask || store.modal.viewTask) {
+            return true;
+        }
     });
 </script>
 

@@ -19,7 +19,7 @@
 
     const store = useMainStore();
     const route = useRoute();
-    const params = route.params.id.toString();
+    const params = route.params.id;
 </script>
 
 <style scoped lang="scss">
