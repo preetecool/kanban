@@ -1,6 +1,7 @@
 <template>
     <!-- <Modal v-if="store.modal === true" /> -->
     <ModalBoard v-if="store.modal['newBoard'] === true" />
+    <ModalEditBoard v-if="store.modal['editBoard'] === true && !db.isLoadingData" />
     <ModalCreateTask v-if="store.modal['newTask'] === true" />
     <ModalViewTask v-if="store.modal['viewTask'] === true && !db.isLoadingData" />
     <ModalEditTask v-if="store.modal['editTask'] === true && !db.isLoadingData" />
@@ -18,7 +19,10 @@
                 <span class="headingL">
                     This board is empty. Create a new column to get started
                 </span>
-                <UIButton label="+ Add New Column"></UIButton>
+                <UIButton
+                    label="+ Add New Column"
+                    @click="store.changeToEditView('editBoard')"
+                ></UIButton>
             </div>
         </div>
 

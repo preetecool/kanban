@@ -1,125 +1,94 @@
 @font-face {
-	font-family: "Plus Jakarta Sans";
-	font-style: "normal";
-	font-weight: 400;
-	src: url("/assets/fonts/PlusJakartaSans-VariableFont_wght.ttf");
+    font-family: "Plus Jakarta Sans";
+    font-style: "normal";
+    font-weight: 400;
+    src: url("/assets/fonts/PlusJakartaSans-VariableFont_wght.ttf");
 }
 
 body {
-	font-family: "Plus Jakarta Sans";
+    font-family: "Plus Jakarta Sans";
 }
 
 input,
 select {
-	min-width: 350px;
-	max-width: 416px;
-	height: 40px;
-	border: 1px solid #828fa325;
-	padding: 8px 16px;
-	border-radius: 4px;
-	font-size: 16px;
+    min-width: 350px;
+    max-width: 416px;
+    height: 40px;
+    border: 1px solid #828fa325;
+    padding: 8px 16px;
+    border-radius: 4px;
+    font-size: 16px;
 }
 select {
-	appearance: none;
-	-webkit-appearance: none;
-	-moz-appearance: none;
-	background: url("/img/icon-chevron-down.svg") no-repeat right center;
-	background-size: 13px;
-	background-position: 97%;
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    background: url("/img/icon-chevron-down.svg") no-repeat right center;
+    background-size: 13px;
+    background-position: 97%;
 }
 
 .pt-16 {
-	padding-top: 16px;
+    padding-top: 16px;
 }
 .pb-16 {
-	padding-bottom: 16px;
+    padding-bottom: 16px;
 }
 
 .light-text {
-	color: $medgrey;
+    color: $medgrey;
 }
 
 .headingXL {
-	font-size: 24px;
-	font-weight: bold;
-	line-height: 30px;
+    font-size: 24px;
+    font-weight: bold;
+    line-height: 30px;
 }
 
 .headingL {
-	font-size: 18px;
-	font-weight: bold;
-	line-height: 23px;
+    font-size: 18px;
+    font-weight: bold;
+    line-height: 23px;
 }
 
 .headingM {
-	font-size: 15px;
-	font-weight: bold;
-	line-height: 19px;
+    font-size: 15px;
+    font-weight: bold;
+    line-height: 19px;
 }
 
 .headingS {
-	font-size: 12px;
-	font-weight: bold;
-	line-height: 15px;
+    font-size: 12px;
+    font-weight: bold;
+    line-height: 15px;
 
-	letter-spacing: 2.4px;
+    letter-spacing: 2.4px;
 }
 
 .bodyL {
-	font-weight: medium;
-	font-size: 13px;
-	line-height: 23px;
+    font-weight: medium;
+    font-size: 13px;
+    line-height: 23px;
 }
 
 .bodyM {
-	font-weight: bold;
-	font-size: 12px;
-	line-height: 15px;
+    font-weight: bold;
+    font-size: 12px;
+    line-height: 15px;
 }
 
 .bodyM-thin {
-	font-weight: normal;
-	font-size: 12px;
-	line-height: 13px;
+    font-weight: normal;
+    font-size: 12px;
+    line-height: 13px;
 }
 
 .bg-light {
-	background-color: $lightgrey;
-	height: 100vh;
-	display: flex;
+    background-color: $lightgrey;
+    height: 100vh;
+    display: flex;
 }
 
 .danger {
-	color: $red;
-}
-
-.edit-delete {
-	position: relative;
-
-	&__menu {
-		position: absolute;
-		background-color: $white;
-		width: 160px;
-		display: flex;
-		gap: 16px;
-		border-radius: 8px;
-		box-shadow: rgba(0, 0, 0, 0.05) 0px 1px 4px;
-		flex-direction: column;
-	}
-	&__item {
-		padding: 0px 16px;
-		display: flex;
-		align-items: center;
-
-		&:hover {
-			background-color: $lightgrey;
-			cursor: pointer;
-		}
-	}
-	&__item:first-child {
-		padding-top: 16px;
-	}
-	&__item:last-child {
-		padding-bottom: 16px;
-	}
+    color: $red;
 }

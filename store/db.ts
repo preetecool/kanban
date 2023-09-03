@@ -32,6 +32,29 @@ export const useDB = defineStore("db", {
                 this.isLoadingData = false;
             }
         },
+        async updateBoard(id: Board["id"], title: Board["title"]) {
+            await $fetch(`/api/boards/update/${id}`, {
+                method: "PATCH",
+                body: {
+                    title: title,
+                },
+            });
+        },
+        async deleteBoard(id: Board["id"]) {
+            await $fetch(`/api/boards/delete/${id}`);
+        },
+        async updateCategory(id: Category["id"], title: Category["title"]) {
+            await $fetch(`/api/category/update/${id}`, {
+                method: "PATCH",
+                body: {
+                    title: title,
+                },
+            });
+        },
+        async deleteCategory(id: Category["id"]) {
+            await $fetch(`/api/category/delete/${id}`);
+        },
+
         async fetchTaskById(id: Task["id"]) {
             let store = useMainStore();
 

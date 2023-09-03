@@ -27,6 +27,9 @@ export const useMainStore = defineStore("main", {
             if (board === "viewTask") {
                 db.fetchTaskById(taskId as Task["id"]);
             }
+            if (board === "editTask") {
+                this.modal["viewTask"] = false;
+            }
             this.modal[board] = !this.modal[board];
         },
         closeModal() {
@@ -38,5 +41,9 @@ export const useMainStore = defineStore("main", {
             }
             this.modal["closeModal"] = false;
         },
+        // changeToEditView(view: keyof Modal) {
+        //     this.toggleModal(view);
+        //     this.modal[view] = !this.modal[view];
+        // },
     },
 });

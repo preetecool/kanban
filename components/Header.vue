@@ -3,8 +3,11 @@
         <div class="headingXL">{{ store.activeBoard.title }}</div>
         <div class="settings">
             <div class="wrap">
-                <UIButton label="+ Add New Task" @click="store.toggleModal('newTask')" />
-                <Icon name="icon-vertical-ellipsis" width="5px" />
+                <UIButton
+                    label="+ Add New Task"
+                    @click="store.toggleModal('editBoard')"
+                />
+                <UIEditDropdown view="editBoard" menuText="Board" :id="params" />
             </div>
         </div>
     </div>
@@ -15,6 +18,8 @@
     import { Board } from "~~/types/app.types";
 
     const store = useMainStore();
+    const route = useRoute();
+    const params = route.params.id.toString();
 </script>
 
 <style scoped lang="scss">
