@@ -9,6 +9,18 @@ export const useDB = defineStore("db", {
 		registerUser() {
 			return "";
 		},
+		async setActiveBoard(params: string) {
+			const store = useMainStore();
+			this.isLoadingData = true;
+			try {
+				let data = await $fetch(`/api/boards/get/${params}`);
+				store.activeBoard = data;
+			} catch (error) {
+				console.error("Error fetching board by Id", error);
+			} finally {
+				this.isLoadingData = true;
+			}
+		},
 		async fetchAllBoards() {
 			this.isLoadingData = true;
 			try {

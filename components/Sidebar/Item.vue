@@ -12,6 +12,7 @@
 
 <script setup lang="ts">
 	import { useMainStore } from "@/store/main";
+	import { useDB } from "@/store/db";
 	const props = defineProps({
 		name: {
 			type: String,
@@ -22,10 +23,13 @@
 			required: true
 		}
 	});
+
 	function changeBoardView() {
 		let store = useMainStore();
+		let db = useDB();
 		store.$reset();
-		navigateTo(`/board/${props.url}`);
+		db.setActiveBoard(props.url.toString());
+		navigateTo(`/board/${props.url.toString()}`);
 	}
 </script>
 <style scoped lang="scss">

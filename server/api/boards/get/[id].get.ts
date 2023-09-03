@@ -13,7 +13,7 @@ export default defineEventHandler(async (event) => {
 		error
 	} = await client
 		.from("boards")
-		.select("*")
+		.select("*, category(title, id)")
 		.eq("user_id", user?.id)
 		.eq("id", params)
 		.single();

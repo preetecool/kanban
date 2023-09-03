@@ -14,7 +14,7 @@
 
 		<div
 			class="body"
-			v-if="!hasColumns && !db.isLoadingData"
+			v-if="!hasColumns"
 		>
 			<div class="body__new-column">
 				<span class="headingL">
@@ -23,7 +23,10 @@
 				<UIButton label="+ Add New Column"></UIButton>
 			</div>
 		</div>
-		<div class="body">
+		<div
+			class="body"
+			v-else
+		>
 			<div class="columns-grid">
 				<slot />
 			</div>
@@ -34,13 +37,12 @@
 <script setup lang="ts">
 	import { useMainStore } from "@/store/main";
 	import { useDB } from "@/store/db";
-
 	const store = useMainStore();
 	const db = useDB();
-	console.log(store.activeBoard[0]);
-	let hasColumns = computed(() => {
-		return store.activeBoard[0];
-	});
+	let hasColumns;
+	if (db.isLoadingData === false) {
+		hasColumns = ref(store.activeBoard.categories.length);
+	}
 </script>
 
 <style lang="scss" scoped>

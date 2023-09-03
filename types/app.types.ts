@@ -12,6 +12,7 @@ export type Board = {
 	created_at: string;
 	title: string;
 	user_id: string;
+	categories: {}[];
 };
 export type Category = {
 	id: string;
