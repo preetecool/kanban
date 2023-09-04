@@ -1,8 +1,10 @@
 <script setup>
 	const user = useSupabaseUser();
-	if (!user.value) {
-		navigateTo("/login");
-	}
+	onBeforeMount(() => {
+		if (!user.value) {
+			navigateTo("https://kanban-roan-delta.vercel.app/confirm");
+		}
+	});
 </script>
 
 <template>

@@ -23,7 +23,7 @@
 		const { error } = await supabase.auth.signInWithOtp({
 			email: email.value,
 			options: {
-				emailRedirectTo: "/confirm"
+				emailRedirectTo: "https://kanban-roan-delta.vercel.app/confirm"
 			}
 		});
 		await $fetch("/api/user", {
