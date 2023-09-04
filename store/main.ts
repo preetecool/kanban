@@ -10,27 +10,30 @@ export const useMainStore = defineStore("main", {
                 editTask: false,
                 viewTask: false,
                 closeModal: false,
+                deleteView: false,
             },
             activeBoard: {} as Board,
             inputItems: [],
             selectedTask: {} as Task,
-
             categoriesByBoard: {} as CategoriesByBoard,
+            deleteView: "",
         };
     },
     actions: {
-        toggleModal(board: keyof Modal, taskId?: string) {
+        toggleModal(key: keyof Modal, id?: string) {
             let db = useDB();
-            if (board === "closeModal") {
+            if (key === "closeModal") {
                 return this.closeModal();
             }
-            if (board === "viewTask") {
-                db.fetchTaskById(taskId as Task["id"]);
+            if (key === "viewTask") {
+                db.fetchTaskById(id as Task["id"]);
             }
-            if (board === "editTask") {
+            if (key === "editTask" || key === "deleteView") {
                 this.modal["viewTask"] = false;
             }
-            this.modal[board] = !this.modal[board];
+            
+
+            this.modal[key] = !this.modal[key];
         },
         closeModal() {
             for (let key in this.modal) {
@@ -41,9 +44,5 @@ export const useMainStore = defineStore("main", {
             }
             this.modal["closeModal"] = false;
         },
-        // changeToEditView(view: keyof Modal) {
-        //     this.toggleModal(view);
-        //     this.modal[view] = !this.modal[view];
-        // },
     },
 });

@@ -25,7 +25,7 @@
         </template>
 
         <template #submit-button>
-            <UIButton label="Save board" @click="updateboard()"></UIButton>
+            <UIButton label="Save board" @click="updateboard()" />
         </template>
     </Modal>
 </template>
@@ -49,9 +49,7 @@
     });
     function removeColumn(index: number) {
         if (store.activeBoard.category[index].id) {
-            
             db.deleteCategory(store.activeBoard.category[index].id);
-            
         }
         store.activeBoard.category.splice(index, 1);
         return store.activeBoard.category;

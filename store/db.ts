@@ -132,6 +132,11 @@ export const useDB = defineStore("db", {
                 },
             });
         },
+        async deleteTask(id: string) {
+            await $fetch(`/api/task/delete/${id}`);
+            
+        },
+
         async updateSubtask(id: Subtask["id"], isComplete: boolean, title?: string) {
             let udpatedTask = await $fetch(`/api/subtask/update/${id}/`, {
                 method: "PATCH",

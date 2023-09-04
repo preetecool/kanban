@@ -41,8 +41,10 @@
         </template>
 
         <template #submit-button>
-            <UIButton label="Save Task" @click="updateTask()"></UIButton>
+            <UIButton label="Save Task" @click="updateTask()" />
         </template>
+		
+		
     </Modal>
 </template>
 

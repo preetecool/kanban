@@ -9,7 +9,7 @@
                 >
                     <span class="light-text">Edit {{ menuText }}</span>
                 </li>
-                <li class="edit-delete__item">
+                <li class="edit-delete__item" @click="displayDeleteModal">
                     <span class="light-text danger">Delete {{ menuText }}</span>
                 </li>
             </ul>
@@ -34,13 +34,24 @@
             type: String,
             required: true,
         },
+        deleteView: {
+            type: String,
+            required: true,
+        },
+        item: {
+            type: Object,
+        },
     });
 
     let menu = ref(false);
-
-    // function changeView(view: keyof Modal, id?: string) {
-    //     store.toggleModal(view, id);
-    // }
+    function displayDeleteModal() {
+        if (store.modal.viewTask) {
+            store.deleteView = "task";
+        } else if (store.modal.editBoard) {
+            store.deleteView = "category";
+        }
+        store.toggleModal("deleteView" as keyof Modal, props.id);
+    }
 </script>
 
 <style lang="scss">

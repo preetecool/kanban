@@ -5,6 +5,7 @@
     <ModalCreateTask v-if="store.modal['newTask'] === true" />
     <ModalViewTask v-if="store.modal['viewTask'] === true && !db.isLoadingData" />
     <ModalEditTask v-if="store.modal['editTask'] === true && !db.isLoadingData" />
+    <ModalDelete v-if="store.modal['deleteView'] === true" />
 
     <div class="main-grid">
         <Sidebar class="sidebar" />

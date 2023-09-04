@@ -5,7 +5,7 @@
                 <slot name="header" />
             </div>
 
-            <div class="modal__content__body">
+            <div class="modal__content__body" v-if="!store.modal.deleteView">
                 <div class="modal__content__body__input">
                     <slot name="subtasks" />
                     <div class="input-block">
@@ -121,6 +121,12 @@
             }
             &__footer {
                 padding: 32px;
+                display: flex;
+                gap: 16px;
+
+                & > *:only-child {
+                    flex: 1;
+                }
             }
         }
     }
