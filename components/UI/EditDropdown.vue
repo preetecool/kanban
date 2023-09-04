@@ -56,6 +56,8 @@
 			store.deleteView = "task";
 		} else if (store.modal.editBoard) {
 			store.deleteView = "category";
+		} else {
+			store.deleteView = "board";
 		}
 		store.toggleModal("deleteView" as keyof Modal, props.id);
 	}
