@@ -1,9 +1,12 @@
 <script setup>
-    const user = useSupabaseUser();
+	const user = useSupabaseUser();
+	if (!user.value) {
+		navigateTo("/login");
+	}
 </script>
 
 <template>
-    <NuxtLayout>
-        <NuxtPage />
-    </NuxtLayout>
+	<NuxtLayout>
+		<NuxtPage />
+	</NuxtLayout>
 </template>
