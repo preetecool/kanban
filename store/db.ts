@@ -41,7 +41,10 @@ export const useDB = defineStore("db", {
 			});
 		},
 		async deleteBoard(id: Board["id"]) {
+			let store = useMainStore();
+			store.activeBoard = {} as Board;
 			await $fetch(`/api/boards/delete/${id}`);
+			navigateTo("/");
 		},
 		async updateCategory(id: Category["id"], title: Category["title"]) {
 			await $fetch(`/api/category/update/${id}`, {

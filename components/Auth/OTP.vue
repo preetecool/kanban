@@ -19,11 +19,13 @@
 	const supabase = useSupabaseClient();
 	const email = ref("");
 
+	const runtimeConfig = useRuntimeConfig();
+
 	const signInWithOtp = async () => {
 		const { error } = await supabase.auth.signInWithOtp({
 			email: email.value,
 			options: {
-				emailRedirectTo: "https://kanban-roan-delta.vercel.app/confirm"
+				emailRedirectTo: `${runtimeConfig.public.base_url}/confirm`
 			}
 		});
 		await $fetch("/api/user", {

@@ -11,12 +11,13 @@
 <script setup lang="ts">
 	const supabase = useSupabaseClient();
 	const user = useSupabaseClient();
+	const runtimeConfig = useRuntimeConfig();
 
 	const signInWithOAuth = async (event: MouseEvent) => {
 		const { data, error } = await supabase.auth.signInWithOAuth({
 			provider: "google",
 			options: {
-				redirectTo: "https://kanban-roan-delta.vercel.app/confirm"
+				redirectTo: `${runtimeConfig.public.base_url}/confirm`
 			}
 		});
 

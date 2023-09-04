@@ -3,6 +3,11 @@ export default defineNuxtConfig({
 	devtools: { enabled: true },
 	css: ["@/assets/scss/global.scss"],
 	ssr: false,
+	runtimeConfig: {
+		public: {
+			base_url: process.env.BASE_URL
+		}
+	},
 	vite: {
 		css: {
 			preprocessorOptions: {
@@ -15,6 +20,7 @@ export default defineNuxtConfig({
 			}
 		}
 	},
+
 	modules: [
 		[
 			"@pinia/nuxt",
