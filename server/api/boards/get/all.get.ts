@@ -10,12 +10,12 @@ export default defineEventHandler(async (event) => {
 		data: boards,
 
 		error
-	} = await client.from("boards").select("*").eq("user_id", user?.id);
+	} = await client.from("board").select("*").eq("user_id", user?.id);
 	channel = client
-		.channel("public:boards")
+		.channel("public:board")
 		.on(
 			"postgres_changes",
-			{ event: "*", schema: "public", table: "boards" },
+			{ event: "*", schema: "public", table: "board" },
 			(payload) => payload
 		);
 

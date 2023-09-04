@@ -14,16 +14,22 @@
 
 		<div
 			class="body"
-			v-if="store.activeBoard && store.activeBoard.category.length === 0"
+			v-if="route.path === '/' || store.activeBoard.category.length === 0"
 		>
 			<div class="body__new-column">
 				<span class="headingL">
 					This board is empty. Create a new column to get started
 				</span>
 				<UIButton
+					v-if="route.path !== '/'"
 					label="+ Add New Column"
 					@click="store.toggleModal('editBoard')"
-				></UIButton>
+				/>
+				<UIButton
+					v-else
+					label="+ Add New Board"
+					@click="store.toggleModal('newBoard')"
+				/>
 			</div>
 		</div>
 
@@ -43,6 +49,7 @@
 	import { useDB } from "@/store/db";
 	const store = useMainStore();
 	const db = useDB();
+	const route = useRoute();
 </script>
 
 <style lang="scss" scoped>

@@ -9,7 +9,7 @@ export default defineEventHandler(async (event) => {
 
 	try {
 		const { data, error } = await client
-			.from("boards")
+			.from("board")
 			.insert({
 				id: body.id,
 				title: body.title,

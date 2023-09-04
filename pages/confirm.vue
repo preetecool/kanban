@@ -37,9 +37,10 @@
 				} catch (error: any) {
 					alert(error.message);
 				} finally {
-					let boards: Board[] = await $fetch("/api/boards/get/all");
+					let boards: [] = await $fetch("/api/boards/get/all");
+
 					if (boards.length) {
-						let firstBoard = boards[0].id.toString();
+						let firstBoard = boards[0].id;
 						let route = `/board/${firstBoard}`;
 						store.activeBoard = boards[0];
 						return navigateTo(route);

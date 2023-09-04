@@ -12,16 +12,16 @@ export default defineEventHandler(async (event) => {
 
 		error
 	} = await client
-		.from("boards")
+		.from("board")
 		.select("*, category(title, id)")
 		.eq("user_id", user?.id)
 		.eq("id", params)
 		.single();
 	channel = client
-		.channel("public:boards")
+		.channel("public:board")
 		.on(
 			"postgres_changes",
-			{ event: "*", schema: "public", table: "boards" },
+			{ event: "*", schema: "public", table: "board" },
 			(payload) => payload
 		);
 

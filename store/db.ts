@@ -12,7 +12,6 @@ export const useDB = defineStore("db", {
 		async setActiveBoard(params: string) {
 			const store = useMainStore();
 			this.isLoadingData = true;
-			// store.$reset();
 			try {
 				let data = await $fetch(`/api/boards/get/${params}`);
 				store.activeBoard = data;
@@ -32,7 +31,7 @@ export const useDB = defineStore("db", {
 				this.isLoadingData = false;
 			}
 		},
-		async updateBoard(id: Board["id"], title: Board["title"]) {
+		async updateBoard(id: string, title: Board["title"]) {
 			await $fetch(`/api/boards/update/${id}`, {
 				method: "PATCH",
 				body: {
@@ -40,11 +39,12 @@ export const useDB = defineStore("db", {
 				}
 			});
 		},
-		async deleteBoard(id: Board["id"]) {
-			let store = useMainStore();
-			store.activeBoard = {} as Board;
-			await $fetch(`/api/boards/delete/${id}`);
-			navigateTo("/");
+		async deleteBoard(id: string) {
+			console.log("entering delete board method");
+			let res = await $fetch(`/api/boards/delete/${id}`);
+			if (res) {
+				navigateTo("/");
+			}
 		},
 		async updateCategory(id: Category["id"], title: Category["title"]) {
 			await $fetch(`/api/category/update/${id}`, {

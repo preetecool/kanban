@@ -51,7 +51,8 @@
 			}
 		}
 		if (store.deleteView === "board") {
-			await db.deleteBoard(store.activeBoard.id);
+			let id = store.activeBoard.id;
+			await db.deleteBoard(id);
 		}
 		store.closeModal();
 	}

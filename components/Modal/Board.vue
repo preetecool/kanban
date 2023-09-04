@@ -30,6 +30,7 @@
 
 <script lang="ts" setup>
 	import { useMainStore } from "@/store/main";
+	import { uuid } from "vue-uuid";
 
 	const store = useMainStore();
 	const boardName = ref("");
@@ -47,8 +48,8 @@
 			return console.error("Board name is Empty");
 		}
 
-		const boardId = BigInt(Math.floor(Math.random() * 1000000000)).toString();
-
+		const boardId = uuid.v4();
+		console.log("board board id", boardId);
 		const { data: board } = useAsyncData("board", async () => {
 			await $fetch("/api/boards/post/", {
 				method: "POST",
@@ -60,6 +61,7 @@
 		});
 
 		const { data: categories } = useAsyncData("board", async () => {
+			console.log("category board id", boardId);
 			await $fetch("/api/category/post/", {
 				method: "POST",
 				body: {
