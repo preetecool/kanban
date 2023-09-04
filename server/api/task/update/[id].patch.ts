@@ -7,7 +7,6 @@ export default defineEventHandler(async (event) => {
 	let channel: RealtimeChannel;
 	let body = await readBody(event);
 	let taskId = getRouterParam(event, "id");
-	console.log(body.category);
 	let response;
 
 	try {

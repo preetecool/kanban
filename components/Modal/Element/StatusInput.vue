@@ -42,5 +42,6 @@
 		if (indexToRemove !== -1) {
 			store.categoriesByBoard[currentStatus].task.splice(indexToRemove, 1);
 		}
+		store.closeModal();
 	}
 </script>

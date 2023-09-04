@@ -7,7 +7,7 @@ export default defineEventHandler(async (event) => {
 	const user = await serverSupabaseUser(event);
 	const client = await serverSupabaseClient<Database>(event);
 
-	let channel: RealtimeChannel;
+	// let channel: RealtimeChannel;
 	let subtaskId = getRouterParam(event, "id");
 
 	try {
@@ -15,5 +15,8 @@ export default defineEventHandler(async (event) => {
 	} catch (error: any) {
 		return createError({ statusMessage: error.message });
 	}
-	return;
+	return {
+		status: 204,
+		statusText: "Subtask Succesfully deleted"
+	};
 });
