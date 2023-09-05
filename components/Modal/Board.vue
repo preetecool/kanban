@@ -47,30 +47,36 @@
 		if (!boardName.value) {
 			return console.error("Board name is Empty");
 		}
-
 		const boardId = uuid.v4();
-		console.log("board board id", boardId);
-		const { data: board } = useAsyncData("board", async () => {
-			await $fetch("/api/boards/post/", {
-				method: "POST",
-				body: {
-					id: boardId,
-					title: boardName.value
-				}
+		try {
+			console.log("board board id", boardId);
+			const { data: board } = useAsyncData("board", async () => {
+				await $fetch("/api/boards/post/", {
+					method: "POST",
+					body: {
+						id: boardId,
+						title: boardName.value
+					}
+				});
 			});
-		});
 
-		const { data: categories } = useAsyncData("board", async () => {
-			console.log("category board id", boardId);
-			await $fetch("/api/category/post/", {
-				method: "POST",
-				body: {
-					board: boardId,
-					titles: titles.value
-					// title: title,
-				}
+			const { data: categories } = useAsyncData("board", async () => {
+				console.log("category board id", boardId);
+				await $fetch("/api/category/post/", {
+					method: "POST",
+					body: {
+						board: boardId,
+						titles: titles.value
+						// title: title,
+					}
+				});
 			});
-		});
+		} catch (err) {
+			console.error("Error while creating a new board");
+			throw new Error();
+		} finally {
+			navigateTo(`/board/${boardId}`);
+		}
 
 		store.toggleModal("newBoard");
 	}
