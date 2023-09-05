@@ -69,12 +69,6 @@
 	}
 	async function updateboard() {
 		try {
-			// await db.updateBoard(
-			//     boardId.value,
-			//     selected.value,
-			//     boardName.value,
-
-			// );
 			if (board.title !== boardName.value) {
 				store.activeBoard.title = boardName.value;
 			}
@@ -85,19 +79,19 @@
 		try {
 			let route = useRoute();
 			let titles: [] = [];
-			store.inputItems.forEach((item) => {
-				titles.push(item.title);
-			});
-			const { data: categories } = useAsyncData("board", async () => {
-				await $fetch("/api/category/post/", {
-					method: "POST",
-					body: {
-						board: route.params.id,
-						titles: titles
-						// title: title,
-					}
-				});
-			});
+			// store.inputItems.forEach((item) => {
+			// 	titles.push(item.title);
+			// });
+			// const { data: categories } = useAsyncData("board", async () => {
+			// 	await $fetch("/api/category/post/", {
+			// 		method: "POST",
+			// 		body: {
+			// 			board: route.params.id,
+			// 			titles: titles
+			// 			// title: title,
+			// 		}
+			// 	});
+			// });
 		} catch (error) {
 			console.error("Error updating board:", error);
 			throw new Error();
