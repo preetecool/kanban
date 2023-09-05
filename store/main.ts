@@ -3,7 +3,7 @@ import { useDB } from "./db";
 export const useMainStore = defineStore("main", {
 	state: () => {
 		return {
-			theme: "light" || "dark",
+			theme: localStorage.getItem("theme"),
 			modal: {
 				newBoard: false,
 				editBoard: false,
