@@ -1,0 +1,30 @@
+@import "colors.scss";
+
+$light-theme: (
+    primary: $purple,
+    primary-hover: $purplehover,
+    bg-color: $white,
+    text-color: $black,
+);
+
+$dark-theme: (
+    primary: $purple,
+    primary-hover: $purplehoverdark,
+    bg-color: $verydarkgrey,
+    text-color: $white,
+);
+
+$active-theme: light;
+
+$themes: (
+    light: (
+        primary: #ffffff,
+        secondary: #cccccc,
+        // ... other colors ...
+    ),
+    dark: (
+        primary: #000000,
+        secondary: #333333,
+        // ... other colors ...
+    ),
+);

@@ -1,0 +1,9 @@
+@import "variables.scss";
+
+@mixin theme-color($color-name) {
+    color: map-get(map-get($themes, $active-theme), $color-name);
+}
+
+body {
+    @include theme-color(text-color);
+}

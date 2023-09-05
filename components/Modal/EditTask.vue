@@ -19,7 +19,7 @@
             <span class="bodyM light-text">Subtasks</span>
             <div v-for="(item, index) in store.selectedTask.subtask" :key="index">
                 <ModalElementColumnItem v-model:item-name="item.title">
-                    <Icon @click="removeColumn(index)" name="icon-cross" />
+                    <IconOld @click="removeColumn(index)" name="icon-cross" />
                 </ModalElementColumnItem>
             </div>
         </template>
@@ -43,8 +43,6 @@
         <template #submit-button>
             <UIButton label="Save Task" @click="updateTask()" />
         </template>
-		
-		
     </Modal>
 </template>
 
