@@ -1,30 +1,19 @@
-@import "colors.scss";
+@use "colors.scss" as colors;
 
 $light-theme: (
-    primary: $purple,
-    primary-hover: $purplehover,
-    bg-color: $white,
-    text-color: $black,
+	primary: colors.$purple,
+	primary-hover: colors.$purplehover,
+	bg-color: colors.$white,
+	text-color: colors.$black,
+	task-card-bg: colors.$white,
+	body-bg: colors.$lightgrey
 );
 
 $dark-theme: (
-    primary: $purple,
-    primary-hover: $purplehoverdark,
-    bg-color: $verydarkgrey,
-    text-color: $white,
-);
-
-$active-theme: light;
-
-$themes: (
-    light: (
-        primary: #ffffff,
-        secondary: #cccccc,
-        // ... other colors ...
-    ),
-    dark: (
-        primary: #000000,
-        secondary: #333333,
-        // ... other colors ...
-    ),
+	primary: colors.$purple,
+	primary-hover: colors.$purplehoverdark,
+	bg-color: colors.$verydarkgrey,
+	text-color: colors.$white,
+	task-card-bg: colors.$darkgrey,
+	body-bg: colors.$verydarkgrey
 );

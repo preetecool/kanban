@@ -67,7 +67,6 @@
 					body: {
 						board: boardId,
 						titles: titles.value
-						// title: title,
 					}
 				});
 			});

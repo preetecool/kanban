@@ -18,7 +18,11 @@ export default defineEventHandler(async (event) => {
 				.select()
 				.single();
 			if (error) throw error;
-			return data;
+			return {
+				status: 200,
+				statusText: "Categorie(s) Created",
+				body: data
+			};
 		});
 	} catch (error: any) {
 		return createError({ statusMessage: error.message });

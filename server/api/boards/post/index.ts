@@ -18,12 +18,6 @@ export default defineEventHandler(async (event) => {
 			.select("id, title")
 			.single();
 
-		// const { data: categories } = await client.from("categories").insert({
-		// 	id: BigInt(Math.floor(Math.random() * 1000000000)).toString(),
-		// 	user_id: user?.id,
-		// 	board: body.id,
-		// 	titles: body.categories
-		// });
 		if (error) throw error;
 		return data;
 	} catch (error: any) {

@@ -23,9 +23,6 @@ export default defineEventHandler(async (event) => {
 		)
 		.subscribe();
 
-	// channel
-	// channel.unsubscribe();
-
 	if (error) {
 		return createError({ statusMessage: error.message });
 	}

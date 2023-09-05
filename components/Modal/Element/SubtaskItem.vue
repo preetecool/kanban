@@ -49,10 +49,10 @@
 		display: flex;
 		gap: 16px;
 		padding: 13px;
-		background-color: $lightgrey;
+		background-color: colors.$lightgrey;
 		border-radius: 4px;
 		&:hover {
-			background-color: $purplehover;
+			background-color: colors.$purplehover;
 			color: black;
 		}
 		input {
@@ -60,7 +60,7 @@
 			height: 16px;
 			min-width: auto;
 			min-height: auto;
-			accent-color: $purple;
+			accent-color: colors.$purple;
 		}
 		&__text {
 			font-size: 12px;

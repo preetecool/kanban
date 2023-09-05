@@ -20,7 +20,7 @@
 		margin: auto;
 		gap: 40px;
 		min-width: 250px;
-		background-color: $lightgrey;
+		background-color: colors.$lightgrey;
 		border: 1px solid rgba(204, 204, 204, 0.4);
 		box-shadow: rgba(0, 0, 0, 0.02) 0px 1px 2px;
 		border-radius: 4px;
