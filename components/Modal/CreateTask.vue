@@ -85,8 +85,6 @@ async function sendData() {
     let data = await db.createTask(taskId, categories[selected.value].id, params, taskName.value, description.value)
 
     store.categoriesByBoard[categories[selected.value].id].task.push(data)
-
-    console.log(store.categoriesByBoard)
   } catch (error) {
     console.error('Error Creating Task:', error)
     throw new Error()

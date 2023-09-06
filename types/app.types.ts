@@ -14,7 +14,7 @@ export type Board = {
   updated_at: string
   title: string
   user_id: string
-  categories: {}[]
+  category: Category[]
 }
 
 export type Category = {

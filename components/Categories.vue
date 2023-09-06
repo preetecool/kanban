@@ -25,9 +25,7 @@ let params = route.params.id
 let categories = ref(store.categoriesByBoard)
 try {
   if (store.activeBoard.category.length !== 0) {
-    let data: Category[] = await db.fetchCategoriesByBoard(params as string)
-
-    data.forEach((category: Category) => {
+    store.activeBoard.category.forEach((category: Category) => {
       let id = category.id
       store.categoriesByBoard[id] = {
         ...category,

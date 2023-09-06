@@ -67,6 +67,7 @@ export const useDB = defineStore('db', {
       })
     },
     async updateCategory(id: Category['id'], title: Category['title']) {
+      console.log('in update function')
       await $fetch(`/api/category/update/${id}`, {
         method: 'PATCH',
         body: {

@@ -48,9 +48,9 @@ const logo = computed(() => {
 
 const { data: boards, refresh: refreshBoards } = await useAsyncData('board', async () => {
   const data = await db.fetchAllBoards()
+
   return data
 })
-store.userBoards = boards
 
 onMounted(() => {
   channel = supabase

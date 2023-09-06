@@ -24,7 +24,10 @@
         v-for="(item, index) in store.activeBoard.category"
         :key="index"
       >
-        <ModalElementColumnItem v-model:item-name="item.title">
+        <ModalElementColumnItem
+          v-model:item-name="item.title"
+          @input="debounceInput(item.id, item.title)"
+        >
           <IconOld
             @click="removeColumn(index)"
             name="icon-cross"
@@ -47,15 +50,20 @@
 import { Board, Category } from '~~/types/app.types'
 import { useMainStore } from '@/store/main'
 import { useDB } from '@/store/db'
+import { Database } from '~~/types/database.types'
+import type { RealtimeChannel } from '@supabase/supabase-js'
 
 let store = useMainStore()
 let db = useDB()
 let route = useRoute()
 store.inputItems = []
-let board = store.activeBoard
+let board: { category: Category[]; [key: string]: any } = store.activeBoard
 const boardId = ref(board ? board.id : '')
 const boardName = ref(board ? board.title : '')
 let boardNameisChanged = ref(false)
+let channel: RealtimeChannel
+const supabase = useSupabaseClient<Database>()
+let refreshCategoriesRef = null
 
 watch(boardName, async () => {
   if (board.title !== boardName.value) {
@@ -72,42 +80,55 @@ function removeColumn(index: number) {
   store.activeBoard.category.splice(index, 1)
   return store.activeBoard.category
 }
-console.log(store.userBoards)
-async function updateboard() {
-  try {
-    // const { data: updatedBoard } = useAsyncData('board', async () => {
-    if (boardNameisChanged.value === true) {
-      store.activeBoard.title = boardName.value
 
-      await db.updateBoard(boardId.value, boardName.value)
-    }
-    // })
-  } catch (error) {
-    console.error('Error updating board:', error)
-    throw new Error()
-  }
-  // try {
-  //   let route = useRoute()
-  //   let titles: [] = []
+let isTyping = null
 
-  //   // store.inputItems.forEach((item) => {
-  //   // 	titles.push(item.title);
-  //   // });
-  //   // const { data: categories } = useAsyncData("board", async () => {
-  //   // 	await $fetch("/api/category/post/", {
-  //   // 		method: "POST",
-  //   // 		body: {
-  //   // 			board: route.params.id,
-  //   // 			titles: titles
-  //   // 			// title: title,
-  //   // 		}
-  //   // 	});
-  //   // });
-  // } catch (error) {
-  //   console.error('Error updating board:', error)
-  //   throw new Error()
-  // } finally {
-  //   store.closeModal()
-  // }
+function debounceInput(id: string, title: string) {
+  clearTimeout(isTyping)
+
+  isTyping = setTimeout(() => {
+    submitCategoryUpdate(id, title)
+    console.log('user has finished typing')
+  }, 500)
 }
+
+async function submitCategoryUpdate(id: string, title: string) {
+  store.categoriesByBoard[id].title = title
+  await db.updateCategory(id, title)
+}
+async function updateboard() {
+  const { data: updatedBoard } = await useAsyncData('updatedBoard', async () => {
+    const data = await db.updateBoard(boardId.value, boardName.value)
+
+    return data
+  })
+
+  if (store.inputItems.length > 0) {
+    const titles: string[] = []
+    store.inputItems.forEach((category: Category) => {
+      titles.push(category.title)
+    })
+    const { data: newCategories, refresh: refreshCategories } = await useAsyncData('updatedCategories', async () => {
+      const data = await db.postCategory(boardId.value, titles)
+    })
+    refreshCategoriesRef = refreshCategories
+  }
+  store.closeModal()
+}
+
+onMounted(() => {
+  channel = supabase
+    .channel('public:category')
+    .on('postgres_changes', { event: '*', schema: 'public', table: 'category' }, () => {
+      if (refreshCategoriesRef) {
+        // Check if the function is assigned
+        refreshCategoriesRef()
+      }
+    })
+  channel.subscribe()
+})
+
+onUnmounted(() => {
+  supabase.removeChannel(channel)
+})
 </script>
