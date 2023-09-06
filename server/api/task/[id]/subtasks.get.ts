@@ -1,37 +1,24 @@
-import { createError } from "h3";
-import { Database } from "~~/types/database.types";
-import { serverSupabaseUser, serverSupabaseClient } from "#supabase/server";
+import { createError } from 'h3'
+import { Database } from '~~/types/database.types'
+import { serverSupabaseUser, serverSupabaseClient } from '#supabase/server'
 
-export default defineEventHandler(async (event) => {
-	const user = await serverSupabaseUser(event);
-	const client = await serverSupabaseClient<Database>(event);
-	let channel: RealtimeChannel;
-	let taskId = getRouterParam(event, "id");
+export default defineEventHandler(async event => {
+  const user = await serverSupabaseUser(event)
+  const client = await serverSupabaseClient<Database>(event)
+  let channel: RealtimeChannel
+  let taskId = getRouterParam(event, 'id')
 
-	let response;
-	try {
-		const { data: tasks, error } = await client
-			.from("subtask")
-			.select("*")
-			.eq("task", taskId)
-			.order("created_at");
-		channel = client
-			.channel("public:subtask")
-			.on(
-				"postgres_changes",
-				{ event: "*", schema: "public", table: "subtask" },
-				(payload) => {}
-			);
-		channel.subscribe();
+  let response
+  try {
+    const { data: tasks, error } = await client.from('subtask').select('*').eq('task', taskId).order('created_at')
+    if (tasks) {
+      response = tasks
+    } else if (error) {
+      return createError({ statusMessage: error.message })
+    }
+  } catch (e: any) {
+    return createError({ statusMessage: e.message })
+  }
 
-		if (tasks) {
-			response = tasks;
-		} else if (error) {
-			return createError({ statusMessage: error.message });
-		}
-	} catch (e: any) {
-		return createError({ statusMessage: e.message });
-	}
-
-	return response;
-});
+  return response
+})

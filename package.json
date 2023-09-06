@@ -1,37 +1,28 @@
 {
-	"name": "nuxt-app",
-	"private": true,
-	"scripts": {
-		"build": "nuxt build",
-		"dev": "nuxt dev",
-		"generate": "nuxt generate",
-		"preview": "nuxt preview",
-		"postinstall": "nuxt prepare"
-	},
-	"devDependencies": {
-		"@nuxt/devtools": "latest",
-		"@nuxtjs/supabase": "^1.0.2",
-		"@types/node": "^18.17.3",
-		"nuxt": "^3.6.5",
-		"sass": "^1.65.1"
-	},
-	"dependencies": {
-		"@pinia/nuxt": "^0.4.11",
-		"pinia": "^2.1.4",
-		"vue-uuid": "^3.0.0"
-	},
-	"overrides": {
-		"vue": "latest"
-	},
-	"eslintConfig": {
-		"root": true,
-		"env": {
-			"node": true,
-			"vue/setup-compiler-macros": true
-		},
-		"extends": [
-			"plugin:vue/vue3-essential",
-			"eslint:recommended"
-		]
-	}
+  "name": "nuxt-app",
+  "private": true,
+  "scripts": {
+    "build": "nuxt build",
+    "dev": "nuxt dev",
+    "generate": "nuxt generate",
+    "preview": "nuxt preview",
+    "postinstall": "nuxt prepare",
+    "format": "prettier --write './**/*.{js,jsx,ts,tsx,css,md,json, vue}'",
+    "lint": "eslint --ext .js,.ts,.vue ."
+  },
+  "devDependencies": {
+    "@nuxt/devtools": "latest",
+    "@nuxtjs/supabase": "^1.0.2",
+    "@types/node": "^18.17.3",
+    "nuxt": "^3.6.5",
+    "prettier": "^3.0.3",
+    "sass": "^1.65.1",
+    "@nuxt/eslint-config": "^0.2.0",
+    "eslint": "^8.48.0"
+  },
+  "dependencies": {
+    "@pinia/nuxt": "^0.4.11",
+    "pinia": "^2.1.4",
+    "vue-uuid": "^3.0.0"
+  }
 }
