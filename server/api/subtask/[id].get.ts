@@ -8,10 +8,7 @@ export default defineEventHandler(async event => {
   let subtaskId = getRouterParams(event)
   let response
   try {
-    const {
-      data: tasks,
-      error,
-    } = await client.from('subtask').select('*').eq('id', subtaskId.id)
+    const { data: tasks, error } = await client.from('subtask').select('*').eq('id', subtaskId.id)
     if (tasks) {
       response = tasks
     }

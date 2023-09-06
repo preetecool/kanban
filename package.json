@@ -7,7 +7,7 @@
     "generate": "nuxt generate",
     "preview": "nuxt preview",
     "postinstall": "nuxt prepare",
-    "format": "prettier --write './**/*.{js,jsx,ts,tsx,css,md,json, vue}'",
+    "format": "prettier --write './**/*.{js,jsx,ts,tsx,css,md,json,vue}'",
     "lint": "eslint --ext .js,.ts,.vue ."
   },
   "devDependencies": {

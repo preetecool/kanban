@@ -1,11 +1,11 @@
 <template>
-	<Categories />
+  <Categories />
 </template>
 
 <script setup lang="ts">
-	definePageMeta({
-		layout: "dashboard"
-	});
+definePageMeta({
+  layout: 'dashboard',
+})
 </script>
 
 <style lang="scss" scoped></style>

@@ -1,12 +1,12 @@
 <template>
-	<div>
-		<NuxtLayout>
-			<NuxtPage />
-		</NuxtLayout>
-	</div>
+  <div>
+    <NuxtLayout>
+      <NuxtPage />
+    </NuxtLayout>
+  </div>
 </template>
 
 <script setup>
-	import { useMainStore } from "@/store/main";
-	let store = useMainStore();
+import { useMainStore } from '@/store/main'
+let store = useMainStore()
 </script>
