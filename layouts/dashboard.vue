@@ -64,8 +64,8 @@
 		background-color: colors.$lightgrey;
 		position: relative;
 		display: grid;
-		grid-template-columns: 20% 80%;
-		grid-template-rows: 10% 90%;
+		grid-template-columns: minmax(0, 300px) 1fr;
+		grid-template-rows: 6rem 1fr;
 		grid-template-areas:
 			"sidebar header"
 			"sidebar content";

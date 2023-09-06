@@ -80,6 +80,7 @@
 <style scoped lang="scss">
 	.sidebar {
 		height: 100vh;
+		max-width: 300px;
 		display: flex;
 		flex-direction: column;
 		background-color: colors.$white;

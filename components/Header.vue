@@ -36,7 +36,7 @@
 		align-items: center;
 		border-bottom: 1px solid var(--lines-color);
 		background-color: colors.$white;
-		// height: 6rem;
+		max-height: 6rem;
 	}
 	.divider {
 		height: 100%;
