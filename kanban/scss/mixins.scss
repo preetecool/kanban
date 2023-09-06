@@ -2,7 +2,7 @@
 
 @mixin theme-color($theme-map, $color-name) {
 	color: map-get($theme-map, $color-name);
-	--lines-color: #{map-get($theme-map, lines)};
+	--lines-color: map-get($theme-map, lines);
 }
 
 @mixin task-card-theme($theme-map) {

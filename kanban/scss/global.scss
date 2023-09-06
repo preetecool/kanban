@@ -1,0 +1,123 @@
+@font-face {
+	font-family: "Plus Jakarta Sans";
+	font-style: "normal";
+	font-weight: 400;
+	src: url("/assets/fonts/PlusJakartaSans-VariableFont_wght.ttf");
+}
+
+* {
+	font-size: 16px;
+}
+
+body {
+	font-family: "Plus Jakarta Sans";
+}
+
+.light.main-grid {
+	@include mixins.main-grid-theme(variables.$light-theme);
+	--lines-color: colors.$lineslight;
+	// --lines-color: #e4ebfa;
+}
+
+.dark.main-grid {
+	@include mixins.main-grid-theme(variables.$dark-theme);
+	--lines-color: colors.$linesdark;
+
+	// --lines-color: #3e3f4e;
+}
+
+input,
+select {
+	min-width: 350px;
+	max-width: 416px;
+	height: 40px;
+	border: 1px solid #828fa325;
+	padding: 8px 16px;
+	border-radius: 4px;
+	font-size: 16px;
+}
+select {
+	appearance: none;
+	-webkit-appearance: none;
+	-moz-appearance: none;
+	background: url("/img/icon-chevron-down.svg") no-repeat right center;
+	background-size: 13px;
+	background-position: 97%;
+}
+
+.pl-2r {
+	padding-left: 2rem;
+}
+.pr-2r {
+	padding-left: 2rem;
+}
+
+.pt-16 {
+	padding-top: 16px;
+}
+.pb-16 {
+	padding-bottom: 16px;
+}
+
+.light-text {
+	color: colors.$medgrey;
+}
+
+.headingXL {
+	font-size: 24px;
+	font-weight: bold;
+	line-height: 30px;
+}
+
+.headingL {
+	font-size: 18px;
+	font-weight: bold;
+	line-height: 23px;
+}
+
+.headingM {
+	font-size: 15px;
+	font-weight: bold;
+	line-height: 19px;
+}
+
+.headingS {
+	font-size: 12px;
+	font-weight: bold;
+	line-height: 15px;
+
+	letter-spacing: 2.4px;
+}
+
+.bodyL {
+	font-weight: medium;
+	font-size: 13px;
+	line-height: 23px;
+}
+
+.bodyM {
+	font-weight: bold;
+	font-size: 12px;
+	line-height: 15px;
+}
+
+.bodyM-thin {
+	font-weight: normal;
+	font-size: 12px;
+	line-height: 13px;
+}
+
+.bg-light {
+	background-color: colors.$lightgrey;
+
+	height: 100vh;
+	display: flex;
+}
+
+.danger {
+	color: colors.$red;
+}
+
+.single-footer-child {
+	width: 100%;
+}
