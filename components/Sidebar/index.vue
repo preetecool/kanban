@@ -48,8 +48,15 @@ const logo = computed(() => {
 
 const { data: boards, refresh: refreshBoards } = await useAsyncData('board', async () => {
   const data = await db.fetchAllBoards()
-
+  store.userBoards = data
   return data
+  // if (store.userBoards.length < 1) {
+  //   const data = await db.fetchAllBoards()
+  //   store.userBoards = data
+  //   return data
+  // } else {
+  //   return store.userBoards
+  // }
 })
 
 onMounted(() => {

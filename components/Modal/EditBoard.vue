@@ -96,32 +96,35 @@ async function submitCategoryUpdate(id: string, title: string) {
   store.categoriesByBoard[id].title = title
   await db.updateCategory(id, title)
 }
-async function updateboard() {
-  const { data: updatedBoard } = await useAsyncData('updatedBoard', async () => {
-    const data = await db.updateBoard(boardId.value, boardName.value)
 
-    return data
-  })
+async function updateboard() {
+  if (boardNameisChanged.value === true) {
+    const { data: updatedBoard } = await useAsyncData('updatedBoard', async () => {
+      const data = await db.updateBoard(boardId.value, boardName.value)
+      return data
+    })
+  }
 
   if (store.inputItems.length > 0) {
     const titles: string[] = []
     store.inputItems.forEach((category: Category) => {
       titles.push(category.title)
     })
+
     const { data: newCategories, refresh: refreshCategories } = await useAsyncData('updatedCategories', async () => {
+      const route = useRoute()
       const data = await db.postCategory(boardId.value, titles)
+      return data
     })
     refreshCategoriesRef = refreshCategories
   }
   store.closeModal()
 }
-
 onMounted(() => {
   channel = supabase
     .channel('public:category')
     .on('postgres_changes', { event: '*', schema: 'public', table: 'category' }, () => {
       if (refreshCategoriesRef) {
-        // Check if the function is assigned
         refreshCategoriesRef()
       }
     })

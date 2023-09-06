@@ -6,7 +6,7 @@ export default defineEventHandler(async event => {
   const client = await serverSupabaseClient<Database>(event)
   let body = await readBody(event)
   let boardId = getRouterParam(event, 'id')
-
+  
   try {
     const { data, error } = await client
       .from('board')

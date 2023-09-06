@@ -32,12 +32,18 @@
 import { useMainStore } from '@/store/main'
 import { useDB } from '@/store/db'
 import { uuid } from 'vue-uuid'
+import type { RealtimeChannel } from '@supabase/supabase-js'
+import { Database } from '~~/types/database.types'
 
 const store = useMainStore()
 const db = useDB()
 const boardName = ref('')
 const user = useSupabaseUser()
 let titles = ref([])
+let refreshCategoriesRef = null
+let refreshBoardsRef = null
+let channel: RealtimeChannel
+const supabase = useSupabaseClient<Database>()
 
 console.log(store.inputItems)
 async function sendData() {
@@ -51,25 +57,67 @@ async function sendData() {
   const boardId = uuid.v4()
 
   try {
-    await db.postBoard(boardId, boardName.value)
+    const { data: newBoards, refresh: refreshBoards } = await useAsyncData(
+      'updatedCategories',
+      async () => {
+        return await db.postBoard(boardId, boardName.value)
+        // await db.fetchAllBoards()
+      },
+      {
+        transform: response => response.body,
+      },
+    )
+    refreshBoardsRef = refreshBoards
   } catch (error) {
     console.error('Error while creating a new board', error)
     throw new Error()
+  } finally {
+    await db.fetchAllBoards()
   }
 
   try {
-    await db.postCategory(boardId, titles.value)
+    const { data: newCategories, refresh: refreshCategories } = await useAsyncData(
+      'updatedCategories',
+      async () => {
+        return await db.postCategory(boardId, titles.value)
+      },
+      {
+        transform: response => response.body,
+      },
+    )
+    refreshCategoriesRef = refreshCategories
   } catch (error) {
     console.error('Error while creating categories', error)
     throw new Error()
   } finally {
-    // console.log('board created')
-    // if()
-    navigateTo(`/board/${boardId}`)
+    let router = useRouter()
+    router.push(`/board/${boardId}`)
   }
-
-  store.toggleModal('newBoard')
+  store.closeModal()
 }
+
+onMounted(() => {
+  channel = supabase
+    .channel('public:category')
+    .on('postgres_changes', { event: '*', schema: 'public', table: 'category' }, () => {
+      if (refreshCategoriesRef) {
+        refreshCategoriesRef()
+      }
+    })
+  channel = supabase
+    .channel('public:boards')
+    .on('postgres_changes', { event: '*', schema: 'public', table: 'boards' }, () => {
+      if (refreshBoardsRef) {
+        refreshBoardsRef()
+      }
+    })
+
+  channel.subscribe()
+})
+
+onUnmounted(() => {
+  supabase.removeChannel(channel)
+})
 </script>
 
 <style lang="scss" scoped></style>

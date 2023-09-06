@@ -58,6 +58,7 @@ export const useDB = defineStore('db', {
       }
     },
     async postCategory(boardId: string, titles: string[]) {
+      const store = useMainStore()
       await $fetch('/api/category/post', {
         method: 'POST',
         body: {
