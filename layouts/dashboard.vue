@@ -21,7 +21,7 @@
       v-if="route.path === '/' || store.activeBoard.category.length === 0"
     >
       <div class="body__new-column">
-        <span class="headingL"> No board here. Create a board or navigate to one using the sidebar. </span>
+        <!-- <span class="headingL"> No board here. Create a board or navigate to one using the sidebar. </span> -->
         <UIButton
           v-if="route.path !== '/'"
           label="+ Add New Column"
