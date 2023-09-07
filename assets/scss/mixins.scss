@@ -12,15 +12,16 @@
   .sidebar {
     background-color: map-get($theme-map, task-card-bg);
   }
-  .header,
+
+  html,
+  .header-container,
   .logo {
     background-color: map-get($theme-map, task-card-bg);
   }
 }
 
 @mixin body-bg-theme($theme-map) {
-  html,
-  body {
+  .bg-light {
     background-color: map-get($theme-map, body-bg);
   }
   .body {

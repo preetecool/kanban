@@ -1,21 +1,23 @@
 <template>
-  <div class="logo pl-2r">
+  <!-- <div class="logo pl-2r">
     <img :src="`/img/logo-${logo}.svg`" />
-  </div>
-  <div class="header">
-    <div class="headingXL heading">{{ store.activeBoard.title }}</div>
+  </div> -->
+  <div class="header-container">
+    <div class="header">
+      <div class="headingXL heading">{{ store.activeBoard.title }}</div>
 
-    <div class="settings">
-      <div class="actions">
-        <UIButton
-          label="+ Add New Task"
-          @click="store.toggleModal('newTask')"
-        />
-        <UIEditDropdown
-          view="editBoard"
-          menuText="Board"
-          :id="params as string"
-        />
+      <div class="settings">
+        <div class="actions">
+          <UIButton
+            label="+ Add New Task"
+            @click="store.toggleModal('newTask')"
+          />
+          <UIEditDropdown
+            view="editBoard"
+            menuText="Board"
+            :id="params as string"
+          />
+        </div>
       </div>
     </div>
   </div>
@@ -28,36 +30,26 @@ import { Board } from '~~/types/app.types'
 const store = useMainStore()
 const route = useRoute()
 const params = route.params.id
-const logo = computed(() => (store.theme === 'light' ? 'dark' : 'light'))
 </script>
 
 <style scoped lang="scss">
-.logo {
-  grid-area: logo;
-  display: flex;
-  box-sizing: border-box;
-  flex: 0 0 auto;
-  height: 6rem;
-  background-color: colors.$white;
-  align-items: center;
-  border-right: 1px solid var(--lines-color);
+img {
+  padding-right: 32px;
+}
+.header-container {
+  border-bottom: 1px solid var(--lines-color);
 }
 .header {
   grid-area: header;
   display: flex;
   justify-content: flex-start;
   align-items: center;
-  border-bottom: 1px solid var(--lines-color);
-  background-color: colors.$white;
   max-height: 6rem;
-}
-.divider {
   height: 100%;
-  width: 1px;
-  background-color: var(--lines-color);
-  margin-left: 5.5rem;
-  margin-right: 1.5rem;
+  /* max-width: 1140px; */
+  flex-grow: 1;
 }
+
 .heading {
   flex: 1;
   margin-left: 1.5rem;

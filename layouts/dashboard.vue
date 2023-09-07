@@ -21,7 +21,6 @@
       v-if="route.path === '/' || store.activeBoard.category.length === 0"
     >
       <div class="body__new-column">
-        <!-- <span class="headingL"> No board here. Create a board or navigate to one using the sidebar. </span> -->
         <UIButton
           v-if="route.path !== '/'"
           label="+ Add New Column"
@@ -60,33 +59,31 @@ span {
 }
 .main-grid {
   height: 100vh;
+  // overflow-y: auto;
   background-color: colors.$lightgrey;
-  position: relative;
   display: grid;
-  grid-template-columns: minmax(0, 300px) 1fr;
+  grid-template-columns: minmax(261px, 300px) 1fr;
   grid-template-rows: 6rem 1fr;
   grid-template-areas:
-    'logo header'
-    'sidebar content';
-  position: relative;
+    'sidebar header'
+    'sidebar columns';
+  @media (max-width: 768px) {
+    grid-template-columns: 261px 1fr;
+  }
 }
-.body {
-  grid-area: content;
-  display: flex;
-  justify-content: center;
-  flex-grow: 1;
 
+.body {
+  display: flex;
+  grid-area: columns;
+  overflow: auto;
   &__new-column {
     display: flex;
     flex-direction: column;
     justify-content: center;
     gap: 32px;
   }
-}
-
-.columns-grid {
-  display: flex;
-  justify-content: flex-start;
-  width: 100%;
+  &__columns-grid {
+    flex-direction: row;
+  }
 }
 </style>

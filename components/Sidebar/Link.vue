@@ -28,6 +28,5 @@ const props = defineProps({
 }
 span {
   margin: auto 0;
-  color: inherit;
 }
 </style>

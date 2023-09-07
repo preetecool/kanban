@@ -1,48 +1,53 @@
 <template>
-  <div
-    class="sidebar"
-    v-if="isSideBarVisible"
-  >
-    <div class="boards">
-      <span class="allboards pl-2r">ALL BOARDS ({{ boards?.length }})</span>
-      <div>
-        <ul class="">
-          <SidebarItem
-            v-for="board in boards"
-            class="item-container"
-            :key="board.title"
-            :class="{ 'item-container__active': isActive(board.id) }"
-          >
-            <template #icon-label>
-              <Icon
-                icon="board"
-                class="icon"
-              />
-              <SidebarLink
-                class="link"
-                :id="board.id"
-                :label="board.title"
-              />
-            </template>
-          </SidebarItem>
-          <SidebarNewBoard />
-        </ul>
-      </div>
-    </div>
-    <SidebarToggle />
-
-    <SidebarItem
-      @click="toggleSidebarDisplay"
-      class="item-container hide"
+  <div class="sidebar-container">
+    <div
+      class="sidebar"
+      v-if="isSideBarVisible"
     >
-      <template #icon-label>
-        <Icon
-          icon="hide-sidebar"
-          class="icon"
-        />
-        <span class="headingM light-text">Hide sidebar</span>
-      </template>
-    </SidebarItem>
+      <div class="logo pl-2r">
+        <img :src="`/img/logo-${logo}.svg`" />
+      </div>
+      <div class="boards">
+        <span class="allboards pl-2r">ALL BOARDS ({{ boards?.length }})</span>
+        <div>
+          <ul class="">
+            <SidebarItem
+              v-for="board in boards"
+              class="item-container"
+              :key="board.title"
+              :class="{ 'item-container__active': isActive(board.id) }"
+            >
+              <template #icon-label>
+                <Icon
+                  icon="board"
+                  class="icon"
+                />
+                <SidebarLink
+                  class="link"
+                  :id="board.id"
+                  :label="board.title"
+                />
+              </template>
+            </SidebarItem>
+            <SidebarNewBoard />
+          </ul>
+        </div>
+      </div>
+      <SidebarToggle />
+
+      <SidebarItem
+        @click="toggleSidebarDisplay"
+        class="item-container hide"
+      >
+        <template #icon-label>
+          <Icon
+            icon="hide-sidebar"
+            class="icon"
+          />
+          <span class="headingM light-text">Hide sidebar</span>
+        </template>
+      </SidebarItem>
+    </div>
   </div>
 </template>
 <script setup lang="ts">
@@ -57,6 +62,7 @@ const db = useDB()
 const supabase = useSupabaseClient<Database>()
 let channel: RealtimeChannel
 let isSideBarVisible = ref(true)
+const logo = computed(() => (store.theme === 'light' ? 'dark' : 'light'))
 const isActive = (id: string) => id === store.activeBoard.id
 const toggleSidebarDisplay = () => {
   isSideBarVisible.value = !isSideBarVisible.value
@@ -82,20 +88,34 @@ onUnmounted(() => {
 </script>
 
 <style scoped lang="scss">
+.sidebar-container {
+  position: sticky;
+  top: 0;
+  overflow-y: auto;
+  grid-area: sidebar;
+}
+
+.logo {
+  height: 6rem;
+  display: flex;
+  align-items: center;
+}
+
 .sidebar {
-  height: calc(100vh - 6rem);
-  min-width: 300px;
+  flex-grow: 1;
   max-width: 300px;
+  width: 100%;
   display: flex;
   flex-direction: column;
   background-color: colors.$white;
   border-right: 1px solid var(--lines-color);
-  grid-area: sidebar;
-  position: absolute;
+  overflow-y: auto;
+  @media screen and (max-width: 768px) {
+    width: 261px;
+  }
 }
 .item-container {
   border-radius: 0 100px 100px 0;
-  width: flex-grow;
   max-width: 90%;
   cursor: pointer;
   &:hover {

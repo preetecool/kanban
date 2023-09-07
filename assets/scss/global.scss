@@ -9,9 +9,9 @@
   font-size: 16px;
 }
 
-html,
 body {
   font-family: 'Plus Jakarta Sans';
+  height: 100vh;
 }
 
 .light.main-grid {
@@ -103,8 +103,8 @@ select {
   line-height: 13px;
 }
 
-.bg-light {
-  background-color: colors.$lightgrey;
+.vh-100 {
+  height: 100vh;
 }
 
 .danger {
@@ -114,3 +114,9 @@ select {
 .single-footer-child {
   width: 100%;
 }
+::-webkit-scrollbar {
+  width: 1px;
+}
+// .container{
+
+// }

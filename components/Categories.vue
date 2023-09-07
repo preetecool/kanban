@@ -1,12 +1,15 @@
 <template>
   <!-- <client-only> -->
-  <div v-for="(column, index) in categories">
-    <div
-      class="column"
-      :key="index"
-    >
-      <span class="headingS light-text"> {{ column.title.toUpperCase() }} ({{ numTasks }}) </span>
-      <TaskCard :tasks="column.task" />
+  <div class="container-column">
+    <div v-for="(column, index) in categories">
+      <div
+        class="column"
+        :key="index"
+      >
+        <span class="headingS light-text"> {{ column.title.toUpperCase() }} ({{ numTasks }}) </span>
+        <TaskCard :tasks="column.task" />
+      </div>
+      <!-- <div class="column"></div> -->
     </div>
   </div>
   <!-- </client-only> -->
@@ -39,10 +42,15 @@ try {
 </script>
 
 <style lang="scss" scoped>
+.container-column {
+  display: flex;
+  flex-grow: 1;
+  overflow-x: auto;
+}
 .column {
+  flex-shrink: 0;
   height: 100%;
-  width: 200px;
-  padding: 24px;
   width: 280px;
+  padding: 24px;
 }
 </style>
