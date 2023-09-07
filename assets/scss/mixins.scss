@@ -19,6 +19,10 @@
 }
 
 @mixin body-bg-theme($theme-map) {
+  html,
+  body {
+    background-color: map-get($theme-map, body-bg);
+  }
   .body {
     background-color: map-get($theme-map, body-bg);
   }

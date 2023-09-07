@@ -59,7 +59,7 @@ span {
   color: colors.$medgrey;
 }
 .main-grid {
-  height: 100%;
+  height: 100vh;
   background-color: colors.$lightgrey;
   position: relative;
   display: grid;
@@ -68,11 +68,13 @@ span {
   grid-template-areas:
     'logo header'
     'sidebar content';
+  position: relative;
 }
 .body {
   grid-area: content;
   display: flex;
   justify-content: center;
+  flex-grow: 1;
 
   &__new-column {
     display: flex;

@@ -84,12 +84,14 @@ onUnmounted(() => {
 <style scoped lang="scss">
 .sidebar {
   height: calc(100vh - 6rem);
+  min-width: 300px;
   max-width: 300px;
   display: flex;
   flex-direction: column;
   background-color: colors.$white;
   border-right: 1px solid var(--lines-color);
   grid-area: sidebar;
+  position: absolute;
 }
 .item-container {
   border-radius: 0 100px 100px 0;
