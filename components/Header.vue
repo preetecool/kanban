@@ -1,4 +1,7 @@
 <template>
+  <div class="logo pl-2r">
+    <img :src="`/img/logo-${logo}.svg`" />
+  </div>
   <div class="header">
     <div class="headingXL heading">{{ store.activeBoard.title }}</div>
 
@@ -8,7 +11,6 @@
           label="+ Add New Task"
           @click="store.toggleModal('newTask')"
         />
-
         <UIEditDropdown
           view="editBoard"
           menuText="Board"
@@ -26,9 +28,20 @@ import { Board } from '~~/types/app.types'
 const store = useMainStore()
 const route = useRoute()
 const params = route.params.id
+const logo = computed(() => (store.theme === 'light' ? 'dark' : 'light'))
 </script>
 
 <style scoped lang="scss">
+.logo {
+  grid-area: logo;
+  display: flex;
+  box-sizing: border-box;
+  flex: 0 0 auto;
+  height: 6rem;
+  background-color: colors.$white;
+  align-items: center;
+  border-right: 1px solid var(--lines-color);
+}
 .header {
   grid-area: header;
   display: flex;

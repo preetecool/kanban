@@ -1,7 +1,6 @@
 <template>
   <div class="sidebar-settings">
     <div class="theme-toggle">
-      <!-- <div class="wrap"> -->
       <div>
         <svg
           width="16"
@@ -29,11 +28,6 @@
           <use xlink:href="#icon-dark-theme"></use>
         </svg>
       </div>
-      <!-- </div> -->
-    </div>
-    <div class="sidebar-toggle">
-      <Icon icon="hide-sidebar" />
-      <span class="light-text headingM">Hide Sidebar</span>
     </div>
   </div>
 </template>
@@ -103,26 +97,11 @@ onMounted(() => {
     background-color: colors.$lightgrey;
   }
   &__isRight {
-    // left: 23px;
     transform: translateX(20px);
-    // transition: all 5s ease-out;
   }
 }
 .wrap {
   width: 100%;
   display: flex;
-}
-
-.sidebar-toggle {
-  display: flex;
-  gap: 15px;
-  align-items: center;
-  cursor: pointer;
-  padding-left: 4px;
-  svg {
-    &:hover {
-      fill: colors.$purplehover;
-    }
-  }
 }
 </style>

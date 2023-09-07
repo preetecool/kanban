@@ -16,10 +16,10 @@ export default defineNuxtConfig({
         // },
         scss: {
           additionalData: `
+                  @use "@/assets/scss/reset.scss";
                 	@use "@/assets/scss/_colors.scss" as colors;
                 	@use "@/assets/scss/variables.scss" as variables;
                 	@use "@/assets/scss/mixins.scss" as mixins ;
-                	@use "@/assets/scss/reset.scss" ;
                 	`,
         },
       },

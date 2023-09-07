@@ -1,34 +1,35 @@
-@use "variables.scss" as variables;
+@use 'variables.scss' as variables;
 
 @mixin theme-color($theme-map, $color-name) {
-	color: map-get($theme-map, $color-name);
-	--lines-color: #{map-get($theme-map, lines)};
+  color: map-get($theme-map, $color-name);
+  --lines-color: #{map-get($theme-map, lines)};
 }
 
 @mixin task-card-theme($theme-map) {
-	.task-card {
-		background-color: map-get($theme-map, task-card-bg);
-	}
-	.sidebar {
-		background-color: map-get($theme-map, task-card-bg);
-	}
-	.header {
-		background-color: map-get($theme-map, task-card-bg);
-	}
+  .task-card {
+    background-color: map-get($theme-map, task-card-bg);
+  }
+  .sidebar {
+    background-color: map-get($theme-map, task-card-bg);
+  }
+  .header,
+  .logo {
+    background-color: map-get($theme-map, task-card-bg);
+  }
 }
 
 @mixin body-bg-theme($theme-map) {
-	.body {
-		background-color: map-get($theme-map, body-bg);
-	}
-	.theme-toggle {
-		background-color: map-get($theme-map, body-bg);
-	}
+  .body {
+    background-color: map-get($theme-map, body-bg);
+  }
+  .theme-toggle {
+    background-color: map-get($theme-map, body-bg);
+  }
 }
 
 @mixin main-grid-theme($theme-map) {
-	@include task-card-theme($theme-map);
-	@include theme-color($theme-map, text-color);
-	@include body-bg-theme($theme-map);
-	background-color: map-get($theme-map, bg-color);
+  @include task-card-theme($theme-map);
+  @include theme-color($theme-map, text-color);
+  @include body-bg-theme($theme-map);
+  background-color: map-get($theme-map, bg-color);
 }

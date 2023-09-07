@@ -59,19 +59,18 @@ span {
   color: colors.$medgrey;
 }
 .main-grid {
+  height: 100%;
   background-color: colors.$lightgrey;
   position: relative;
   display: grid;
   grid-template-columns: minmax(0, 300px) 1fr;
   grid-template-rows: 6rem 1fr;
   grid-template-areas:
-    'sidebar header'
+    'logo header'
     'sidebar content';
 }
-
 .body {
   grid-area: content;
-  flex: 1;
   display: flex;
   justify-content: center;
 
@@ -82,6 +81,7 @@ span {
     gap: 32px;
   }
 }
+
 .columns-grid {
   display: flex;
   justify-content: flex-start;
