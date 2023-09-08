@@ -17,7 +17,7 @@ const signInWithOAuth = async (event: MouseEvent) => {
   const { data, error } = await supabase.auth.signInWithOAuth({
     provider: 'google',
     options: {
-      redirectTo: `${runtimeConfig.public.base_url}/confirm`,
+      redirectTo: `${runtimeConfig.public.base_url}/confirm/`,
     },
   })
 

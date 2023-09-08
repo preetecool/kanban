@@ -20,14 +20,23 @@
       class="body"
       v-if="route.path === '/' || store.activeBoard.category.length === 0"
     >
-      <div class="body__new-column">
+      <div
+        v-if="route.path !== '/'"
+        class="body__new-column"
+      >
+        <p class="light-text text">Add a column to get started.</p>
         <UIButton
-          v-if="route.path !== '/'"
           label="+ Add New Column"
           @click="store.toggleModal('editBoard')"
         />
+      </div>
+
+      <div
+        v-else
+        class="body__new-column"
+      >
+        <p class="light-text text">There's no board here. Add or navigate to one using the sidebar.</p>
         <UIButton
-          v-else
           label="+ Add New Board"
           @click="store.toggleModal('newBoard')"
         />
@@ -71,13 +80,19 @@ span {
     grid-template-columns: 261px 1fr;
   }
 }
-
+.text {
+  padding-bottom: 10px;
+}
 .body {
   display: flex;
   grid-area: columns;
   overflow: auto;
+  width: 100%;
+
+  justify-content: center;
   &__new-column {
     display: flex;
+
     flex-direction: column;
     justify-content: center;
     gap: 32px;
