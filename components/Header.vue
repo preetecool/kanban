@@ -4,7 +4,7 @@
   </div> -->
   <div class="header-container">
     <div class="header">
-      <div class="headingXL heading">{{ store.activeBoard.title }}</div>
+      <span class="headingXL heading">{{ store.activeBoard.title }}</span>
 
       <div class="settings">
         <div class="actions">
@@ -33,9 +33,6 @@ const params = route.params.id
 </script>
 
 <style scoped lang="scss">
-img {
-  padding-right: 32px;
-}
 .header-container {
   border-bottom: 1px solid var(--lines-color);
 }
@@ -46,8 +43,11 @@ img {
   align-items: center;
   max-height: 6rem;
   height: 100%;
+  width: 100%;
   /* max-width: 1140px; */
   flex-grow: 1;
+  gap: 24px;
+  /* padding-right: 24px; */
 }
 
 .heading {
@@ -57,7 +57,7 @@ img {
 .settings {
   display: flex;
   height: 100%;
-  padding-right: 2rem;
+  padding-right: 1rem;
 }
 .actions {
   display: flex;

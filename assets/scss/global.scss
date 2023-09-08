@@ -62,6 +62,9 @@ select {
   font-size: 24px;
   font-weight: bold;
   line-height: 30px;
+  @media (max-width: 768px) {
+    font-size: 20px;
+  }
 }
 
 .headingL {

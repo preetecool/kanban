@@ -12,12 +12,22 @@
     class="main-grid"
     :class="[store.theme, { 'main-grid__no-sidebar': !store.isSideBarVisible }]"
   >
-    <div class="logo pl-2r">
+    <div
+      class="logo pl-2r"
+      v-if="width > 600"
+    >
       <img :src="`/img/logo-${logo}.svg`" />
     </div>
-    <Sidebar class="sidebar" />
 
-    <Header class="header" />
+    <Sidebar
+      class="sidebar"
+      v-if="width > 600"
+    />
+
+    <Header
+      class="header"
+      v-if="width > 600"
+    />
 
     <div
       class="body"
@@ -64,6 +74,27 @@ const store = useMainStore()
 const db = useDB()
 const route = useRoute()
 const logo = computed(() => (store.theme === 'light' ? 'dark' : 'light'))
+
+let width = ref(window.innerWidth)
+watch(width, (new_val, prev_val) => {})
+
+onMounted(() => {
+  const handleResize = () => {
+    width.value = window.innerWidth
+  }
+  window.addEventListener('resize', handleResize)
+})
+onBeforeUnmount(() => {
+  window.removeEventListener('resize', handleResize)
+})
+
+onMounted(() => {
+  setTimeout(() => {
+    if (window.innerWidth < 500) {
+      return console.log('less than 500')
+    }
+  }, 2000)
+})
 </script>
 
 <style lang="scss" scoped>
@@ -92,6 +123,11 @@ span {
   @media (max-width: 768px) {
     grid-template-columns: 261px 1fr;
   }
+  @media (max-width: 600px) {
+    grid-template-areas:
+      'mobile_logo mobile_header'
+      'columns columns';
+  }
 }
 .text {
   padding-bottom: 10px;
@@ -112,10 +148,22 @@ span {
 
   &__new-column {
     display: flex;
-    margin: auto;
+    flex-grow: 1;
     flex-direction: column;
     justify-content: center;
+    align-items: center;
     gap: 32px;
+    p {
+      text-align: center;
+    }
+    .button {
+      max-width: 250px;
+    }
+    @media screen and (max-width: 600px) {
+      // display: flex;
+      justify-content: center;
+      align-items: center;
+    }
   }
   &__columns-grid {
     overflow: auto;

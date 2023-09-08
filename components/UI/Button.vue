@@ -33,7 +33,8 @@ const classes = computed(() => {
 .button {
   width: 100%;
   // max-width: 255px;
-
+  // flex: 1;
+  // display: flex;
   background-color: colors.$purple;
   color: colors.$white;
   text-align: center;
@@ -68,6 +69,11 @@ const classes = computed(() => {
     &:hover {
       background-color: colors.$redhover;
     }
+  }
+  @media (max-width: 768px) {
+    width: 100%;
+    // max-width: 160px;
+    padding: 15px 25px;
   }
 }
 </style>
