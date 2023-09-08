@@ -2,11 +2,11 @@
   <div class="sidebar-container">
     <div
       class="sidebar"
-      v-if="isSideBarVisible"
+      v-if="store.isSideBarVisible"
     >
-      <div class="logo pl-2r">
+      <!-- <div class="logo pl-2r">
         <img :src="`/img/logo-${logo}.svg`" />
-      </div>
+      </div> -->
       <div class="boards">
         <span class="allboards pl-2r">ALL BOARDS ({{ boards?.length }})</span>
         <div>
@@ -36,8 +36,9 @@
       <SidebarToggle />
 
       <SidebarItem
+        v-if="store.isSideBarVisible"
         @click="toggleSidebarDisplay"
-        class="item-container hide"
+        class="item-container"
       >
         <template #icon-label>
           <Icon
@@ -47,6 +48,16 @@
           <span class="headingM light-text">Hide sidebar</span>
         </template>
       </SidebarItem>
+    </div>
+    <div
+      class="show-sidebar"
+      v-if="!store.isSideBarVisible"
+    >
+      <Icon
+        @click="toggleSidebarDisplay"
+        icon="show-sidebar"
+        class="icon"
+      />
     </div>
   </div>
 </template>
@@ -61,11 +72,11 @@ const store = useMainStore()
 const db = useDB()
 const supabase = useSupabaseClient<Database>()
 let channel: RealtimeChannel
-let isSideBarVisible = ref(true)
+// let isSideBarVisible = ref(store.isSideBarVisible)
 const logo = computed(() => (store.theme === 'light' ? 'dark' : 'light'))
 const isActive = (id: string) => id === store.activeBoard.id
 const toggleSidebarDisplay = () => {
-  isSideBarVisible.value = !isSideBarVisible.value
+  store.isSideBarVisible = !store.isSideBarVisible
 }
 const { data: boards, refresh: refreshBoards } = await useAsyncData('board', async () => {
   if (!store.userBoards.length) {
@@ -93,6 +104,7 @@ onUnmounted(() => {
   top: 0;
   overflow-y: auto;
   grid-area: sidebar;
+  border-right: 1px solid var(--lines-color);
 }
 
 .logo {
@@ -103,13 +115,13 @@ onUnmounted(() => {
 
 .sidebar {
   flex-grow: 1;
-  max-width: 300px;
   width: 100%;
   display: flex;
   flex-direction: column;
   background-color: colors.$white;
-  border-right: 1px solid var(--lines-color);
+
   overflow-y: auto;
+  padding-bottom: 32px;
   @media screen and (max-width: 768px) {
     width: 261px;
   }
@@ -155,7 +167,25 @@ onUnmounted(() => {
   letter-spacing: 2.4px;
   color: colors.$medgrey;
 }
-.hide {
-  margin-bottom: 30px;
+.show-sidebar {
+  display: flex;
+  position: fixed;
+  top: 92.5%;
+  left: 0;
+  transform: translateY(-50%);
+  width: 56px;
+  padding: 18px;
+  border-radius: 0 100px 100px 0;
+  z-index: 1000;
+  cursor: pointer;
+  background-color: colors.$purple;
+
+  &:hover {
+    background-color: colors.$purplehover;
+    svg {
+      color: white;
+      display: flex;
+    }
+  }
 }
 </style>

@@ -4,8 +4,7 @@
   font-weight: 400;
   src: url('/assets/fonts/PlusJakartaSans-VariableFont_wght.ttf');
 }
-
-* {
+.html {
   font-size: 16px;
 }
 
@@ -116,6 +115,11 @@ select {
 }
 ::-webkit-scrollbar {
   width: 1px;
+}
+
+.center {
+  justify-content: center;
+  align-items: center;
 }
 // .container{
 

@@ -10,8 +10,11 @@
 
   <div
     class="main-grid"
-    :class="store.theme"
+    :class="[store.theme, { 'main-grid__no-sidebar': !store.isSideBarVisible }]"
   >
+    <div class="logo pl-2r">
+      <img :src="`/img/logo-${logo}.svg`" />
+    </div>
     <Sidebar class="sidebar" />
 
     <Header class="header" />
@@ -60,6 +63,7 @@ import { useDB } from '@/store/db'
 const store = useMainStore()
 const db = useDB()
 const route = useRoute()
+const logo = computed(() => (store.theme === 'light' ? 'dark' : 'light'))
 </script>
 
 <style lang="scss" scoped>
@@ -68,13 +72,23 @@ span {
 }
 .main-grid {
   height: 100vh;
-  background-color: colors.$lightgrey;
+  position: relative;
+  // background-color: colors.$lightgrey;
   display: grid;
-  grid-template-columns: minmax(261px, 300px) 1fr;
+  grid-template-columns: 300px 1fr;
   grid-template-rows: 6rem 1fr;
   grid-template-areas:
-    'sidebar header'
+    'logo header'
     'sidebar columns';
+
+  &__no-sidebar {
+    grid-template-areas:
+      'logo header'
+      'columns columns';
+    .logo {
+      border-bottom: 1px solid var(--lines-color);
+    }
+  }
   @media (max-width: 768px) {
     grid-template-columns: 261px 1fr;
   }
@@ -82,22 +96,28 @@ span {
 .text {
   padding-bottom: 10px;
 }
+.logo {
+  height: 6rem;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  border-right: 1px solid var(--lines-color);
+}
 .body {
   display: flex;
+  flex-grow: 1;
   grid-area: columns;
   overflow: auto;
   width: 100%;
-
-  justify-content: center;
   &__new-column {
     display: flex;
-
+    margin: auto;
     flex-direction: column;
     justify-content: center;
     gap: 32px;
   }
   &__columns-grid {
-    flex-direction: row;
+    // flex-direction: row;
     overflow: auto;
   }
 }

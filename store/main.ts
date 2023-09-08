@@ -4,6 +4,7 @@ export const useMainStore = defineStore('main', {
   state: () => {
     return {
       theme: localStorage.getItem('theme'),
+      isSideBarVisible: true,
       modal: {
         newBoard: false,
         editBoard: false,

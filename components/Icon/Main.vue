@@ -73,7 +73,10 @@
       </svg>
     </symbol>
 
-    <symbol id="icon-show-sidebar">
+    <symbol
+      id="icon-show-sidebar"
+      viewBox="0 0 16 10.22"
+    >
       <svg
         width="16"
         height="11"
