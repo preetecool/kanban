@@ -9,7 +9,8 @@
   .task-card {
     background-color: map-get($theme-map, task-card-bg);
   }
-  .sidebar {
+  .sidebar,
+  .new-col {
     background-color: map-get($theme-map, task-card-bg);
   }
 

@@ -50,7 +50,7 @@
       class="body"
       v-else
     >
-      <div class="columns-grid">
+      <div class="body__columns-grid">
         <slot />
       </div>
     </div>
@@ -109,6 +109,7 @@ span {
   grid-area: columns;
   overflow: auto;
   width: 100%;
+
   &__new-column {
     display: flex;
     margin: auto;
@@ -117,8 +118,8 @@ span {
     gap: 32px;
   }
   &__columns-grid {
-    // flex-direction: row;
     overflow: auto;
+    // display: flex;
   }
 }
 </style>
