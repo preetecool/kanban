@@ -3,6 +3,6 @@ export default defineNuxtRouteMiddleware(async (to, from) => {
   const user = useSupabaseUser()
   await user
   if (!user.value) {
-    navigateTo(`${runtimeConfig.public.base_url}`)
+    navigateTo(`${runtimeConfig.public.base_url}/login`)
   }
 })

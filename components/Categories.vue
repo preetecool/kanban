@@ -45,7 +45,7 @@ try {
 .container-column {
   display: flex;
   flex-grow: 1;
-  overflow-x: auto;
+  overflow: auto;
 }
 .column {
   flex-shrink: 0;

@@ -68,7 +68,6 @@ span {
 }
 .main-grid {
   height: 100vh;
-  // overflow-y: auto;
   background-color: colors.$lightgrey;
   display: grid;
   grid-template-columns: minmax(261px, 300px) 1fr;
@@ -99,6 +98,7 @@ span {
   }
   &__columns-grid {
     flex-direction: row;
+    overflow: auto;
   }
 }
 </style>

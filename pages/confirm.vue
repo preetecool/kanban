@@ -33,11 +33,11 @@ watch(
       } catch (error: any) {
         alert(error.message)
       } finally {
-        let boards: [] = await $fetch('/api/boards/get/all')
+        let boards: Board[] = await $fetch('/api/boards/get/all')
 
         if (boards.length) {
           let firstBoard = boards[0].id
-          let route = `/board/${firstBoard}`
+          let route = `/board/${firstBoard}/`
           store.activeBoard = boards[0]
           return navigateTo(route)
         } else return navigateTo('/')

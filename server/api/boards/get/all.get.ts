@@ -7,8 +7,9 @@ export default defineEventHandler(async event => {
   const client = await serverSupabaseClient<Database>(event)
   const { data: boards, error } = await client
     .from('board')
-    .select('*, category(title, id, task(id, title))')
+    .select('*, category(title, id, created_at, task(id, title))')
     .eq('user_id', user?.id)
+    .order('created_at', { foreignTable: 'category', ascending: true })
 
   if (error) {
     return createError({ statusMessage: error.message })

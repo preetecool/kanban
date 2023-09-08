@@ -9,9 +9,10 @@ export default defineEventHandler(async event => {
   let params = event?.context?.params?.id
   const { data: board, error } = await client
     .from('board')
-    .select('*, category(title, id, task(id, title, subtask(id, title)))')
+    .select('*, category(title, id, created_at, task(id, title, subtask(id, title)))')
     .eq('user_id', user?.id)
     .eq('id', params)
+    .order('created_at', { foreignTable: 'category' })
     .single()
 
   if (error) {
