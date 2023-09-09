@@ -14,7 +14,7 @@
       >
         <Icon icon="add-task-mobile" />
       </div>
-      <Icon icon="vertical-ellipsis" />
+      <UIEditDropdown />
     </div>
   </div>
 </template>
