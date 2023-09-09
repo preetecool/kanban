@@ -4,9 +4,6 @@
       class="sidebar"
       v-if="store.isSideBarVisible"
     >
-      <!-- <div class="logo pl-2r">
-        <img :src="`/img/logo-${logo}.svg`" />
-      </div> -->
       <div class="boards">
         <span class="allboards pl-2r">ALL BOARDS ({{ boards?.length }})</span>
         <div>
@@ -106,13 +103,6 @@ onUnmounted(() => {
   grid-area: sidebar;
   border-right: 1px solid var(--lines-color);
 }
-
-.logo {
-  height: 6rem;
-  display: flex;
-  align-items: center;
-}
-
 .sidebar {
   flex-grow: 1;
   width: 100%;

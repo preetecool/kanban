@@ -18,7 +18,7 @@
     >
       <img :src="`/img/logo-${logo}.svg`" />
     </div>
-
+    <UIMobileHeader v-if="width < 600" />
     <Sidebar
       class="sidebar"
       v-if="width > 600"
