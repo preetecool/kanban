@@ -14,7 +14,11 @@
       >
         <Icon icon="add-task-mobile" />
       </div>
-      <UIEditDropdown />
+      <UIEditDropdown
+        view="board"
+        :id="store.activeBoard.id"
+        menu-text="Board"
+      />
     </div>
   </div>
 </template>
