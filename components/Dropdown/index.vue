@@ -2,6 +2,7 @@
   <div
     @mouseenter="menu = true"
     @mouseleave="menu = false"
+    @click="menu = !menu"
     class="menu"
   >
     <slot name="icon"></slot>
@@ -9,6 +10,7 @@
     <div
       class="menu-list"
       v-if="menu"
+      :class="{ 'menu-list__mobilemenu': view === 'mobilemenu', 'menu-list__editmenu': view !== 'mobilemnu' }"
     >
       <ul class="menu-list__menu bodyL">
         <div class="menu-list__item">
@@ -21,6 +23,12 @@
 
 <script setup lang="ts">
 let menu = ref(false)
+
+const props = defineProps({
+  view: {
+    type: String,
+  },
+})
 </script>
 
 <style scoped lang="scss">
@@ -29,27 +37,26 @@ let menu = ref(false)
 }
 
 .menu-list {
-  position: absolute;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  width: 160px;
-  top: 11px;
-  right: 0;
-  background-color: #fff;
+
   box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
   border-radius: 8px;
   z-index: 1;
-
-  &__menu {
-    // gap: 20px;
-    // border-radius: 8px;
+  &__editmenu {
+    position: absolute;
+    top: 15px;
+    right: 0;
+    width: 160px;
+    border: 1px solid var(--lines-colors);
   }
-  // &__item:first-child {
-  //   padding-top: 16px;
-  // }
-  // &__item:last-child {
-  //   padding-bottom: 16px;
-  // }
+  &__mobilemenu {
+    // width: 100%;
+    width: 264px;
+
+    top: 3.5rem;
+    left: 1rem;
+  }
 }
 </style>

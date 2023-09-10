@@ -76,10 +76,10 @@ const toggleSidebarDisplay = () => {
   store.isSideBarVisible = !store.isSideBarVisible
 }
 const { data: boards, refresh: refreshBoards } = await useAsyncData('board', async () => {
-  if (!store.userBoards.length) {
-    const data: Board[] = await db.fetchAllBoards()
-    store.userBoards = data
-  }
+  // if (!store.userBoards.length) {
+  const data: Board[] = await db.fetchAllBoards()
+  store.userBoards = data
+  // }
   return store.userBoards
 })
 
