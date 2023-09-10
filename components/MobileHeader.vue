@@ -1,11 +1,12 @@
 <template>
   <div class="mobile-header">
     <div class="menu pl-2r">
-      <img src="/img/logo-mobile.svg" />
+      <DropdownMobileMenu />
+      <!-- <img src="/img/logo-mobile.svg" />
       <div class="dropdown">
         <span class="headingXL heading">{{ store.activeBoard.title }} </span>
-        <Icon icon="chevron-down" />
-      </div>
+        <Icon icon="chevron-down" /> -->
+      <!-- </div> -->
     </div>
     <div class="settings pr-2r">
       <div
@@ -14,7 +15,7 @@
       >
         <Icon icon="add-task-mobile" />
       </div>
-      <UIEditDropdown
+      <DropdownEdit
         view="board"
         :id="store.activeBoard.id"
         menu-text="Board"

@@ -12,7 +12,7 @@
             label="+ Add New Task"
             @click="store.toggleModal('newTask')"
           />
-          <UIEditDropdown
+          <DropdownEdit
             view="editBoard"
             menuText="Board"
             :id="params as string"

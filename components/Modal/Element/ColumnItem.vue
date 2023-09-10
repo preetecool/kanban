@@ -43,7 +43,7 @@ let showRedBorder = ref(false)
 }
 .cross {
   cursor: pointer;
-  color: inherit;
+  color: #828fa3;
   &:hover {
     transform: scale(1.13);
     color: colors.$red;

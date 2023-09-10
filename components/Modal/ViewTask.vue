@@ -3,7 +3,7 @@
     <template #header>
       <div class="task-heading">
         <span class="headingL">{{ task.title }}</span>
-        <UIEditDropdown
+        <DropdownEdit
           view="editTask"
           menuText="Task"
           :id="taskId"

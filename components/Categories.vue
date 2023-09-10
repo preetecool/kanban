@@ -63,7 +63,6 @@ try {
   padding: 24px;
 }
 .new-col {
-  background-color: aqua;
   min-width: 280px;
   max-width: 280px;
   // height: calc()

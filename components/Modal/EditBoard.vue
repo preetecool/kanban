@@ -28,9 +28,9 @@
           v-model:item-name="item.title"
           @input="debounceInput(item.id, item.title)"
         >
-          <IconOld
+          <Icon
             @click="removeColumn(index)"
-            name="icon-cross"
+            icon="cross"
             class="cross"
           />
         </ModalElementColumnItem>
