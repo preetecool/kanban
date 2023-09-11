@@ -20,7 +20,9 @@
   gap: 16px;
   width: 100%;
   align-items: center;
+  color: colors.$medgrey;
 }
+
 .item-wrap > a {
   height: 100%;
   flex-grow: 1;

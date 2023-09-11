@@ -38,7 +38,6 @@ import { Database } from '~~/types/database.types'
 const store = useMainStore()
 const db = useDB()
 const boardName = ref('')
-const user = useSupabaseUser()
 const titles = ref([])
 let refreshCategoriesRef = null
 let refreshBoardsRef = null

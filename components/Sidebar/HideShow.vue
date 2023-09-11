@@ -51,6 +51,9 @@ const toggleSidebarDisplay = () => {
   background-color: colors.$purple;
   z-index: 99;
   cursor: pointer;
+
+  color: colors.$medgrey;
+
   &:hover {
     background-color: colors.$purplehover;
     svg {

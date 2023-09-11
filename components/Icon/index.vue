@@ -20,7 +20,7 @@ const props = defineProps({
 .svg-container {
   justify-content: center;
   align-items: center;
-  width: 16px;
+  width: 18px;
   height: 16px;
 }
 svg {
