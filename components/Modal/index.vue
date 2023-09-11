@@ -64,11 +64,9 @@
 
 <script lang="ts" setup>
 import { useMainStore } from '@/store/main'
-import { off } from 'process'
-import { Database } from '~~/types/database.types'
 
 const store = useMainStore()
-const items = store.inputItems
+const items: {}[] = store.inputItems
 
 async function addNewColumn() {
   items.push({
@@ -91,16 +89,13 @@ const hasStatus = computed(() => {
   if (store.modal.editTask || store.modal.viewTask || store.modal.newTask) {
     return true
   }
+  return false
 })
 </script>
 
 <style lang="scss" scoped>
-.bgModal {
-  z-index: 99;
-}
 input {
   max-width: 416px;
-  width: 416px;
 }
 .input-block {
   display: flex;
@@ -113,7 +108,6 @@ input {
   left: 0;
   width: 100%;
   height: 100%;
-  background-color: rgba(0, 0, 0, 0.5);
   backdrop-filter: blur(2px);
   transition: all 0.3s ease-in-out;
   z-index: 100;
@@ -122,7 +116,6 @@ input {
   align-items: center;
   &__content {
     width: 480px;
-    background-color: colors.$white;
     border-radius: 8px;
     display: flex;
     flex-direction: column;
@@ -155,4 +148,3 @@ input {
   }
 }
 </style>
-```

@@ -5,39 +5,35 @@
   --lines-color: #{map-get($theme-map, lines)};
 }
 
-@mixin task-card-theme($theme-map) {
-  .task-card {
-    background-color: map-get($theme-map, task-card-bg);
-  }
-  .sidebar,
-  .new-col {
-    background-color: map-get($theme-map, task-card-bg);
-  }
-
-  html,
-  .menu-list,
-  .header-container,
-  .mobile-header,
-  .logo {
-    background-color: map-get($theme-map, task-card-bg);
+@mixin apply-bg-color($selectors, $color) {
+  #{$selectors} {
+    background-color: $color;
   }
 }
 
+@mixin task-card-theme($theme-map) {
+  $bgColor: map-get($theme-map, task-card-bg);
+
+  @include apply-bg-color('.task-card, .sidebar, .new-col', $bgColor);
+}
+
+@mixin modal-theme($theme-map) {
+  $bgColor: map-get($theme-map, task-card-bg);
+
+  @include apply-bg-color('html, .modal__content, .menu-list, .header-container, .mobile-header, .logo', $bgColor);
+}
+
 @mixin body-bg-theme($theme-map) {
-  .bg-light {
-    background-color: map-get($theme-map, body-bg);
-  }
-  .body {
-    background-color: map-get($theme-map, body-bg);
-  }
-  .theme-toggle {
-    background-color: map-get($theme-map, body-bg);
-  }
+  $bgColor: map-get($theme-map, body-bg);
+
+  @include apply-bg-color('.bg-light, .body, .theme-toggle', $bgColor);
 }
 
 @mixin main-grid-theme($theme-map) {
   @include task-card-theme($theme-map);
-  @include theme-color($theme-map, text-color);
+  @include modal-theme($theme-map);
   @include body-bg-theme($theme-map);
+  @include theme-color($theme-map, text-color);
+
   background-color: map-get($theme-map, bg-color);
 }

@@ -50,8 +50,14 @@ const isActive = (id: string) => id === store.activeBoard.id
   letter-spacing: 2.4px;
   color: colors.$medgrey;
 }
-
-.icon {
+.menu-item-container {
   color: #828fa3;
+  &__active {
+    span,
+    a,
+    .icon {
+      color: colors.$white;
+    }
+  }
 }
 </style>

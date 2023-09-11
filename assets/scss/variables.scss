@@ -1,21 +1,21 @@
-@use "_colors.scss" as colors;
+@use '_colors.scss' as colors;
 
 $light-theme: (
-	primary: colors.$purple,
-	primary-hover: colors.$purplehover,
-	bg-color: colors.$white,
-	text-color: colors.$black,
-	task-card-bg: colors.$white,
-	body-bg: colors.$lightgrey,
-	lines: colors.$lineslight
+  primary: colors.$purple,
+  primary-hover: colors.$purplehover,
+  bg-color: colors.$white,
+  text-color: colors.$black,
+  task-card-bg: colors.$white,
+  body-bg: colors.$lightgrey,
+  lines: colors.$lineslight,
 );
 
 $dark-theme: (
-	primary: colors.$purple,
-	primary-hover: colors.$purplehoverdark,
-	bg-color: colors.$verydarkgrey,
-	text-color: colors.$white,
-	task-card-bg: colors.$darkgrey,
-	body-bg: colors.$verydarkgrey,
-	lines: colors.$linesdark
+  primary: colors.$purple,
+  primary-hover: colors.$purplehoverdark,
+  bg-color: colors.$verydarkgrey,
+  text-color: colors.$white,
+  task-card-bg: colors.$darkgrey,
+  body-bg: colors.$verydarkgrey,
+  lines: colors.$linesdark,
 );

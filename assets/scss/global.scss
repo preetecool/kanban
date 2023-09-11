@@ -13,11 +13,10 @@ body {
   height: 100vh;
 }
 
-.light.main-grid {
+.light.main-div {
   @include mixins.main-grid-theme(variables.$light-theme);
 }
-
-.dark.main-grid {
+.dark.main-div {
   @include mixins.main-grid-theme(variables.$dark-theme);
 }
 
@@ -137,11 +136,13 @@ select {
     }
     background-color: colors.$purplehover;
   }
+
   &__active {
     background-color: colors.$purple;
     a,
     svg {
       color: colors.$white;
+      fill: colors.$white;
     }
     &:hover {
       background-color: colors.$purplehover;

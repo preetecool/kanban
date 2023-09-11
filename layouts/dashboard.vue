@@ -1,5 +1,8 @@
 <template>
-  <div>
+  <div
+    class="main-div"
+    :class="[store.theme]"
+  >
     <IconMain />
     <!-- <Modal v-if="store.modal === true" /> -->
     <ModalBoard v-if="store.modal['newBoard'] === true" />
@@ -11,7 +14,7 @@
 
     <div
       class="main-grid"
-      :class="[store.theme, { 'main-grid__no-sidebar': !store.isSideBarVisible }]"
+      :class="{ 'main-grid__no-sidebar': !store.isSideBarVisible }"
     >
       <div
         v-if="width > 600"
