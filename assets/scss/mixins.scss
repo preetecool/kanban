@@ -1,13 +1,43 @@
 @use 'variables.scss' as variables;
+@use 'colors' as colors;
 
 @mixin theme-color($theme-map, $color-name) {
-  color: map-get($theme-map, $color-name);
+  color: map-get($theme-map, primary-font-color);
+
+  select,
+  .subtask,
+  input {
+    color: map-get($theme-map, primary-font-color);
+  }
+
+  p span option {
+    color: map-get($theme-map, secondary-font-color);
+    &:hover {
+      background-color: colors.$purplehover;
+    }
+  }
   --lines-color: #{map-get($theme-map, lines)};
+}
+
+@mixin apply-button-theme($selectors, $color) {
+  #{$selectors} {
+    background-color: $color;
+  }
 }
 
 @mixin apply-bg-color($selectors, $color) {
   #{$selectors} {
     background-color: $color;
+  }
+}
+@mixin apply-font-color($selectors, $color) {
+  #{$selectors} {
+    color: $color;
+  }
+}
+@mixin subtask-completed-theme($theme-map) {
+  .subtask__completed {
+    color: map-get($theme-map, subtask-completed);
   }
 }
 
@@ -19,21 +49,40 @@
 
 @mixin modal-theme($theme-map) {
   $bgColor: map-get($theme-map, task-card-bg);
+  $button-second: map-get($theme-map, button-second);
 
-  @include apply-bg-color('html, .modal__content, .menu-list, .header-container, .mobile-header, .logo', $bgColor);
+  @include apply-bg-color(
+    'html, .modal__content,  .header-container, .mobile-header, .logo, input, .description, , select ',
+    $bgColor
+  );
+
+  .subtask {
+    &:hover {
+      cursor: pointer;
+      background-color: colors.$purplehover;
+    }
+    input {
+      &__completed {
+        text-decoration: line-through;
+        // color: #00000050;
+      }
+    }
+  }
+
+  @include apply-button-theme('.button--secondary', $button-second);
 }
 
 @mixin body-bg-theme($theme-map) {
   $bgColor: map-get($theme-map, body-bg);
 
-  @include apply-bg-color('.bg-light, .body, .theme-toggle', $bgColor);
+  @include apply-bg-color('.bg-light, .body, .theme-toggle, .subtask, .menu-list', $bgColor);
 }
 
-@mixin main-grid-theme($theme-map) {
+@mixin main-div-theme($theme-map) {
+  @include theme-color($theme-map, text-color);
   @include task-card-theme($theme-map);
   @include modal-theme($theme-map);
   @include body-bg-theme($theme-map);
-  @include theme-color($theme-map, text-color);
-
+  @include subtask-completed-theme($theme-map);
   background-color: map-get($theme-map, bg-color);
 }

@@ -50,18 +50,15 @@ async function updateSubtask() {
   display: flex;
   gap: 16px;
   padding: 13px;
-  background-color: colors.$lightgrey;
+
   border-radius: 4px;
-  &:hover {
-    background-color: colors.$purplehover;
-    color: black;
-  }
   input {
     width: 16px;
     height: 16px;
     min-width: auto;
     min-height: auto;
     accent-color: colors.$purple;
+    border-radius: 2px;
   }
   &__text {
     font-size: 12px;
@@ -72,7 +69,7 @@ async function updateSubtask() {
   }
   &__completed {
     text-decoration: line-through;
-    color: #00000050;
+    // color: #00000050;
   }
 }
 </style>

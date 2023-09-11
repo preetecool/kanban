@@ -14,10 +14,10 @@ body {
 }
 
 .light.main-div {
-  @include mixins.main-grid-theme(variables.$light-theme);
+  @include mixins.main-div-theme(variables.$light-theme);
 }
 .dark.main-div {
-  @include mixins.main-grid-theme(variables.$dark-theme);
+  @include mixins.main-div-theme(variables.$dark-theme);
 }
 
 input,

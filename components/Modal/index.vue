@@ -96,6 +96,7 @@ const hasStatus = computed(() => {
 <style lang="scss" scoped>
 input {
   max-width: 416px;
+  background-color: red;
 }
 .input-block {
   display: flex;

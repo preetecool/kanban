@@ -10,7 +10,7 @@
     </template>
 
     <template #form-content-title>
-      <span class="bodyM light-text">Title</span>
+      <span class="bodyM">Title</span>
       <input
         v-model="boardName"
         type="text"

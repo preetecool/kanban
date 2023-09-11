@@ -4,18 +4,26 @@ $light-theme: (
   primary: colors.$purple,
   primary-hover: colors.$purplehover,
   bg-color: colors.$white,
+  button-second: rgba(99, 95, 199, 0.1),
   text-color: colors.$black,
   task-card-bg: colors.$white,
   body-bg: colors.$lightgrey,
   lines: colors.$lineslight,
+  primary-font-color: colors.$black,
+  secondary-font-color: colors.$medgrey,
+  subtask-completed: #00000050,
 );
 
 $dark-theme: (
   primary: colors.$purple,
   primary-hover: colors.$purplehoverdark,
   bg-color: colors.$verydarkgrey,
+  button-second: colors.$white,
   text-color: colors.$white,
   task-card-bg: colors.$darkgrey,
   body-bg: colors.$verydarkgrey,
   lines: colors.$linesdark,
+  primary-font-color: colors.$white,
+  secondary-font-color: colors.$lightgrey,
+  subtask-completed: #8f9095,
 );
