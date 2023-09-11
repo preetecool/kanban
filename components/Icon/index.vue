@@ -3,7 +3,7 @@
     xmlns="http://www.w3.org/2000/svg"
     class="svg-container"
   >
-    <use :xlink:href="`#icon-${icon}`"></use>
+    <use :xlink:href="`#icon-${icon}`" />
   </svg>
 </template>
 

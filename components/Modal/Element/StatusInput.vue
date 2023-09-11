@@ -1,12 +1,12 @@
 <template>
   <span class="bodyM light-text">Status</span>
   <select
-    name="status"
     v-model="selected"
+    name="status"
     @change="setNewStatus"
   >
     <option
-      v-for="(category, index) in store.categoriesByBoard"
+      v-for="category in store.categoriesByBoard"
       :key="category.id"
       :value="category.id"
     >
@@ -23,7 +23,7 @@ import { Task } from '~~/types/app.types'
 
 const store = useMainStore()
 const db = useDB()
-let task = store.selectedTask
+const task = store.selectedTask
 
 const taskId = ref(task ? task.id : '')
 const currentStatus = task.category

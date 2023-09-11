@@ -2,8 +2,8 @@
   <div class="sidebar-container">
     <!-- <transition name="slide"> -->
     <div
-      class="sidebar"
       v-if="store.isSideBarVisible"
+      class="sidebar"
     >
       <SidebarBoardsList :boards="boards" />
       <SidebarToggle />

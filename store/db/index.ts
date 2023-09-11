@@ -23,7 +23,7 @@ export const useDB = defineStore('db', {
       const store = useMainStore()
       this.isLoadingData = true
       try {
-        let data = await $fetch(`/api/boards/get/${params}`)
+        const data = await $fetch(`/api/boards/get/${params}`)
         store.activeBoard = data
       } catch (error) {
         console.error('Error fetching board by Id', error)
@@ -34,7 +34,7 @@ export const useDB = defineStore('db', {
     async fetchAllBoards() {
       this.isLoadingData = true
       try {
-        let data = await $fetch('/api/boards/get/all')
+        const data = await $fetch('/api/boards/get/all')
         return data
       } catch (err) {
         console.error('Error fetching all boards', err)
@@ -52,13 +52,12 @@ export const useDB = defineStore('db', {
     },
     async deleteBoard(id: string) {
       console.log('entering delete board method')
-      let res = await $fetch(`/api/boards/delete/${id}`)
+      const res = await $fetch(`/api/boards/delete/${id}`)
       if (res) {
         navigateTo('/')
       }
     },
     async postCategory(boardId: string, titles: string[]) {
-      const store = useMainStore()
       await $fetch('/api/category/post', {
         method: 'POST',
         body: {
@@ -81,11 +80,11 @@ export const useDB = defineStore('db', {
     },
 
     async fetchTaskById(id: Task['id']) {
-      let store = useMainStore()
+      const store = useMainStore()
 
       this.isLoadingData = true
       try {
-        let task = await $fetch(`/api/task/${id}/`)
+        const task = await $fetch(`/api/task/${id}/`)
         store.selectedTask = task as Task
       } catch (err) {
         console.error('Error fetching task by Id', err)
@@ -96,7 +95,7 @@ export const useDB = defineStore('db', {
     async fetchCategoriesByBoard(boardId: string) {
       this.isLoadingData = true
       try {
-        let data = await $fetch(`/api/category/${boardId}`)
+        const data = await $fetch(`/api/category/${boardId}`)
         return data as Category[]
       } catch (error) {
         return console.error('Error fetching categories by board', error)
@@ -109,12 +108,12 @@ export const useDB = defineStore('db', {
       return response
     },
     setSubtasksForTask() {
-      let store = useMainStore()
+      const store = useMainStore()
 
       return store.selectedTask.subtask
     },
     async createTask(taskId: string, categoryId: string, board: string, title: string, description: string) {
-      let data = await $fetch(`/api/task/post/`, {
+      const data = await $fetch(`/api/task/post/`, {
         method: 'POST',
         body: {
           taskId: taskId,
@@ -147,7 +146,7 @@ export const useDB = defineStore('db', {
       })
     },
     async deleteTask(id: string) {
-      let store = useMainStore()
+      const store = useMainStore()
       store.categoriesByBoard[store.selectedTask.category].task.forEach((task, index) => {
         if (task.id === id) {
           store.categoriesByBoard[store.selectedTask.category].task.splice(index, 1)
@@ -157,7 +156,7 @@ export const useDB = defineStore('db', {
     },
 
     async updateSubtask(id: Subtask['id'], isComplete: boolean, title?: string) {
-      let udpatedTask = await $fetch(`/api/subtask/update/${id}/`, {
+      await $fetch(`/api/subtask/update/${id}/`, {
         method: 'PATCH',
         body: {
           completed: isComplete,

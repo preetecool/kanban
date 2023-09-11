@@ -1,4 +1,4 @@
-import { Modal, Task, Subtask, Board, CategoriesByBoard } from '~~/types/app.types'
+import { Modal, Task, Board, CategoriesByBoard } from '~~/types/app.types'
 import { useDB } from '@/store/db'
 export const useMainStore = defineStore('main', {
   state: () => {
@@ -25,7 +25,7 @@ export const useMainStore = defineStore('main', {
   },
   actions: {
     toggleModal(key: keyof Modal, id?: string) {
-      let db = useDB()
+      const db = useDB()
       if (key === 'closeModal') {
         return this.closeModal()
       }
@@ -39,7 +39,7 @@ export const useMainStore = defineStore('main', {
       this.modal[key] = !this.modal[key]
     },
     closeModal() {
-      for (let key in this.modal) {
+      for (const key in this.modal) {
         if (this.modal[key as keyof Modal] === true) {
           this.modal[key as keyof Modal] = false
           break

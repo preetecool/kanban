@@ -12,9 +12,9 @@
     <template #form-content-title>
       <span class="bodyM light-text">Title</span>
       <input
+        v-model="taskName"
         type="text"
         placeholder="Enter a name for your board"
-        v-model="taskName"
       />
     </template>
 
@@ -26,8 +26,8 @@
       >
         <ModalElementColumnItem v-model:item-name="item.title">
           <IconOld
-            @click="removeColumn(index)"
             name="icon-cross"
+            @click="removeColumn(index)"
           />
         </ModalElementColumnItem>
       </div>
@@ -36,13 +36,13 @@
     <template #description>
       <span class="bodyM light-text">Description</span>
       <textarea
+        v-model="description"
         type="text"
         class="input description"
         rows="4"
         cols="50"
         placeholder="Write a description for your task"
-        v-model="description"
-      />
+      ></textarea>
     </template>
 
     <template #status>
@@ -63,15 +63,15 @@ import { Task, Subtask } from '~~/types/app.types'
 import { useMainStore } from '@/store/main'
 import { useDB } from '@/store/db'
 
-let store = useMainStore()
-let db = useDB()
+const store = useMainStore()
+const db = useDB()
 store.inputItems = []
-let task = store.selectedTask
+const task = store.selectedTask
 const taskId = ref(task ? task.id : '')
 const selected = ref(task ? task.category : '')
 const taskName = ref(task ? task.title : '')
 const description = ref(task ? task.description : '')
-let findTaskOnBoard = store.categoriesByBoard[task.category].task.filter(item => item.id === taskId.value)
+const findTaskOnBoard = store.categoriesByBoard[task.category].task.filter(item => item.id === taskId.value)
 
 watch(taskName || description, async () => {
   if (task.title !== taskName.value) {

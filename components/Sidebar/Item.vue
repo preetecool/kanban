@@ -2,16 +2,13 @@
   <li>
     <div class="item pl-2r">
       <div class="item-wrap">
-        <slot name="icon-label" />
+        <slot name="icon-label"></slot>
       </div>
     </div>
   </li>
 </template>
 
-<script setup lang="ts">
-import { useMainStore } from '@/store/main'
-const store = useMainStore()
-</script>
+<script setup lang="ts"></script>
 <style scoped lang="scss">
 .item {
   margin-top: 1px;

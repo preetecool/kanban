@@ -1,67 +1,69 @@
 <template>
-  <IconMain />
-  <!-- <Modal v-if="store.modal === true" /> -->
-  <ModalBoard v-if="store.modal['newBoard'] === true" />
-  <ModalEditBoard v-if="store.modal['editBoard'] === true && !db.isLoadingData" />
-  <ModalCreateTask v-if="store.modal['newTask'] === true" />
-  <ModalViewTask v-if="store.modal['viewTask'] === true && !db.isLoadingData" />
-  <ModalEditTask v-if="store.modal['editTask'] === true && !db.isLoadingData" />
-  <ModalDelete v-if="store.modal['deleteView'] === true" />
-
-  <div
-    class="main-grid"
-    :class="[store.theme, { 'main-grid__no-sidebar': !store.isSideBarVisible }]"
-  >
-    <div
-      class="logo pl-2r"
-      v-if="width > 600"
-    >
-      <img :src="`/img/logo-${logo}.svg`" />
-    </div>
-    <MobileHeader v-if="width < 600" />
-    <Sidebar
-      class="sidebar"
-      v-if="width > 600"
-    />
-
-    <Header
-      class="header"
-      v-if="width > 600"
-    />
+  <div>
+    <IconMain />
+    <!-- <Modal v-if="store.modal === true" /> -->
+    <ModalBoard v-if="store.modal['newBoard'] === true" />
+    <ModalEditBoard v-if="store.modal['editBoard'] === true && !db.isLoadingData" />
+    <ModalCreateTask v-if="store.modal['newTask'] === true" />
+    <ModalViewTask v-if="store.modal['viewTask'] === true && !db.isLoadingData" />
+    <ModalEditTask v-if="store.modal['editTask'] === true && !db.isLoadingData" />
+    <ModalDelete v-if="store.modal['deleteView'] === true" />
 
     <div
-      class="body"
-      v-if="route.path === '/' || store.activeBoard.category.length === 0"
+      class="main-grid"
+      :class="[store.theme, { 'main-grid__no-sidebar': !store.isSideBarVisible }]"
     >
       <div
-        v-if="route.path !== '/'"
-        class="body__new-column"
+        v-if="width > 600"
+        class="logo pl-2r"
       >
-        <p class="light-text text">Add a column to get started.</p>
-        <UIButton
-          label="+ Add New Column"
-          @click="store.toggleModal('editBoard')"
-        />
+        <img :src="`/img/logo-${logo}.svg`" />
+      </div>
+      <MobileHeader v-if="width < 600" />
+      <Sidebar
+        v-if="width > 600"
+        class="sidebar"
+      />
+
+      <Header
+        v-if="width > 600"
+        class="header"
+      />
+
+      <div
+        v-if="route.path === '/' || store.activeBoard.category.length === 0"
+        class="body"
+      >
+        <div
+          v-if="route.path !== '/'"
+          class="body__new-column"
+        >
+          <p class="light-text text">Add a column to get started.</p>
+          <UIButton
+            label="+ Add New Column"
+            @click="store.toggleModal('editBoard')"
+          />
+        </div>
+
+        <div
+          v-else
+          class="body__new-column"
+        >
+          <p class="light-text text">There's no board here. Add or navigate to one using the sidebar.</p>
+          <UIButton
+            label="+ Add New Board"
+            @click="store.toggleModal('newBoard')"
+          />
+        </div>
       </div>
 
       <div
         v-else
-        class="body__new-column"
+        class="body"
       >
-        <p class="light-text text">There's no board here. Add or navigate to one using the sidebar.</p>
-        <UIButton
-          label="+ Add New Board"
-          @click="store.toggleModal('newBoard')"
-        />
-      </div>
-    </div>
-
-    <div
-      class="body"
-      v-else
-    >
-      <div class="body__columns-grid">
-        <slot />
+        <div class="body__columns-grid">
+          <slot></slot>
+        </div>
       </div>
     </div>
   </div>
@@ -75,8 +77,8 @@ const db = useDB()
 const route = useRoute()
 const logo = computed(() => (store.theme === 'light' ? 'dark' : 'light'))
 
-let width = ref(window.innerWidth)
-watch(width, (new_val, prev_val) => {})
+const width = ref(window.innerWidth)
+watch(width, () => {})
 
 onMounted(() => {
   const handleResize = () => {

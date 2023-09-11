@@ -13,9 +13,9 @@
             @click="store.toggleModal('newTask')"
           />
           <DropdownEdit
-            view="editBoard"
-            menuText="Board"
             :id="params as string"
+            view="editBoard"
+            menu-text="Board"
           />
         </div>
       </div>

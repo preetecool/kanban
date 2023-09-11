@@ -28,9 +28,9 @@
 import { useMainStore } from '@/store/main'
 import { useDB } from '@/store/db'
 
-let store = useMainStore()
-let db = useDB()
-let deleteText = computed(() => {
+const store = useMainStore()
+const db = useDB()
+const deleteText = computed(() => {
   if (store.deleteView === 'task') {
     return 'Delete Task'
   }
@@ -51,18 +51,18 @@ async function handleDelete() {
     }
   }
   if (store.deleteView === 'board') {
-    let id = store.activeBoard.id
+    const id = store.activeBoard.id
     await db.deleteBoard(id)
   }
   store.closeModal()
 }
 const madLibs = computed(() => {
-  let type = store.deleteView
+  const type = store.deleteView
   let item
   let childElement
   if (type === 'task') {
     item = store.selectedTask
-    let subtasks = store.selectedTask.subtask.length > 0 ? store.selectedTask.subtask.length + ' subtasks' : 'subtasks'
+    const subtasks = store.selectedTask.subtask.length > 0 ? store.selectedTask.subtask.length + ' subtasks' : 'subtasks'
     childElement = subtasks
   }
   if (type === 'category') {

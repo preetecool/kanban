@@ -1,11 +1,11 @@
 <template>
   <div class="subtask">
     <input
+      :id="subtask.id"
       type="checkbox"
       :checked="taskCompleted"
-      @change="updateSubtask"
-      :id="subtask.id"
       name="isCompleted"
+      @change="updateSubtask"
     />
     <label
       :for="subtask.id"
@@ -23,7 +23,7 @@ import { useDB } from '@/store/db'
 const props = defineProps({
   subtask: {
     type: Object,
-    default: {},
+    default: () => {},
   },
   taskId: {
     type: String,
@@ -31,9 +31,9 @@ const props = defineProps({
   },
 })
 
-let db = useDB()
-let taskCompleted: Ref<boolean> = ref(props.subtask.completed)
-let subtaskId: string = props.subtask.id
+const db = useDB()
+const taskCompleted: Ref<boolean> = ref(props.subtask.completed)
+const subtaskId: string = props.subtask.id
 async function updateSubtask() {
   taskCompleted.value = !taskCompleted.value
   try {

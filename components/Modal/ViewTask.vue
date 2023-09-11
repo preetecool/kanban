@@ -4,9 +4,9 @@
       <div class="task-heading">
         <span class="headingL">{{ task.title }}</span>
         <DropdownEdit
-          view="editTask"
-          menuText="Task"
           :id="taskId"
+          view="editTask"
+          menu-text="Task"
         />
       </div>
       <p class="bodyL light-text">
@@ -17,12 +17,12 @@
     <template #subtasks>
       <span class="bodyM light-text">Subtasks({{ ' 0 of 3' }})</span>
       <div
-        v-for="(subtask, index) in subtasks"
+        v-for="subtask in subtasks"
         :key="subtask.id"
       >
         <ModalElementSubtaskItem
           :subtask="subtask"
-          :taskId="taskId"
+          :task-id="taskId"
         />
       </div>
     </template>
@@ -38,12 +38,11 @@ import { Task, Subtask } from '~~/types/app.types'
 import { useMainStore } from '@/store/main'
 import { useDB } from '@/store/db'
 
-let store = useMainStore()
-let db = useDB()
-let task: Task = store.selectedTask
+const store = useMainStore()
+const db = useDB()
+const task: Task = store.selectedTask
 const taskId = ref(task ? task.id : '')
 const subtasks: Subtask[] = db.setSubtasksForTask()
-let menu = ref(false)
 </script>
 <style lang="scss" scpoped>
 .task-heading {

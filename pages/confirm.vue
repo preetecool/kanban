@@ -24,7 +24,7 @@ watch(
               updated_at: new Date(),
             }
 
-            let { error } = await supabase.from('profiles').upsert(updates, {
+            const { error } = await supabase.from('profiles').upsert(updates, {
               returning: 'minimal',
             })
             if (error) throw error
@@ -33,14 +33,14 @@ watch(
       } catch (error: any) {
         alert(error.message)
       } finally {
-        let boards: Board[] = await $fetch('/api/boards/get/all')
+        const boards: Board[] = await $fetch('/api/boards/get/all')
 
         if (boards.length) {
-          let firstBoard = boards[0].id
-          let route = `/board/${firstBoard}/`
+          const firstBoard = boards[0].id
+          const route = `/board/${firstBoard}/`
           store.activeBoard = boards[0]
-          return navigateTo(route)
-        } else return navigateTo('/')
+          navigateTo(route)
+        } else navigateTo('/')
       }
     }
   },

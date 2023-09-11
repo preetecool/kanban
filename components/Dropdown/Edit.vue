@@ -5,14 +5,14 @@
     </template>
     <template #menu-items>
       <li
-        @click="store.toggleModal(view as keyof Modal, id)"
         class="item"
+        @click="store.toggleModal(view as keyof Modal, id)"
       >
         <span class="light-text">Edit {{ menuText }}</span>
       </li>
       <li
-        @click="displayDeleteModal"
         class="item"
+        @click="displayDeleteModal"
       >
         <span class="light-text danger">Delete {{ menuText }}</span>
       </li>
@@ -23,7 +23,7 @@
 <script setup lang="ts">
 import { useMainStore } from '@/store/main'
 import { Modal } from '~~/types/app.types'
-let store = useMainStore()
+const store = useMainStore()
 const props = defineProps({
   view: {
     type: String,
@@ -39,7 +39,7 @@ const props = defineProps({
   },
 })
 
-let menu = ref(false)
+const menu = ref(false)
 function displayDeleteModal() {
   if (store.modal.viewTask) {
     store.deleteView = 'task'

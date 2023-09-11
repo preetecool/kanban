@@ -8,22 +8,22 @@
     <template #form-content-title>
       <span class="bodyM light-text">Title</span>
       <input
+        v-model="taskName"
         type="text"
         placeholder="Enter a name for your board"
-        v-model="taskName"
       />
     </template>
 
     <template #description>
       <span class="bodyM light-text">Description</span>
       <textarea
+        v-model="description"
         type="text"
         class="input description"
         rows="4"
         cols="50"
         placeholder="Write a description for your task"
-        v-model="description"
-      />
+      ></textarea>
     </template>
 
     <template #form-content-input>
@@ -33,8 +33,8 @@
     <template #status>
       <span class="bodyM light-text">Status</span>
       <select
-        name="status"
         v-model="selected"
+        name="status"
       >
         <option
           v-for="(category, index) in categories"
@@ -50,7 +50,7 @@
       <UIButton
         label="Create Task"
         @click="sendData()"
-      ></UIButton>
+      />
     </template>
   </Modal>
 </template>
@@ -65,24 +65,24 @@ import { uuid } from 'vue-uuid'
 const store = useMainStore()
 const db = useDB()
 
-let taskId = uuid.v4()
+const taskId = uuid.v4()
 const taskName = ref('')
 const description = ref('')
 const subtasks = ref(store.inputItems)
-let selected = ref(0)
+const selected = ref(0)
 
-let route = useRoute()
-let params = route.params.id
+const route = useRoute()
+const params = route.params.id
 
 const categories: Category[] = await $fetch(`/api/category/${params}`)
 
 store.inputItems = []
 
-let tasksByCategoryByBoard: Ref<CategoriesByBoard> = ref(store.categoriesByBoard)
+const tasksByCategoryByBoard: Ref<CategoriesByBoard> = ref(store.categoriesByBoard)
 
 async function sendData() {
   try {
-    let data = await db.createTask(taskId, categories[selected.value].id, params, taskName.value, description.value)
+    const data = await db.createTask(taskId, categories[selected.value].id, params, taskName.value, description.value)
     store.categoriesByBoard[categories[selected.value].id].task.push(data)
   } catch (error) {
     console.error('Error Creating Task:', error)

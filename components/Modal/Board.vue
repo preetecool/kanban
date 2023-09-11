@@ -1,5 +1,5 @@
 <template>
-  <Modal modalType="newBoard">
+  <Modal modal-type="newBoard">
     <template #header>
       <span class="headingL">Create a new board</span>
       <span class="bodyM-thin light-text"> Organize your tasks by creating columns! </span>
@@ -8,13 +8,13 @@
     <template #form-content-title>
       <span class="bodyM light-text">Name</span>
       <input
+        v-model="boardName"
         type="text"
         placeholder="Enter a name for your board"
-        v-model="boardName"
       />
     </template>
 
-    <template #form-content-input="{ items }">
+    <template #form-content-input>
       <span class="bodyM light-text">Column</span>
       <ModalList />
     </template>
@@ -23,7 +23,7 @@
       <UIButton
         label="Create Board"
         @click="sendData()"
-      ></UIButton>
+      />
     </template>
   </Modal>
 </template>
@@ -39,7 +39,7 @@ const store = useMainStore()
 const db = useDB()
 const boardName = ref('')
 const user = useSupabaseUser()
-let titles = ref([])
+const titles = ref([])
 let refreshCategoriesRef = null
 let refreshBoardsRef = null
 let channel: RealtimeChannel
@@ -90,7 +90,7 @@ async function sendData() {
     console.error('Error while creating categories', error)
     throw new Error()
   } finally {
-    let router = useRouter()
+    const router = useRouter()
     router.push(`/board/${boardId}`)
   }
   store.closeModal()

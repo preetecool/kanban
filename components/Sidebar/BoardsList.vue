@@ -5,8 +5,8 @@
       <ul class="">
         <SidebarItem
           v-for="board in boards"
-          class="menu-item-container"
           :key="board.title"
+          class="menu-item-container"
           :class="{ 'menu-item-container__active': isActive(board.id) }"
         >
           <template #icon-label>
@@ -15,8 +15,8 @@
               class="icon"
             />
             <SidebarLink
-              class="link"
               :id="board.id"
+              class="link"
               :label="board.title"
             />
           </template>

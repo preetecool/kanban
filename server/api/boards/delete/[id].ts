@@ -1,22 +1,17 @@
 import { createError } from 'h3'
 import { Database } from '~~/types/database.types'
-import { Subtask } from '~~/types/app.types'
-import { serverSupabaseUser, serverSupabaseClient } from '#supabase/server'
-import type { RealtimeChannel } from '@supabase/supabase-js'
+import { serverSupabaseClient } from '#supabase/server'
 
 export default defineEventHandler(async event => {
-  const user = await serverSupabaseUser(event)
   const client = await serverSupabaseClient<Database>(event)
 
-  let channel: RealtimeChannel
-  let boardId = getRouterParam(event, 'id')
+  const boardId = getRouterParam(event, 'id')
 
   try {
     const { error } = await client.from('board').delete().eq('id', boardId)
-    channel = client
-      .channel('public:board')
-      .on('postgres_changes', { event: '*', schema: 'public', table: 'board' }, payload => payload)
-    channel.subscribe()
+    if (error) {
+      throw new Error('Something went wrong deleting the board')
+    }
   } catch (error: any) {
     return createError({ statusMessage: error.message })
   }

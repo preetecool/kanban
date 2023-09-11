@@ -1,7 +1,7 @@
 <template>
   <button
-    @click="action"
     :class="classes"
+    @click="action"
   >
     {{ label }}
   </button>

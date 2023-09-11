@@ -7,7 +7,7 @@
           height="16"
           xmlns="http://www.w3.org/2000/svg"
         >
-          <use xlink:href="#icon-light-theme"></use>
+          <use xlink:href="#icon-light-theme" />
         </svg>
       </div>
       <div
@@ -25,7 +25,7 @@
           height="16"
           xmlns="http://www.w3.org/2000/svg"
         >
-          <use xlink:href="#icon-dark-theme"></use>
+          <use xlink:href="#icon-dark-theme" />
         </svg>
       </div>
     </div>
@@ -35,7 +35,7 @@
 <script setup lang="ts">
 import { useMainStore } from '@/store/main'
 const store = useMainStore()
-let isLight = ref(true)
+const isLight = ref(true)
 function toggleTheme() {
   if (isLight.value) {
     localStorage.setItem('theme', 'dark')

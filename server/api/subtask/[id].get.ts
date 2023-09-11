@@ -5,7 +5,7 @@ import { serverSupabaseUser, serverSupabaseClient } from '#supabase/server'
 export default defineEventHandler(async event => {
   const user = await serverSupabaseUser(event)
   const client = await serverSupabaseClient<Database>(event)
-  let subtaskId = getRouterParams(event)
+  const subtaskId = getRouterParams(event)
   let response
   try {
     const { data: tasks, error } = await client.from('subtask').select('*').eq('id', subtaskId.id)

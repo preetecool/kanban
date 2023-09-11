@@ -2,11 +2,9 @@ import { createError } from 'h3'
 import { Database } from '~~/types/database.types'
 import { serverSupabaseUser, serverSupabaseClient } from '#supabase/server'
 export default defineEventHandler(async event => {
-  const user = await serverSupabaseUser(event)
   const client = await serverSupabaseClient<Database>(event)
-  let channel: RealtimeChannel
-  let body = await readBody(event)
-  let taskId = getRouterParam(event, 'id')
+  const body = await readBody(event)
+  const taskId = getRouterParam(event, 'id')
   let response
 
   try {

@@ -1,7 +1,7 @@
 <template>
   <div
-    @click="toggleSidebarDisplay"
     v-if="store.isSideBarVisible && !store.isMobileView"
+    @click="toggleSidebarDisplay"
   >
     <SidebarItem class="menu-item-container hide">
       <template #icon-label>
@@ -15,13 +15,13 @@
   </div>
 
   <div
-    class="show-sidebar"
     v-if="!store.isSideBarVisible"
+    class="show-sidebar"
   >
     <Icon
-      @click="toggleSidebarDisplay"
       icon="show-sidebar"
       class="icon"
+      @click="toggleSidebarDisplay"
     />
   </div>
 </template>

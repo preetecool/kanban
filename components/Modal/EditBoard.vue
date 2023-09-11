@@ -12,9 +12,9 @@
     <template #form-content-title>
       <span class="bodyM light-text">Title</span>
       <input
+        v-model="boardName"
         type="text"
         placeholder="Enter a name for your board"
-        v-model="boardName"
       />
     </template>
 
@@ -29,9 +29,9 @@
           @input="debounceInput(item.id, item.title)"
         >
           <Icon
-            @click="removeColumn(index)"
             icon="cross"
             class="cross"
+            @click="removeColumn(index)"
           />
         </ModalElementColumnItem>
       </div>
@@ -53,14 +53,14 @@ import { useDB } from '@/store/db'
 import { Database } from '~~/types/database.types'
 import type { RealtimeChannel } from '@supabase/supabase-js'
 
-let store = useMainStore()
-let db = useDB()
-let route = useRoute()
+const store = useMainStore()
+const db = useDB()
+const route = useRoute()
 store.inputItems = []
-let board: { category: Category[]; [key: string]: any } = store.activeBoard
+const board: { category: Category[]; [key: string]: any } = store.activeBoard
 const boardId = ref(board ? board.id : '')
 const boardName = ref(board ? board.title : '')
-let boardNameisChanged = ref(false)
+const boardNameisChanged = ref(false)
 let channel: RealtimeChannel
 const supabase = useSupabaseClient<Database>()
 let refreshCategoriesRef = null
@@ -68,7 +68,7 @@ let refreshCategoriesRef = null
 watch(boardName, async () => {
   if (board.title !== boardName.value) {
     board.title = boardName.value
-    let boardIndex = store.userBoards.findIndex(item => item.id === route.params.id)
+    const boardIndex = store.userBoards.findIndex(item => item.id === route.params.id)
     store.userBoards[boardIndex].title = boardName.value
     boardNameisChanged.value = true
   }

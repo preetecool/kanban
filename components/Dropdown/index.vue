@@ -1,15 +1,15 @@
 <template>
   <div
+    class="menu"
     @mouseenter="toggle(true)"
     @mouseleave="toggle(false)"
     @click="menu = !menu"
-    class="menu"
   >
     <slot name="icon"></slot>
 
     <div
-      class="menu-list"
       v-if="menu"
+      class="menu-list"
       :class="{ 'menu-list__mobilemenu': view === 'mobilemenu', 'menu-list__editmenu': view !== 'mobilemnu' }"
     >
       <ul class="menu-list__menu bodyL">
@@ -24,7 +24,7 @@
 <script setup lang="ts">
 import { useMainStore } from '@/store/main'
 const store = useMainStore()
-let menu = ref(false)
+const menu = ref(false)
 
 const toggle = (bool: boolean) => {
   if (!store.isMobileView) {

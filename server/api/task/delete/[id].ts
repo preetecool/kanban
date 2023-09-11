@@ -1,12 +1,10 @@
 import { createError } from 'h3'
 import { Database } from '~~/types/database.types'
-import { Task } from '~~/types/app.types'
-import { serverSupabaseUser, serverSupabaseClient } from '#supabase/server'
+import { serverSupabaseClient } from '#supabase/server'
 
 export default defineEventHandler(async event => {
-  const user = await serverSupabaseUser(event)
   const client = await serverSupabaseClient<Database>(event)
-  let taskId = getRouterParam(event, 'id')
+  const taskId = getRouterParam(event, 'id')
   try {
     const { error } = await client.from('task').delete().eq('id', taskId).select('*')
     if (error) {

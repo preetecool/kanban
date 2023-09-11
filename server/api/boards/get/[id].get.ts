@@ -6,7 +6,7 @@ export default defineEventHandler(async event => {
   const user = await serverSupabaseUser(event)
   const client = await serverSupabaseClient<Database>(event)
   let channel: RealtimeChannel
-  let params = event?.context?.params?.id
+  const params = event?.context?.params?.id
   const { data: board, error } = await client
     .from('board')
     .select('*, category(title, id, created_at, task(id, title, subtask(id, title)))')

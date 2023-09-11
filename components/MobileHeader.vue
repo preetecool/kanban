@@ -16,8 +16,8 @@
         <Icon icon="add-task-mobile" />
       </div>
       <DropdownEdit
-        view="board"
         :id="store.activeBoard.id"
+        view="board"
         menu-text="Board"
       />
     </div>

@@ -8,27 +8,27 @@
       @click.stop
     >
       <div class="modal__content__header">
-        <slot name="header" />
+        <slot name="header"></slot>
       </div>
 
       <div
-        class="modal__content__body"
         v-if="!store.modal.deleteView"
+        class="modal__content__body"
       >
         <div class="modal__content__body__input">
-          <slot name="subtasks" />
+          <slot name="subtasks"></slot>
           <div class="input-block">
-            <slot name="form-content-title" />
+            <slot name="form-content-title"></slot>
           </div>
-          <slot name="description" />
+          <slot name="description"></slot>
           <div
-            class="input-block"
             v-if="!store.modal.viewTask"
+            class="input-block"
           >
             <slot
               name="form-content-input"
               :items="items"
-            />
+            ></slot>
 
             <div
               v-for="(item, index) in items"
@@ -36,8 +36,8 @@
             >
               <ModalElementColumnItem v-model:item-name="item.title">
                 <IconOld
-                  @click="removeColumn(index)"
                   name="icon-cross"
+                  @click="removeColumn(index)"
                 />
               </ModalElementColumnItem>
             </div>
@@ -50,13 +50,13 @@
         </div>
       </div>
       <div
-        class="modal__content__body status"
         v-if="hasStatus"
+        class="modal__content__body status"
       >
-        <slot name="status" />
+        <slot name="status"></slot>
       </div>
       <div class="modal__content__footer">
-        <slot name="submit-button" />
+        <slot name="submit-button"></slot>
       </div>
     </div>
   </div>
@@ -68,7 +68,7 @@ import { off } from 'process'
 import { Database } from '~~/types/database.types'
 
 const store = useMainStore()
-let items = store.inputItems
+const items = store.inputItems
 
 async function addNewColumn() {
   items.push({

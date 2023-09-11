@@ -2,11 +2,11 @@
   <!-- <client-only> -->
   <div class="container">
     <div class="columns">
-      <div v-for="(column, index) in categories">
-        <div
-          class="column"
-          :key="index"
-        >
+      <div
+        v-for="(column, index) in categories"
+        :key="index"
+      >
+        <div class="column">
           <span class="headingS light-text"> {{ column.title.toUpperCase() }} ({{ numTasks }}) </span>
           <TaskCard :tasks="column.task" />
         </div>
@@ -31,14 +31,14 @@ import { useDB } from '@/store/db'
 
 const store = useMainStore()
 const db = useDB()
-let numTasks = ref(0)
-let route = useRoute()
-let params = route.params.id
-let categories = ref(store.categoriesByBoard)
+const numTasks = ref(0)
+const route = useRoute()
+const params = route.params.id
+const categories = ref(store.categoriesByBoard)
 try {
   if (store.activeBoard.category.length !== 0) {
     store.activeBoard.category.forEach((category: Category) => {
-      let id = category.id
+      const id = category.id
       store.categoriesByBoard[id] = {
         ...category,
       }

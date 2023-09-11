@@ -6,7 +6,4 @@
   </div>
 </template>
 
-<script setup>
-import { useMainStore } from '@/store/main'
-let store = useMainStore()
-</script>
+<script setup lang="ts"></script>

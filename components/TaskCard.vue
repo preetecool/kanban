@@ -1,6 +1,6 @@
 <template>
   <div
-    v-for="(task, index) in tasks"
+    v-for="task in tasks"
     :key="task.id"
     class="tasks"
   >
@@ -16,16 +16,14 @@
 </template>
 
 <script lang="ts" setup>
-import { Task, Subtask } from '~~/types/app.types'
 import { useMainStore } from '@/store/main'
-import { useDB } from '@/store/db'
 
 const store = useMainStore()
-const db = useDB()
 
 const props = defineProps({
   tasks: {
     type: Array,
+    default: () => [],
   },
 })
 

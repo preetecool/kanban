@@ -3,8 +3,8 @@ import { Database } from '~~/types/database.types'
 import { serverSupabaseClient } from '#supabase/server'
 export default defineEventHandler(async event => {
   const client = await serverSupabaseClient<Database>(event)
-  let body = await readBody(event)
-  let categoryId = getRouterParam(event, 'id')
+  const body = await readBody(event)
+  const categoryId = getRouterParam(event, 'id')
 
   try {
     const { data, error } = await client

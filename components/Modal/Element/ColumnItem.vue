@@ -4,9 +4,9 @@
       type="text"
       :placeholder="placeholder"
       :v-model="itemName"
-      @input="$emit('update:itemName', $event.target.value)"
       :value="itemName"
       :class="{ 'red-border': showRedBorder }"
+      @input="$emit('update:itemName', $event.target.value)"
     />
     <div
       class="cross"
@@ -31,7 +31,7 @@ const props = defineProps({
   },
 })
 const emit = defineEmits(['update:itemName'])
-let showRedBorder = ref(false)
+const showRedBorder = ref(false)
 </script>
 <style lang="scss" scoped>
 .wrap {
