@@ -1,7 +1,5 @@
 <template>
   <svg
-    width="16"
-    height="16"
     xmlns="http://www.w3.org/2000/svg"
     class="svg-container"
   >
@@ -20,7 +18,6 @@ const props = defineProps({
 
 <style lang="scss" scoped>
 .svg-container {
-  // display: flex;
   justify-content: center;
   align-items: center;
   width: 16px;

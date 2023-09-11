@@ -124,6 +124,29 @@ select {
   justify-content: center;
   align-items: center;
 }
-// .container{
 
-// }
+.menu-item-container {
+  border-radius: 0 100px 100px 0;
+  max-width: 90%;
+  cursor: pointer;
+  &:hover {
+    svg,
+    span,
+    a {
+      color: colors.$purple;
+    }
+    background-color: colors.$purplehover;
+  }
+  &__active {
+    background-color: colors.$purple;
+    a,
+    svg {
+      color: colors.$white;
+    }
+    &:hover {
+      background-color: colors.$purplehover;
+      fill: colors.$white;
+      color: colors.$purple;
+    }
+  }
+}

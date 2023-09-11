@@ -1,7 +1,7 @@
 <template>
   <div
-    @mouseenter="menu = true"
-    @mouseleave="menu = false"
+    @mouseenter="toggle(true)"
+    @mouseleave="toggle(false)"
     @click="menu = !menu"
     class="menu"
   >
@@ -22,7 +22,15 @@
 </template>
 
 <script setup lang="ts">
+import { useMainStore } from '@/store/main'
+const store = useMainStore()
 let menu = ref(false)
+
+const toggle = (bool: boolean) => {
+  if (!store.isMobileView) {
+    menu.value = bool
+  }
+}
 
 const props = defineProps({
   view: {
@@ -34,6 +42,7 @@ const props = defineProps({
 <style scoped lang="scss">
 .menu {
   position: relative;
+  border-radius: 8px;
 }
 
 .menu-list {
@@ -42,7 +51,7 @@ const props = defineProps({
   justify-content: space-between;
 
   box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
-  border-radius: 8px;
+
   z-index: 1;
   &__editmenu {
     position: absolute;

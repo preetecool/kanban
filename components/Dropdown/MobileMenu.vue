@@ -7,25 +7,7 @@
       </div>
     </template>
     <template #menu-items>
-      <span class="allboards pl-2r lighttext">ALL BOARDS ({{ store.userBoards?.length }})</span>
-      <SidebarItem
-        v-for="board in store.userBoards"
-        class="item-container"
-        :key="board.title"
-        :class="{ 'item-container__active': isActive(board.id) }"
-      >
-        <template #icon-label>
-          <Icon
-            icon="board"
-            class="icon"
-          />
-          <SidebarLink
-            class="link"
-            :id="board.id"
-            :label="board.title"
-          />
-        </template>
-      </SidebarItem>
+      <Sidebar class="mobile-menu" />
     </template>
   </Dropdown>
 </template>
@@ -43,43 +25,6 @@ const isActive = (id: string) => id === store.activeBoard.id
   gap: 8px;
   svg {
     margin-top: 11px;
-  }
-}
-.item-container {
-  border-radius: 0 100px 100px 0;
-  max-width: 90%;
-  cursor: pointer;
-  &:hover {
-    svg,
-    span,
-    a {
-      color: colors.$purple;
-    }
-    background-color: colors.$purplehover;
-  }
-  &__active {
-    background-color: colors.$purple;
-    a,
-    svg {
-      color: colors.$white;
-    }
-    &:hover {
-      background-color: colors.$purplehover;
-      fill: colors.$white;
-      color: colors.$purple;
-    }
-  }
-}
-.stuff {
-  position: relative;
-}
-.item {
-  border-radius: 8px;
-  padding: 8px 16px;
-  justify-self: center;
-  &:hover {
-    cursor: pointer;
-    background-color: colors.$lightgrey;
   }
 }
 </style>

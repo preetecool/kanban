@@ -58,10 +58,13 @@ onMounted(() => {
 <style scoped lang="scss">
 .sidebar-settings {
   margin-top: auto;
-  padding: 0 2rem 2rem 2rem;
+  padding: 2rem;
   display: flex;
   flex-direction: column;
   gap: 22px;
+  @media screen and (max-width: 768px) {
+    padding: 2rem 1rem;
+  }
 }
 .theme-toggle {
   height: 3rem;

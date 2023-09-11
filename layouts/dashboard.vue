@@ -91,7 +91,9 @@ onBeforeUnmount(() => {
 onMounted(() => {
   setTimeout(() => {
     if (window.innerWidth < 500) {
-      return console.log('less than 500')
+      store.isMobileView = true
+    } else {
+      store.isMobileView = false
     }
   }, 2000)
 })
