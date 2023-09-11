@@ -35,8 +35,8 @@ const boards = store.userBoards
 const isActive = (id: string) => id === store.activeBoard.id
 </script>
 
-<style lang="scss " scoped>
-  .boards {
+<style scoped lang="scss">
+.boards {
   padding-top: 10%;
   display: flex;
   flex-direction: column;
@@ -50,7 +50,6 @@ const isActive = (id: string) => id === store.activeBoard.id
   letter-spacing: 2.4px;
   color: colors.$medgrey;
 }
-
 
 .icon {
   color: #828fa3;
