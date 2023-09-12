@@ -60,7 +60,6 @@ async function sendData() {
       'updatedCategories',
       async () => {
         return await db.postBoard(boardId, boardName.value)
-        // await db.fetchAllBoards()
       },
       {
         transform: response => response.body,

@@ -39,5 +39,8 @@ const props = defineProps({
   padding: 23px 16px;
   border-radius: 8px;
   box-shadow: rgba(0, 0, 0, 0.05) 0px 1px 4px;
+  &:hover {
+    border: 1px solid var(--lines-color);
+  }
 }
 </style>
