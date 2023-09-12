@@ -12,13 +12,13 @@
   },
   "devDependencies": {
     "@nuxt/devtools": "latest",
+    "@nuxt/eslint-config": "^0.2.0",
     "@nuxtjs/supabase": "^1.0.2",
     "@types/node": "^18.17.3",
+    "eslint": "^8.48.0",
     "nuxt": "^3.6.5",
     "prettier": "^3.0.3",
-    "sass": "^1.65.1",
-    "@nuxt/eslint-config": "^0.2.0",
-    "eslint": "^8.48.0"
+    "sass": "^1.65.1"
   },
   "dependencies": {
     "@pinia/nuxt": "^0.4.11",
