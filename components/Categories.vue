@@ -1,17 +1,23 @@
 <template>
-  <!-- <client-only> -->
   <div class="container">
     <div class="columns">
       <div
         v-for="(column, index) in categories"
         :key="index"
+        @drop="dragDrop($event, column.id)"
+        @dragover.prevent
+        @dragenter.prevent
       >
         <div class="column">
-          <span class="headingS light-text"> {{ column.title.toUpperCase() }} ({{ numTasks }}) </span>
-          <TaskCard :tasks="column.task" />
-        </div>
+          <span class="headingS light-text"> {{ column.title.toUpperCase() }} ({{ column.task.length }}) </span>
 
-        <!-- <div class="column"></div> -->
+          <TaskCard
+            v-for="(task, index) in column.task"
+            :task="task"
+            draggable
+            @dragstart="dragStart($event, task)"
+          />
+        </div>
       </div>
       <div
         class="new-col"
@@ -21,20 +27,19 @@
       </div>
     </div>
   </div>
-  <!-- </client-only> -->
 </template>
 
 <script setup lang="ts">
-import { Category } from '~~/types/app.types'
+import { Category, Task } from '~~/types/app.types'
 import { useMainStore } from '@/store/main'
 import { useDB } from '@/store/db'
 
 const store = useMainStore()
 const db = useDB()
-const numTasks = ref(0)
 const route = useRoute()
 const params = route.params.id
 const categories = ref(store.categoriesByBoard)
+
 try {
   if (store.activeBoard.category.length !== 0) {
     store.activeBoard.category.forEach((category: Category) => {
@@ -48,6 +53,45 @@ try {
   console.error('Failed to fetch categories', error)
   throw new Error()
 }
+function dragStart(event: DragEvent, task: Task) {
+  store.selectedTask = task
+  console.log('Task selected during drag:', store.selectedTask)
+}
+// console.log(categories.value)
+
+function dragDrop(event: DragEvent, columnId: Category['id']) {
+  if (!store.selectedTask || !store.selectedTask.category) {
+    console.error('No task selected or task category is undefined')
+    return
+  }
+
+  let start_column = store.selectedTask.category
+
+  // Log the relevant data
+  console.log('Selected task category ID:', start_column)
+  console.log('Drop column ID:', columnId)
+
+  if (!categories.value[start_column]) {
+    console.error(`No category found with ID: ${start_column}`)
+    return
+  }
+
+  const task_arr = categories.value[start_column].task
+  for (let i = 0; i < task_arr.length; ++i) {
+    if (task_arr[i].id === store.selectedTask.id) {
+      task_arr.splice(i, 1)
+    }
+    store.selectedTask.category = columnId
+  }
+
+  if (!categories.value[columnId]) {
+    console.error(`No category found with ID: ${columnId}`)
+    return
+  }
+
+  categories.value[columnId].task.push(store.selectedTask)
+  store.selectedTask = null
+}
 </script>
 
 <style lang="scss" scoped>
@@ -55,6 +99,7 @@ try {
   display: flex;
   flex-grow: 1;
   overflow: auto;
+  min-height: 50vh;
 }
 .column {
   flex-shrink: 0;
