@@ -10,6 +10,9 @@ export default defineEventHandler(async event => {
 
   try {
     const { error } = await client.from('subtask').delete().eq('id', subtaskId)
+    if (error) {
+      return 'Something went wrong'
+    }
   } catch (error: any) {
     return createError({ statusMessage: error.message })
   }

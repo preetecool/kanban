@@ -17,8 +17,8 @@ const store = useMainStore()
 
 const props = defineProps({
   task: {
-    type: Object,
-    default: {},
+    type: Function,
+    default: () => {},
   },
   draggable: {
     type: Boolean,

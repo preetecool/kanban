@@ -13,6 +13,7 @@
 
           <TaskCard
             v-for="task in column.task"
+            :key="task.id"
             :task="task"
             draggable
             @dragstart="dragStart($event, task)"
@@ -55,7 +56,7 @@ function dragStart(event: DragEvent, task: Task) {
 }
 
 function dragDrop(event: DragEvent, columnId: Category['id']) {
-  let start_column = store.selectedTask.category
+  const start_column = store.selectedTask.category
 
   const task_arr = categories.value[start_column].task
   for (let i = 0; i < task_arr.length; ++i) {
@@ -65,7 +66,7 @@ function dragDrop(event: DragEvent, columnId: Category['id']) {
     store.selectedTask.category = columnId
   }
   categories.value[columnId].task.push(store.selectedTask)
-  let taskId = store.selectedTask.id
+  const taskId = store.selectedTask.id
   db.updateTask(taskId, columnId)
   store.selectedTask = null
 }

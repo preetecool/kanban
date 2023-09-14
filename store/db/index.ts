@@ -160,6 +160,7 @@ export const useDB = defineStore('db', {
         method: 'PATCH',
         body: {
           completed: isComplete,
+          title: title ? title : null,
         },
       })
     },

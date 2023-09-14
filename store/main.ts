@@ -1,4 +1,4 @@
-import { Modal, Task, Board, Category, CategoriesByBoard } from '~~/types/app.types'
+import { Modal, Task, Board, CategoriesByBoard } from '~~/types/app.types'
 import { useDB } from '@/store/db'
 export const useMainStore = defineStore('main', {
   state: () => {
