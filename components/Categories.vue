@@ -12,7 +12,7 @@
           <span class="headingS light-text"> {{ column.title.toUpperCase() }} ({{ column.task.length }}) </span>
 
           <TaskCard
-            v-for="(task, index) in column.task"
+            v-for="task in column.task"
             :task="task"
             draggable
             @dragstart="dragStart($event, task)"
@@ -36,8 +36,6 @@ import { useDB } from '@/store/db'
 
 const store = useMainStore()
 const db = useDB()
-const route = useRoute()
-const params = route.params.id
 const categories = ref(store.categoriesByBoard)
 
 try {
@@ -50,13 +48,11 @@ try {
     })
   }
 } catch (error) {
-  console.error('Failed to fetch categories', error)
-  throw new Error()
+  throw new Error('Something went wrong fetching the categories...')
 }
 function dragStart(event: DragEvent, task: Task) {
   store.selectedTask = task
 }
-// console.log(categories.value)
 
 function dragDrop(event: DragEvent, columnId: Category['id']) {
   let start_column = store.selectedTask.category
@@ -68,7 +64,6 @@ function dragDrop(event: DragEvent, columnId: Category['id']) {
     }
     store.selectedTask.category = columnId
   }
-
   categories.value[columnId].task.push(store.selectedTask)
   let taskId = store.selectedTask.id
   db.updateTask(taskId, columnId)
