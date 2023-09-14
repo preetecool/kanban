@@ -116,6 +116,7 @@ async function updateboard() {
       const data = await db.postCategory(boardId.value, titles)
       return data
     })
+
     refreshCategoriesRef = refreshCategories
   }
   store.closeModal()

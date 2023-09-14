@@ -1,6 +1,7 @@
 <template>
   <div class="tasks">
     <div
+      :draggable="draggable"
       class="task-card"
       @click="store.toggleModal('viewTask', task.id)"
     >
@@ -19,6 +20,10 @@ const props = defineProps({
     type: Object,
     default: {},
   },
+  draggable: {
+    type: Boolean,
+    default: true,
+  },
 })
 </script>
 
@@ -31,11 +36,11 @@ const props = defineProps({
   padding: 23px 16px;
   border-radius: 8px;
   box-shadow: rgba(0, 0, 0, 0.05) 0px 1px 4px;
-
+  user-select: none;
   &:hover {
     border: 1px solid var(--lines-color);
   }
-  cursor: move;
+  // cursor: move;
 }
 .task-card.over {
   border: 2px dashed #000;

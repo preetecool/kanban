@@ -55,26 +55,11 @@ try {
 }
 function dragStart(event: DragEvent, task: Task) {
   store.selectedTask = task
-  console.log('Task selected during drag:', store.selectedTask)
 }
 // console.log(categories.value)
 
 function dragDrop(event: DragEvent, columnId: Category['id']) {
-  if (!store.selectedTask || !store.selectedTask.category) {
-    console.error('No task selected or task category is undefined')
-    return
-  }
-
   let start_column = store.selectedTask.category
-
-  // Log the relevant data
-  console.log('Selected task category ID:', start_column)
-  console.log('Drop column ID:', columnId)
-
-  if (!categories.value[start_column]) {
-    console.error(`No category found with ID: ${start_column}`)
-    return
-  }
 
   const task_arr = categories.value[start_column].task
   for (let i = 0; i < task_arr.length; ++i) {
@@ -84,12 +69,9 @@ function dragDrop(event: DragEvent, columnId: Category['id']) {
     store.selectedTask.category = columnId
   }
 
-  if (!categories.value[columnId]) {
-    console.error(`No category found with ID: ${columnId}`)
-    return
-  }
-
   categories.value[columnId].task.push(store.selectedTask)
+  let taskId = store.selectedTask.id
+  db.updateTask(taskId, columnId)
   store.selectedTask = null
 }
 </script>
