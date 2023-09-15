@@ -119,6 +119,7 @@ async function updateboard() {
 
     refreshCategoriesRef = refreshCategories
   }
+
   store.closeModal()
 }
 onMounted(() => {

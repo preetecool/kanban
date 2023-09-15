@@ -5,8 +5,9 @@
   color: map-get($theme-map, primary-font-color);
 
   select,
+  input,
   .subtask,
-  input {
+  .description {
     color: map-get($theme-map, primary-font-color);
   }
 
@@ -19,22 +20,12 @@
   --lines-color: #{map-get($theme-map, lines)};
 }
 
-@mixin apply-button-theme($selectors, $color) {
+@mixin apply-theme($selectors, $color, $property: 'background-color') {
   #{$selectors} {
-    background-color: $color;
+    #{$property}: $color;
   }
 }
 
-@mixin apply-bg-color($selectors, $color) {
-  #{$selectors} {
-    background-color: $color;
-  }
-}
-@mixin apply-font-color($selectors, $color) {
-  #{$selectors} {
-    color: $color;
-  }
-}
 @mixin subtask-completed-theme($theme-map) {
   .subtask__completed {
     color: map-get($theme-map, subtask-completed);
@@ -42,18 +33,13 @@
 }
 
 @mixin task-card-theme($theme-map) {
-  $bgColor: map-get($theme-map, task-card-bg);
-
-  @include apply-bg-color('.task-card, .sidebar, .new-col', $bgColor);
+  @include apply-theme('.task-card, .sidebar, .new-col', map-get($theme-map, task-card-bg));
 }
 
 @mixin modal-theme($theme-map) {
-  $bgColor: map-get($theme-map, task-card-bg);
-  $button-second: map-get($theme-map, button-second);
-
-  @include apply-bg-color(
-    'html, .modal__content,  .header-container, .mobile-header, .logo, input, .description, , select ',
-    $bgColor
+  @include apply-theme(
+    'html, .modal__content, .header-container, .mobile-header, .logo, input, .description, select',
+    map-get($theme-map, task-card-bg)
   );
 
   .subtask {
@@ -64,18 +50,15 @@
     input {
       &__completed {
         text-decoration: line-through;
-        // color: #00000050;
       }
     }
   }
 
-  @include apply-button-theme('.button--secondary', $button-second);
+  @include apply-theme('.button--secondary', map-get($theme-map, button-second));
 }
 
 @mixin body-bg-theme($theme-map) {
-  $bgColor: map-get($theme-map, body-bg);
-
-  @include apply-bg-color('.bg-light, .body, .theme-toggle, .subtask, .menu-list', $bgColor);
+  @include apply-theme('.bg-light, .body, .theme-toggle, .subtask, .menu-list', map-get($theme-map, body-bg));
 }
 
 @mixin main-div-theme($theme-map) {

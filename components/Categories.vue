@@ -6,11 +6,16 @@
         :key="index"
         @drop="dragDrop($event, column.id)"
         @dragover.prevent
-        @dragenter.prevent
+        @dragenter="() => dragEnter(column.id)"
+        @dragleave="() => dragLeave(column.id)"
       >
-        <div class="column">
-          <span class="headingS light-text"> {{ column.title.toUpperCase() }} ({{ column.task.length }}) </span>
-
+        <span class="headingS light-text column-title">
+          {{ column.title.toUpperCase() }} ({{ column.task.length }})
+        </span>
+        <div
+          class="column"
+          :class="{ 'column__drag-enter': dragOverCount[column.id] && dragOverCount[column.id] > 0 }"
+        >
           <TaskCard
             v-for="task in column.task"
             :key="task.id"
@@ -38,6 +43,7 @@ import { useDB } from '@/store/db'
 const store = useMainStore()
 const db = useDB()
 const categories = ref(store.categoriesByBoard)
+const dragOverCount = ref({})
 
 try {
   if (store.activeBoard.category.length !== 0) {
@@ -51,6 +57,7 @@ try {
 } catch (error) {
   throw new Error('Something went wrong fetching the categories...')
 }
+
 function dragStart(event: DragEvent, task: Task) {
   store.selectedTask = task
 }
@@ -69,6 +76,18 @@ function dragDrop(event: DragEvent, columnId: Category['id']) {
   const taskId = store.selectedTask.id
   db.updateTask(taskId, columnId)
   store.selectedTask = null
+  dragOverCount.value = {}
+}
+function dragEnter(id: Category['id']) {
+  if (!dragOverCount.value[id]) {
+    dragOverCount.value[id] = 0
+  }
+  dragOverCount.value[id]++
+}
+function dragLeave(id: Category['id']) {
+  if (dragOverCount.value[id]) {
+    dragOverCount.value[id]--
+  }
 }
 </script>
 
@@ -78,13 +97,24 @@ function dragDrop(event: DragEvent, columnId: Category['id']) {
   flex-grow: 1;
   overflow: auto;
   min-height: 50vh;
+  margin-top: 29.89px;
+}
+.column-title {
+  padding: 24px;
 }
 .column {
   flex-shrink: 0;
   height: 100%;
   width: 280px;
   padding: 24px;
+  margin-top: 1px;
+  border-radius: 6px;
+  &__drag-enter {
+    // border: 1px solid var(--lines-color);
+    backdrop-filter: invert(2%);
+  }
 }
+
 .new-col {
   min-width: 280px;
   max-width: 280px;
