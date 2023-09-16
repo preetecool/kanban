@@ -49,12 +49,12 @@
 <script lang="ts" setup>
 import { Board, Category } from '~~/types/app.types'
 import { useMainStore } from '@/store/main'
-import { useDB } from '@/store/db'
+import { useDBStore } from '@/store/db'
 import { Database } from '~~/types/database.types'
 import type { RealtimeChannel } from '@supabase/supabase-js'
 
 const store = useMainStore()
-const db = useDB()
+const db = useDBStore()
 const route = useRoute()
 store.inputItems = []
 const board: { category: Category[]; [key: string]: any } = store.activeBoard

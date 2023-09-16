@@ -61,10 +61,10 @@
 <script lang="ts" setup>
 import { Task, Subtask } from '~~/types/app.types'
 import { useMainStore } from '@/store/main'
-import { useDB } from '@/store/db'
+import { useDBStore } from '@/store/db'
 
 const store = useMainStore()
-const db = useDB()
+const db = useDBStore()
 store.inputItems = []
 const task = store.selectedTask
 const taskId = ref(task ? task.id : '')

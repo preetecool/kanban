@@ -1,6 +1,6 @@
 import { Task, Subtask, Category, Board } from '~~/types/app.types'
 import { useMainStore } from '../main'
-export const useDB = defineStore('db', {
+export const useDBStore = defineStore('db', {
   state: () => ({
     test: 'test',
     isLoadingData: true,

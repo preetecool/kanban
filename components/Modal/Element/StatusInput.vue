@@ -18,11 +18,11 @@
 <script setup lang="ts">
 import { ref } from 'vue'
 import { useMainStore } from '@/store/main'
-import { useDB } from '@/store/db'
+import { useDBStore } from '@/store/db'
 import { Task } from '~~/types/app.types'
 
 const store = useMainStore()
-const db = useDB()
+const db = useDBStore()
 const task = store.selectedTask
 
 const taskId = ref(task ? task.id : '')

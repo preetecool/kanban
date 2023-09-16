@@ -38,10 +38,10 @@
 <script setup lang="ts">
 import { Category, Task } from '~~/types/app.types'
 import { useMainStore } from '@/store/main'
-import { useDB } from '@/store/db'
+import { useDBStore } from '@/store/db'
 
 const store = useMainStore()
-const db = useDB()
+const db = useDBStore()
 const categories = ref(store.categoriesByBoard)
 const dragOverCount = ref({})
 
@@ -110,7 +110,6 @@ function dragLeave(id: Category['id']) {
   margin-top: 1px;
   border-radius: 6px;
   &__drag-enter {
-    // border: 1px solid var(--lines-color);
     backdrop-filter: invert(2%);
   }
 }
@@ -118,7 +117,6 @@ function dragLeave(id: Category['id']) {
 .new-col {
   min-width: 280px;
   max-width: 280px;
-  // height: calc()
   height: calc(100vh - 7rem - 24px);
   max-height: 100vh;
   margin-top: 24px;

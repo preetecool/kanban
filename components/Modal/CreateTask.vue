@@ -57,13 +57,13 @@
 
 <script lang="ts" setup>
 import { useMainStore } from '@/store/main'
-import { useDB } from '@/store/db'
+import { useDBStore } from '@/store/db'
 
 import { Category, Task, CategoriesByBoard } from '~~/types/app.types'
 import { uuid } from 'vue-uuid'
 
 const store = useMainStore()
-const db = useDB()
+const db = useDBStore()
 
 const taskId = uuid.v4()
 const taskName = ref('')

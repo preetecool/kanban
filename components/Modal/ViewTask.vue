@@ -36,10 +36,10 @@
 <script lang="ts" setup>
 import { Task, Subtask } from '~~/types/app.types'
 import { useMainStore } from '@/store/main'
-import { useDB } from '@/store/db'
+import { useDBStore } from '@/store/db'
 
 const store = useMainStore()
-const db = useDB()
+const db = useDBStore()
 const task: Task = store.selectedTask
 const taskId = ref(task ? task.id : '')
 const subtasks: Subtask[] = db.setSubtasksForTask()

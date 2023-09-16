@@ -47,3 +47,25 @@ export type Subtask = {
 export interface CategoriesByBoard {
   [key: string]: Category
 }
+
+export type ArgsForDBAction = [string | string[] | number | Subtask[] | boolean]
+
+export type DbStoreMethods =
+  | 'postBoard'
+  | 'registerUser'
+  | 'setActiveBoard'
+  | 'fetchAllBoards'
+  | 'updateBoard'
+  | 'deleteBoard'
+  | 'postCategory'
+  | 'updateCategory'
+  | 'deleteCategory'
+  | 'fetchCategoriesByBoard'
+  | 'fetchTasksByCategory'
+  | 'setSubtasksForTask'
+  | 'createTask'
+  | 'postSubtask'
+  | 'updateTask'
+  | 'deleteTask'
+  | 'updateSubtask'
+  | 'deleteSubtask'

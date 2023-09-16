@@ -1,13 +1,13 @@
 import { useMainStore } from '@/store/main'
 
-import { useDB } from '@/store/db'
+import { useDBStore } from '@/store/db'
 
 export default defineNuxtPlugin(() => {
   addRouteMiddleware(
     'global-middleware',
     async (to, from) => {
       const store = useMainStore()
-      const db = useDB()
+      const db = useDBStore()
       if (to) {
         store.$reset()
         if (to.fullPath !== '/' && to.fullPath !== '/confirm') {

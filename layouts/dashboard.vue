@@ -74,9 +74,9 @@
 
 <script setup lang="ts">
 import { useMainStore } from '@/store/main'
-import { useDB } from '@/store/db'
+import { useDBStore } from '@/store/db'
 const store = useMainStore()
-const db = useDB()
+const db = useDBStore()
 const route = useRoute()
 const logo = computed(() => (store.theme === 'light' ? 'dark' : 'light'))
 

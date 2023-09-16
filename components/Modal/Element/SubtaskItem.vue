@@ -19,7 +19,7 @@
 
 <script setup lang="ts">
 import { ref } from 'vue'
-import { useDB } from '@/store/db'
+import { useDBStore } from '@/store/db'
 const props = defineProps({
   subtask: {
     type: Object,
@@ -31,7 +31,7 @@ const props = defineProps({
   },
 })
 
-const db = useDB()
+const db = useDBStore()
 const taskCompleted: Ref<boolean> = ref(props.subtask.completed)
 const subtaskId: string = props.subtask.id
 async function updateSubtask() {

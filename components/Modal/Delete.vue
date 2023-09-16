@@ -26,10 +26,10 @@
 
 <script setup lang="ts">
 import { useMainStore } from '@/store/main'
-import { useDB } from '@/store/db'
+import { useDBStore } from '@/store/db'
 
 const store = useMainStore()
-const db = useDB()
+const db = useDBStore()
 const deleteText = computed(() => {
   if (store.deleteView === 'task') {
     return 'Delete Task'
@@ -62,7 +62,8 @@ const madLibs = computed(() => {
   let childElement
   if (type === 'task') {
     item = store.selectedTask
-    const subtasks = store.selectedTask.subtask.length > 0 ? store.selectedTask.subtask.length + ' subtasks' : 'subtasks'
+    const subtasks =
+      store.selectedTask.subtask.length > 0 ? store.selectedTask.subtask.length + ' subtasks' : 'subtasks'
     childElement = subtasks
   }
   if (type === 'category') {

@@ -14,13 +14,13 @@
 </template>
 <script setup lang="ts">
 import { useMainStore } from '@/store/main'
-import { useDB } from '@/store/db'
+import { useDBStore } from '@/store/db'
 import { Board } from '~~/types/app.types'
 import { Database } from '~~/types/database.types'
 import type { RealtimeChannel } from '@supabase/supabase-js'
 
 const store = useMainStore()
-const db = useDB()
+const db = useDBStore()
 const supabase = useSupabaseClient<Database>()
 let channel: RealtimeChannel
 

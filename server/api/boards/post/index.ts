@@ -6,7 +6,6 @@ export default defineEventHandler(async event => {
   const user = await serverSupabaseUser(event)
   const client = await serverSupabaseClient<Database>(event)
   const body = await readBody(event)
-  let channel: RealtimeChannel
 
   try {
     const { data, error } = await client
@@ -18,13 +17,6 @@ export default defineEventHandler(async event => {
       })
       .select('id, title')
       .single()
-    channel = client
-      .channel('public:board')
-      .on('postgres_changes', { event: '*', schema: 'public', table: 'board' }, payload =>
-        console.log('updated', payload),
-      )
-    channel.subscribe()
-
     if (error) throw error
     return data
   } catch (error: any) {
