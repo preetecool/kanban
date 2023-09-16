@@ -51,7 +51,6 @@ export const useDBStore = defineStore('db', {
       })
     },
     async deleteBoard(id: string) {
-      console.log('entering delete board method')
       const res = await $fetch(`/api/boards/delete/${id}`)
       if (res) {
         navigateTo('/')

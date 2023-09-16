@@ -1,6 +1,5 @@
 <template>
   <div class="sidebar-container">
-    <!-- <transition name="slide"> -->
     <div
       v-if="store.isSideBarVisible"
       class="sidebar"
@@ -8,39 +7,29 @@
       <SidebarBoardsList :boards="boards" />
       <SidebarToggle />
     </div>
-    <!-- </transition> -->
     <SidebarHideShow />
   </div>
 </template>
 <script setup lang="ts">
 import { useMainStore } from '@/store/main'
-import { useDBStore } from '@/store/db'
-import { Board } from '~~/types/app.types'
-import { Database } from '~~/types/database.types'
-import type { RealtimeChannel } from '@supabase/supabase-js'
-
 const store = useMainStore()
-const db = useDBStore()
-const supabase = useSupabaseClient<Database>()
-let channel: RealtimeChannel
+let boards = ref([])
+let refreshBoards = ref()
 
-const { data: boards, refresh: refreshBoards } = await useAsyncData('board', async () => {
-  // if (!store.userBoards.length) {
-  const data: Board[] = await db.fetchAllBoards()
+try {
+  const { data, refresh } = await useDB('fetchAllBoards')
+  console.log(refresh)
+  boards.value = data
   store.userBoards = data
-  // }
+} catch (e) {
+  throw new Error('Something went wrong while fetching the boards')
+}
+watch(refreshBoards, async () => {
+  await useDBRefresh('board')
 })
-
-onMounted(() => {
-  channel = supabase
-    .channel('public:board')
-    .on('postgres_changes', { event: '*', schema: 'public', table: 'board' }, () => refreshBoards())
-  channel.subscribe()
-})
-
-onUnmounted(() => {
-  supabase.removeChannel(channel)
-})
+// onMounted(() => {
+//   useDBRefresh(refreshBoards, 'board')
+// })
 </script>
 
 <style scoped lang="scss">

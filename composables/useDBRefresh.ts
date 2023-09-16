@@ -1,18 +1,14 @@
 import { Database } from '~~/types/database.types'
 import type { RealtimeChannel } from '@supabase/supabase-js'
 
-export async function useDBRefresh(refreshTable: any, table: string) {
+export async function useDBRefresh(table: string) {
   const supabase = useSupabaseClient<Database>()
-  let channel: RealtimeChannel
-
-  channel = supabase
+  console.log('entering refresh function')
+  let channel: RealtimeChannel = supabase
     .channel(`public:${table}`)
     .on('postgres_changes', { event: '*', schema: 'public', table: `${table}` }, payload => {
       console.log('Changes Received', payload)
-      refreshTable(payload)
     })
     .subscribe()
-  onUnmounted(() => {
-    channel.unsubscribe
-  })
+  channel.unsubscribe
 }

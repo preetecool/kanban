@@ -48,11 +48,10 @@ export interface CategoriesByBoard {
   [key: string]: Category
 }
 
-export type ArgsForDBAction = [string | string[] | number | Subtask[] | boolean]
+export type ArgsForDBAction = string | number | boolean | [string | number | Subtask]
 
 export type DbStoreMethods =
   | 'postBoard'
-  | 'registerUser'
   | 'setActiveBoard'
   | 'fetchAllBoards'
   | 'updateBoard'

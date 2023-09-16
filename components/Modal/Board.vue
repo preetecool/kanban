@@ -35,8 +35,7 @@ import { uuid } from 'vue-uuid'
 const store = useMainStore()
 const boardName = ref('')
 const titles = ref([])
-const refreshBoard = ref(null)
-const refreshCategories = ref(null)
+
 const boardId = uuid.v4()
 
 function sendData() {
@@ -49,7 +48,7 @@ async function sendBoardData() {
   }
   try {
     const { data, refresh } = useDB('postBoard', boardId, boardName.value)
-    refreshBoard.value = refresh
+    useDBRefresh(refresh, 'board', data)
   } catch (error) {
     console.error('Error while creating a new board', error)
   }
@@ -57,17 +56,16 @@ async function sendBoardData() {
 async function sendCategoryData() {
   try {
     const { data, refresh } = useDB('postCategory', boardId, titles.value)
-    refreshCategories.value = refresh
+    useDBRefresh(refresh, 'board', data)
   } catch (error) {
     console.error('Error while creating categories', error)
     throw new Error()
   }
   store.closeModal()
 }
-onMounted(() => {
-  useDBRefresh(refreshBoard, 'board')
-  useDBRefresh(refreshCategories, 'category')
-})
+// onUnmounted(() => {
+//   useDBRefresh(refreshBoard, 'board', )
+// })
 </script>
 
 <style lang="scss" scoped></style>
