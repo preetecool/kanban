@@ -18,18 +18,17 @@ let refreshBoards = ref()
 
 try {
   const { data, refresh } = await useDB('fetchAllBoards')
-  console.log(refresh)
+  // console.log(refresh)
   boards.value = data
   store.userBoards = data
+  refreshBoards.value = refresh
 } catch (e) {
   throw new Error('Something went wrong while fetching the boards')
 }
-watch(refreshBoards, async () => {
-  await useDBRefresh('board')
+watch(refreshBoards, () => {
+  useDBRefresh(refreshBoards.value, 'board')
 })
-// onMounted(() => {
-//   useDBRefresh(refreshBoards, 'board')
-// })
+onMounted(() => {})
 </script>
 
 <style scoped lang="scss">

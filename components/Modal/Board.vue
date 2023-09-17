@@ -47,7 +47,7 @@ async function sendBoardData() {
     return console.error('Board name is Empty')
   }
   try {
-    const { data, refresh } = useDB('postBoard', boardId, boardName.value)
+    const { data, refresh } = await useDB('postBoard', boardId, boardName.value)
     useDBRefresh(refresh, 'board', data)
   } catch (error) {
     console.error('Error while creating a new board', error)
@@ -55,7 +55,7 @@ async function sendBoardData() {
 }
 async function sendCategoryData() {
   try {
-    const { data, refresh } = useDB('postCategory', boardId, titles.value)
+    const { data, refresh } = await useDB('postCategory', boardId, titles.value)
     useDBRefresh(refresh, 'board', data)
   } catch (error) {
     console.error('Error while creating categories', error)
@@ -63,9 +63,6 @@ async function sendCategoryData() {
   }
   store.closeModal()
 }
-// onUnmounted(() => {
-//   useDBRefresh(refreshBoard, 'board', )
-// })
 </script>
 
 <style lang="scss" scoped></style>
