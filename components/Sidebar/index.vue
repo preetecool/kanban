@@ -18,7 +18,7 @@ let refreshBoards = ref()
 
 try {
   const { data, refresh } = await useDB('fetchAllBoards')
-  // console.log(refresh)
+
   boards.value = data
   store.userBoards = data
   refreshBoards.value = refresh

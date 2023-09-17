@@ -34,13 +34,11 @@ import { uuid } from 'vue-uuid'
 
 const store = useMainStore()
 const boardName = ref('')
-const titles = ref([])
-
 const boardId = uuid.v4()
 
-function sendData() {
-  sendBoardData()
-  sendCategoryData()
+async function sendData() {
+  await sendBoardData()
+  await sendCategoryData()
 }
 async function sendBoardData() {
   if (!boardName.value) {
@@ -54,8 +52,13 @@ async function sendBoardData() {
   }
 }
 async function sendCategoryData() {
+  let titles: string[] = []
+  const categories = store.inputItems.map(() => {})
+  store.inputItems.forEach(item => {
+    titles.push(item.title)
+  })
   try {
-    const { data, refresh } = await useDB('postCategory', boardId, titles.value)
+    const { data, refresh } = await useDB('postCategory', boardId, titles)
     useDBRefresh(refresh, 'board', data)
   } catch (error) {
     console.error('Error while creating categories', error)

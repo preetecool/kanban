@@ -88,7 +88,6 @@ function debounceInput(id: string, title: string) {
 
   isTyping = setTimeout(() => {
     submitCategoryUpdate(id, title)
-    console.log('user has finished typing')
   }, 500)
 }
 

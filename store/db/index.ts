@@ -18,6 +18,7 @@ export const useDBStore = defineStore('db', {
           title: title,
         },
       })
+      console.log('board title from store method', title)
     },
     async setActiveBoard(params: string) {
       const store = useMainStore()
@@ -57,16 +58,20 @@ export const useDBStore = defineStore('db', {
       }
     },
     async postCategory(boardId: string, titles: string[]) {
+      const categories = titles.map((title: string) => ({
+        board: boardId,
+        title: title,
+      }))
+      console.log(categories)
       await $fetch('/api/category/post', {
         method: 'POST',
         body: {
           board: boardId,
-          titles: titles,
+          categories: categories,
         },
       })
     },
     async updateCategory(id: Category['id'], title: Category['title']) {
-      console.log('in update function')
       await $fetch(`/api/category/update/${id}`, {
         method: 'PATCH',
         body: {

@@ -6,16 +6,15 @@ export default defineEventHandler(async event => {
   const client = await serverSupabaseClient<Database>(event)
   const body = await readBody(event)
   const boardId = body.board
+  // const categories = body.categories
 
   try {
-    const categories = body.titles.map((title: string) => ({
-      board: boardId,
-      title: title,
-    }))
-    const { data, error } = await client.from('category').insert(categories).select('board, title')
     if (!boardId) {
       return createError({ statusMessage: 'boardId is missing from the request body' })
     }
+
+    const { data, error } = await client.from('category').insert(body.categories).select('board, title')
+
     if (error) throw error
     return {
       status: 200,
