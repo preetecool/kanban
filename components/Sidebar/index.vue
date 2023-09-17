@@ -13,24 +13,9 @@
 <script setup lang="ts">
 import { useMainStore } from '@/store/main'
 const store = useMainStore()
-import type { RealtimeChannel } from '@supabase/supabase-js'
 
-const client = useSupabaseClient()
-let realtimeChannel: RealtimeChannel
-
-const { data, refresh } = await useDB('fetchAllBoards')
+const { data } = await useDB('fetchAllBoards')
 store.userBoards = data
-
-onMounted(() => {
-  realtimeChannel = client
-    .channel('public:board')
-    .on('postgres_changes', { event: '*', schema: 'public', table: 'board' }, () => refresh())
-  realtimeChannel.subscribe()
-})
-
-onUnmounted(() => {
-  client.removeChannel(realtimeChannel)
-})
 </script>
 
 <style scoped lang="scss">
