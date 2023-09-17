@@ -5,7 +5,6 @@ import { serverSupabaseClient } from '#supabase/server'
 export default defineEventHandler(async event => {
   const client = await serverSupabaseClient<Database>(event)
 
-  // let channel: RealtimeChannel;
   const subtaskId = getRouterParam(event, 'id')
 
   try {

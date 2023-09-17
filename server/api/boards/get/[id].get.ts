@@ -5,7 +5,6 @@ import { serverSupabaseUser, serverSupabaseClient } from '#supabase/server'
 export default defineEventHandler(async event => {
   const user = await serverSupabaseUser(event)
   const client = await serverSupabaseClient<Database>(event)
-  let channel: RealtimeChannel
   const params = event?.context?.params?.id
   const { data: board, error } = await client
     .from('board')

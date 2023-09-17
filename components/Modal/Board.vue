@@ -43,9 +43,7 @@ async function sendData() {
 }
 async function sendBoardData() {
   if (!boardName.value) return console.error('Board name is Empty')
-  const { data, refresh } = await useDB('postBoard', boardId, boardName.value)
-  refresh()
-  useDBRefresh(refresh, 'board')
+  const { data } = await useDB('postBoard', boardId, boardName.value)
 }
 async function sendCategoryData() {
   let titles: string[] = []
@@ -53,7 +51,6 @@ async function sendCategoryData() {
   store.inputItems.forEach(item => {
     titles.push(item.title)
   })
-  const { data, refresh } = await useDB('postCategory', boardId, titles)
-  useDBRefresh(refresh, 'board')
+  const { data } = await useDB('postCategory', boardId, titles)
 }
 </script>

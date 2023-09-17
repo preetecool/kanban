@@ -47,11 +47,9 @@
 </template>
 
 <script lang="ts" setup>
-import { Board, Category } from '~~/types/app.types'
+import { Category } from '~~/types/app.types'
 import { useMainStore } from '@/store/main'
 import { useDBStore } from '@/store/db'
-import { Database } from '~~/types/database.types'
-import type { RealtimeChannel } from '@supabase/supabase-js'
 
 const store = useMainStore()
 const db = useDBStore()
@@ -61,9 +59,6 @@ const board: { category: Category[]; [key: string]: any } = store.activeBoard
 const boardId = ref(board ? board.id : '')
 const boardName = ref(board ? board.title : '')
 const boardNameisChanged = ref(false)
-let channel: RealtimeChannel
-const supabase = useSupabaseClient<Database>()
-let refreshCategoriesRef = null
 
 watch(boardName, async () => {
   if (board.title !== boardName.value) {
@@ -115,24 +110,8 @@ async function updateboard() {
       const data = await db.postCategory(boardId.value, titles)
       return data
     })
-
-    refreshCategoriesRef = refreshCategories
   }
 
   store.closeModal()
 }
-onMounted(() => {
-  channel = supabase
-    .channel('public:category')
-    .on('postgres_changes', { event: '*', schema: 'public', table: 'category' }, () => {
-      if (refreshCategoriesRef) {
-        refreshCategoriesRef()
-      }
-    })
-  channel.subscribe()
-})
-
-onUnmounted(() => {
-  supabase.removeChannel(channel)
-})
 </script>
