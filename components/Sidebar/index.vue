@@ -14,21 +14,15 @@
 import { useMainStore } from '@/store/main'
 const store = useMainStore()
 let boards = ref([])
-let refreshBoards = ref()
 
 try {
   const { data, refresh } = await useDB('fetchAllBoards')
-
+  // useDBRefresh(refresh, 'board')
   boards.value = data
   store.userBoards = data
-  refreshBoards.value = refresh
 } catch (e) {
   throw new Error('Something went wrong while fetching the boards')
 }
-watch(refreshBoards, () => {
-  useDBRefresh(refreshBoards.value, 'board')
-})
-onMounted(() => {})
 </script>
 
 <style scoped lang="scss">

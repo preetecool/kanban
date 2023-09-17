@@ -29,9 +29,13 @@
 
 <script setup lang="ts">
 import { useMainStore } from '@/store/main'
-
 const store = useMainStore()
-const boards = store.userBoards
+const props = defineProps({
+  boards: {
+    type: Array,
+    default: [],
+  },
+})
 const isActive = (id: string) => id === store.activeBoard.id
 </script>
 

@@ -39,33 +39,21 @@ const boardId = uuid.v4()
 async function sendData() {
   await sendBoardData()
   await sendCategoryData()
+  store.closeModal()
 }
 async function sendBoardData() {
-  if (!boardName.value) {
-    return console.error('Board name is Empty')
-  }
-  try {
-    const { data, refresh } = await useDB('postBoard', boardId, boardName.value)
-    useDBRefresh(refresh, 'board', data)
-  } catch (error) {
-    console.error('Error while creating a new board', error)
-  }
+  if (!boardName.value) return console.error('Board name is Empty')
+  const { data, refresh } = await useDB('postBoard', boardId, boardName.value)
+  refresh()
+  useDBRefresh(refresh, 'board')
 }
 async function sendCategoryData() {
   let titles: string[] = []
-  const categories = store.inputItems.map(() => {})
+  store.inputItems.map(() => {})
   store.inputItems.forEach(item => {
     titles.push(item.title)
   })
-  try {
-    const { data, refresh } = await useDB('postCategory', boardId, titles)
-    useDBRefresh(refresh, 'board', data)
-  } catch (error) {
-    console.error('Error while creating categories', error)
-    throw new Error()
-  }
-  store.closeModal()
+  const { data, refresh } = await useDB('postCategory', boardId, titles)
+  useDBRefresh(refresh, 'board')
 }
 </script>
-
-<style lang="scss" scoped></style>

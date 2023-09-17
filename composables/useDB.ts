@@ -1,7 +1,5 @@
-import { ref } from 'vue'
 import { useDBStore } from '@/store/db'
-
-import { ArgsForDBAction, DbStoreMethods } from '~~/types/app.types'
+import { DbStoreMethods } from '~~/types/app.types'
 
 export async function useDB(methodName: DbStoreMethods, ...args: any) {
   const dbStore = useDBStore()
@@ -9,6 +7,7 @@ export async function useDB(methodName: DbStoreMethods, ...args: any) {
     if (typeof dbStore[methodName] !== 'function') {
       throw new Error(`Method ${methodName} does not exist on dbStore`)
     }
+
     let { data: fetchedData, refresh } = await useAsyncData('data', async () => {
       if (args) {
         return dbStore[methodName](...args)

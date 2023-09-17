@@ -18,7 +18,6 @@ export const useDBStore = defineStore('db', {
           title: title,
         },
       })
-      console.log('board title from store method', title)
     },
     async setActiveBoard(params: string) {
       const store = useMainStore()
@@ -169,7 +168,6 @@ export const useDBStore = defineStore('db', {
       })
     },
     async deleteSubtask(id: Subtask['id']) {
-      console.log('entering delete subtask method')
       await $fetch(`/api/subtask/delete/${id}`)
     },
   },
