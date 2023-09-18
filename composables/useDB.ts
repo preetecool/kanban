@@ -8,7 +8,7 @@ export async function useDB(methodName: DbStoreMethods, ...args: any) {
       throw new Error(`Method ${methodName} does not exist on dbStore`)
     }
 
-    let { data: fetchedData } = await useAsyncData('data', async () => {
+    let { data: fetchedData, refresh } = await useAsyncData('data', async () => {
       if (args) {
         return dbStore[methodName](...args)
       }
@@ -16,6 +16,7 @@ export async function useDB(methodName: DbStoreMethods, ...args: any) {
     })
     return {
       data: fetchedData.value,
+      refresh,
     }
   } catch (e) {
     throw new Error('Something went wrong with the DB operation.')

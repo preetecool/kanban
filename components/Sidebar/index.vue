@@ -4,7 +4,7 @@
       v-if="store.isSideBarVisible"
       class="sidebar"
     >
-      <SidebarBoardsList :boards="data" />
+      <SidebarBoardsList :boards="store.userBoards" />
       <SidebarToggle />
     </div>
     <SidebarHideShow />
@@ -12,10 +12,34 @@
 </template>
 <script setup lang="ts">
 import { useMainStore } from '@/store/main'
-const store = useMainStore()
+import type { RealtimeChannel } from '@supabase/supabase-js'
 
-const { data } = await useDB('fetchAllBoards')
-store.userBoards = data
+const store = useMainStore()
+const client = useSupabaseClient()
+const user = useSupabaseUser()
+let refreshBoards
+let realtimeChannel: RealtimeChannel
+const boards = ref([])
+
+watch(
+  boards,
+  async () => {
+    await useAsyncData('board', async () => {
+      const { data, refresh } = await useDB('fetchAllBoards')
+      boards.value = data.value
+      refreshBoards = refresh
+      return data
+    })
+    useDBRefresh(refreshBoards, 'board')
+  },
+  { immediate: true },
+)
+store.userBoards = boards
+onMounted(() => {})
+onUnmounted(() => {
+  client.removeChannel(realtimeChannel)
+})
+// const { data } = await useDB('fetchAllBoards')
 </script>
 
 <style scoped lang="scss">
