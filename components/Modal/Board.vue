@@ -30,6 +30,7 @@
 
 <script lang="ts" setup>
 import { useMainStore } from '@/store/main'
+import { title } from 'process'
 import { uuid } from 'vue-uuid'
 
 const store = useMainStore()
@@ -50,6 +51,10 @@ async function sendCategoryData() {
   store.inputItems.map(() => {})
   store.inputItems.forEach(item => {
     titles.push(item.title)
+    store.userBoards.category.push({
+      id: uuid.v4(),
+      title: title,
+    })
   })
   const { data } = await useDB('postCategory', boardId, titles)
 }
