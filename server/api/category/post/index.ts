@@ -12,7 +12,6 @@ export default defineEventHandler(async event => {
     if (!boardId) {
       return createError({ statusMessage: 'boardId is missing from the request body' })
     }
-
     const { data, error } = await client.from('category').insert(body.categories).select('board, title')
 
     if (error) throw error

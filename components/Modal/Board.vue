@@ -48,14 +48,18 @@ async function sendBoardData() {
 }
 async function sendCategoryData() {
   let titles: string[] = []
-  store.inputItems.map(() => {})
   store.inputItems.forEach(item => {
     titles.push(item.title)
     store.userBoards.category.push({
       id: uuid.v4(),
       title: title,
     })
+    let catObjs = [];
+    store.userBoards.category.forEach((cat)=> {
+        let title_id_pair = [cat.title, cat.id]
+        catObjs.push(title_id_pair)
+    })
   })
-  const { data } = await useDB('postCategory', boardId, titles)
+  const { data } = await useDB('postCategory', boardId, catObjs)
 }
 </script>
