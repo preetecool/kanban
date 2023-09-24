@@ -59,9 +59,8 @@ export const useDBStore = defineStore('db', {
     async postCategory(boardId: string, catObjs: [][]) {
       const categories = catObjs.map((pair: []) => ({
         board: boardId,
-        id: obj.id[1]
-        title: obj.title[0]
-
+        id: pair.id[1],
+        title: pair.title[0],
       }))
       console.log(categories)
       await $fetch('/api/category/post', {

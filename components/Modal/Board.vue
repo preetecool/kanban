@@ -46,6 +46,7 @@ async function sendBoardData() {
   if (!boardName.value) return console.error('Board name is Empty')
   const { data } = await useDB('postBoard', boardId, boardName.value)
 }
+let catObjs = []
 async function sendCategoryData() {
   let titles: string[] = []
   store.inputItems.forEach(item => {
@@ -54,10 +55,9 @@ async function sendCategoryData() {
       id: uuid.v4(),
       title: title,
     })
-    let catObjs = [];
-    store.userBoards.category.forEach((cat)=> {
-        let title_id_pair = [cat.title, cat.id]
-        catObjs.push(title_id_pair)
+    store.userBoards.category.forEach(cat => {
+      let title_id_pair = [cat.title, cat.id]
+      catObjs.push(title_id_pair)
     })
   })
   const { data } = await useDB('postCategory', boardId, catObjs)

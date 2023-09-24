@@ -21,6 +21,7 @@ let refreshBoards
 let realtimeChannel: RealtimeChannel
 const boards = ref([])
 
+const { data } = await useDB('fetchAllBoards')
 watch(
   boards,
   async () => {
@@ -39,7 +40,6 @@ onMounted(() => {})
 onUnmounted(() => {
   client.removeChannel(realtimeChannel)
 })
-// const { data } = await useDB('fetchAllBoards')
 </script>
 
 <style scoped lang="scss">
