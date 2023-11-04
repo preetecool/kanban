@@ -1,11 +1,11 @@
 export type Modal = {
-  newBoard: false
-  editBoard: false
-  newTask: false
-  editTask: false
-  viewTask: false
-  closeModal: false
-  deleteView: false
+  newBoard: boolean
+  editBoard: boolean
+  newTask: boolean
+  editTask: boolean
+  viewTask: boolean
+  closeModal: boolean
+  deleteView: boolean
 }
 
 export type Board = {
@@ -28,7 +28,7 @@ export type Category = {
 export type Task = {
   id: string
   created_at: string
-  category: string // Category['id]
+  category: Category['id']
   title: string
   description: string
   completed: boolean

@@ -14,7 +14,6 @@ watch(
       const { data } = await useAsyncData('user', async () => {
         return supabase.from('profiles').select('email').eq('id', user.value.id).single()
       })
-
       try {
         if (data) {
           if (!data.value?.data?.email) {

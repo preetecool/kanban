@@ -30,7 +30,6 @@
 
 <script lang="ts" setup>
 import { useMainStore } from '@/store/main'
-import { title } from 'process'
 import { uuid } from 'vue-uuid'
 
 const store = useMainStore()
@@ -46,6 +45,7 @@ async function sendBoardData() {
   if (!boardName.value) return console.error('Board name is Empty')
   const { data } = await useDB('postBoard', boardId, boardName.value)
 }
+
 let catObjs = []
 async function sendCategoryData() {
   let titles: string[] = []
@@ -53,7 +53,7 @@ async function sendCategoryData() {
     titles.push(item.title)
     store.userBoards.category.push({
       id: uuid.v4(),
-      title: title,
+      title: item.title,
     })
     store.userBoards.category.forEach(cat => {
       let title_id_pair = [cat.title, cat.id]

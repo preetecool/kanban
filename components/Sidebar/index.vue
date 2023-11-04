@@ -35,7 +35,7 @@ watch(
   },
   { immediate: true },
 )
-store.userBoards = boards
+store.userBoards = data
 onMounted(() => {})
 onUnmounted(() => {
   client.removeChannel(realtimeChannel)

@@ -9,7 +9,6 @@ export const useDBStore = defineStore('db', {
     registerUser() {
       return ''
     },
-
     async postBoard(boardId: string, title: string) {
       await $fetch('/api/boards/post', {
         method: 'POST',
@@ -59,10 +58,10 @@ export const useDBStore = defineStore('db', {
     async postCategory(boardId: string, catObjs: [][]) {
       const categories = catObjs.map((pair: []) => ({
         board: boardId,
-        id: pair.id[1],
         title: pair.title[0],
+        id: pair.id[1],
       }))
-      console.log(categories)
+
       await $fetch('/api/category/post', {
         method: 'POST',
         body: {

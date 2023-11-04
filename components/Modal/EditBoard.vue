@@ -101,6 +101,7 @@ async function updateboard() {
 
   if (store.inputItems.length > 0) {
     const titles: string[] = []
+
     store.inputItems.forEach((category: Category) => {
       titles.push(category.title)
     })
