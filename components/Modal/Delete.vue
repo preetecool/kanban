@@ -49,12 +49,20 @@ async function handleDelete() {
     } catch (error) {
       console.error('failed to delete task')
     }
+  } else if (store.deleteView === 'board') {
+    try {
+      const id = store.activeBoard.id
+      await db.deleteBoard(id)
+      store.userBoards = store.userBoards.filter(board => board.id !== id)
+
+      console.log('board deleted', store.userBoards)
+      store.closeModal()
+    } catch (e) {
+      console.error('failed to delete board')
+    } finally {
+      navigateTo('/')
+    }
   }
-  if (store.deleteView === 'board') {
-    const id = store.activeBoard.id
-    await db.deleteBoard(id)
-  }
-  store.closeModal()
 }
 const madLibs = computed(() => {
   const type = store.deleteView

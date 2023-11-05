@@ -1,5 +1,6 @@
 import { Task, Subtask, Category, Board } from '~~/types/app.types'
 import { useMainStore } from '../main'
+import { uuid } from 'vue-uuid'
 export const useDBStore = defineStore('db', {
   state: () => ({
     test: 'test',
@@ -58,10 +59,10 @@ export const useDBStore = defineStore('db', {
     async postCategory(boardId: string, catObjs: [][]) {
       const categories = catObjs.map((pair: []) => ({
         board: boardId,
-        title: pair.title[0],
-        id: pair.id[1],
+        title: pair.title,
+        id: uuid.v4(),
       }))
-
+      console.log('POST CAT CATEGORIES', categories)
       await $fetch('/api/category/post', {
         method: 'POST',
         body: {

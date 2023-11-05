@@ -50,7 +50,9 @@
 import { Category } from '~~/types/app.types'
 import { useMainStore } from '@/store/main'
 import { useDBStore } from '@/store/db'
+import { uuid } from 'vue-uuid'
 
+const catId = uuid.v4()
 const store = useMainStore()
 const db = useDBStore()
 const route = useRoute()
@@ -100,19 +102,21 @@ async function updateboard() {
   }
 
   if (store.inputItems.length > 0) {
-    const titles: string[] = []
-
+    const catObjs: { title: string; id: string }[] = []
     store.inputItems.forEach((category: Category) => {
-      titles.push(category.title)
+      catObjs.push({
+        title: category.title,
+        id: uuid.v4(),
+      })
     })
-
     const { data: newCategories, refresh: refreshCategories } = await useAsyncData('updatedCategories', async () => {
       const route = useRoute()
-      const data = await db.postCategory(boardId.value, titles)
+      console.log('CAT OBJS EDIT BOARD', catObjs)
+      const data = await db.postCategory(boardId.value, catObjs)
       return data
     })
   }
-
+  store.inputItems = []
   store.closeModal()
 }
 </script>

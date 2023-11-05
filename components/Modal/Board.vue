@@ -29,37 +29,43 @@
 </template>
 
 <script lang="ts" setup>
+import { ref } from 'vue'
 import { useMainStore } from '@/store/main'
 import { uuid } from 'vue-uuid'
 
 const store = useMainStore()
 const boardName = ref('')
-const boardId = uuid.v4()
+const generateId = () => uuid.v4()
 
 async function sendData() {
-  await sendBoardData()
-  await sendCategoryData()
-  store.closeModal()
-}
-async function sendBoardData() {
-  if (!boardName.value) return console.error('Board name is Empty')
-  const { data } = await useDB('postBoard', boardId, boardName.value)
+  const boardId = generateId()
+  try {
+    await sendBoardData(boardId)
+    await sendCategoryData(boardId)
+    store.closeModal()
+  } catch (error) {
+    console.error('An error occurred while sending data:', error)
+  } finally {
+    navigateTo(`/board/${boardId}`)
+  }
 }
 
-let catObjs = []
-async function sendCategoryData() {
-  let titles: string[] = []
-  store.inputItems.forEach(item => {
-    titles.push(item.title)
-    store.userBoards.category.push({
-      id: uuid.v4(),
-      title: item.title,
-    })
-    store.userBoards.category.forEach(cat => {
-      let title_id_pair = [cat.title, cat.id]
-      catObjs.push(title_id_pair)
-    })
+async function sendBoardData(boardId: string) {
+  if (!boardName.value) {
+    throw new Error('Board name is empty')
+  }
+  await useDB('postBoard', boardId, boardName.value)
+}
+
+async function sendCategoryData(boardId: string) {
+  const categories = store.inputItems.map(item => ({
+    title: item.title,
+  }))
+  await useDB('postCategory', boardId, categories)
+  store.userBoards.push({
+    id: boardId,
+    title: boardName.value,
+    category: categories,
   })
-  const { data } = await useDB('postCategory', boardId, catObjs)
 }
 </script>
