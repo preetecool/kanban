@@ -30,34 +30,35 @@ The Kanban Task Management App is designed to help users manage their tasks usin
 
 ### 3.1 Boards
 
-- **GET** `/api/boards/[id]`: Fetches a specific board by ID.
-- **GET** `/api/all`: Fetches all boards.
-- **POST** `/api/boards/new`: Creates a new board.
-- **PUT** `/api/boards/[id]/update`: Updates a specific board by ID.
-- **DELETE** `/api/boards/[id]/delete`: Deletes a specific board by ID.
+- **GET** `/api/boards/get/[id]`: Fetches a specific board by ID.
+- **GET** `/api/boards/get/all`: Fetches all boards.
+- **POST** `/api/boards/post/`: Creates a new board.
+- **PUT** `/api/boards/update/[id]`: Updates a specific board by ID.
+- **DELETE** `/api/boards/delete/[id]`: Deletes a specific board by ID.
 
 ### 3.2 Category
 
-- **GET** `/api/category/[id]`: Fetches a specific category by ID.
-- **GET** `/api/category/[id]/tasks`: Fetches all tasks by category ID.
+- **GET** `/api/category/get/[id]`: Fetches a specific category by ID.
+- **GET** `/api/category/get/[id]/tasks`: Fetches all tasks by category ID.
 - **POST** `/api/category/post/`: Creates a new category.
-- **PUT** `/api/category/[id]/update`: Updates a specific category by ID.
-- **DELETE** `/api/category/[id]/delete`: Deletes a specific category by ID.
+- **PUT** `/api/category/update/[id]`: Updates a specific category by ID.
+- **DELETE** `/api/category/delete/[id]`: Deletes a specific category by ID.
 
 ### 3.3 Tasks
 
-- **GET** `/api/task/[id]`: Fetches a specific task by ID.
-- **GET** `/api/task/[id]/subtasks`: Fetches all subtasks by task ID.
-- **POST** `/api/task/new`: Creates a new task.
-- **PATCH** `/api/task/[id]/update`: Updates a specific task by ID.
-- **DELETE** `/api/task/[id]/delete`: Deletes a specific task by ID.
+- **GET** `/api/task/get/[id]`: Fetches a specific task by ID.
+- **GET** `/api/task/get/[id]/subtasks`: Fetches all subtasks by task ID.
+- **POST** `/api/task/get/`: Creates a new task.
+- **PATCH** `/api/task/update/[id]`: Updates a specific task by ID.
+- **DELETE** `/api/task/delete/[id]`: Deletes a specific task by ID.
 
 ### 3.4 Subtask
 
-- **GET** `/api/subtask/[id]`: Fetches a specific subtask by ID.
-- **POST** `/api/subtask/new`: Creates a new subtask.
-- **PATCH** `/api/subtask/[id]/update`: Updates a specific subtask by ID.
-- **DELETE** `/api/subtask/[id]/delete`: Deletes a specific subtask by ID.
+- **GET** `/api/subtask/get/[id]`: Fetches a specific subtask by ID.
+- **POST** `/api/subtask/post/`: Creates a new subtask.
+- **PATCH** `/api/subtask/update/[id]`: Updates a specific subtask by ID.
+- **DELETE** `/api/subtask/delete/[id]`: Deletes a specific subtask by ID.
+
 
 ## 4. Data Schema
 
