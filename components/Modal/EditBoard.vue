@@ -111,7 +111,6 @@ async function updateboard() {
     })
     const { data: newCategories, refresh: refreshCategories } = await useAsyncData('updatedCategories', async () => {
       const route = useRoute()
-      console.log('CAT OBJS EDIT BOARD', catObjs)
       const data = await db.postCategory(boardId.value, catObjs)
       return data
     })

@@ -53,13 +53,11 @@ async function handleDelete() {
     try {
       const id = store.activeBoard.id
       await db.deleteBoard(id)
-      store.userBoards = store.userBoards.filter(board => board.id !== id)
-
-      console.log('board deleted', store.userBoards)
       store.closeModal()
     } catch (e) {
       console.error('failed to delete board')
     } finally {
+      store.userBoards = store.userBoards.filter(board => board.id !== id)
       navigateTo('/')
     }
   }
