@@ -2,7 +2,7 @@
 
 ## 1. Introduction
 
-The Kanban Task Management App is designed to help users manage their tasks using the Kanban methodology. Users can create boards, categories within those boards, tasks within categories, and subtasks within tasks. The system also incorporates third-party authentication for user management.
+The Kanban Task Management App is designed to help users manage their tasks using the Kanban methodology. Users can create boards, categories within those boards, tasks within categories, and subtasks within tasks. Users can drag and drop tasks from one category to the other. The system also incorporates third-party authentication for user management.
 
 ## 2. Architecture Overview
 
