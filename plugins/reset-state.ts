@@ -9,9 +9,10 @@ export default defineNuxtPlugin(() => {
       const store = useMainStore()
       const db = useDBStore()
       if (to) {
-        if (from.fullPath !== '/') {
-          store.$reset()
-        }
+        store.categoriesByBoard = {}
+        store.inputItems = []
+        store.selectedTask = {}
+        store.activeBoard = {}
         if (to.fullPath !== '/' && to.fullPath !== '/confirm') {
           await db.setActiveBoard(to.params.id as string)
         }

@@ -4,7 +4,7 @@
       v-if="store.isSideBarVisible"
       class="sidebar"
     >
-      <SidebarBoardsList :boards="boards" />
+      <SidebarBoardsList :boards="store.userBoards" />
       <SidebarToggle />
     </div>
     <SidebarHideShow />
@@ -21,23 +21,17 @@ let refreshBoards
 let realtimeChannel: RealtimeChannel
 const boards = ref([])
 
-const { data } = await useDB('fetchAllBoards')
-watch(
-  store.userBoards,
-  async () => {
-    await useAsyncData('board', async () => {
-      const { data, refresh } = await useDB('fetchAllBoards')
-      useDBRefresh(refresh, 'board')
-      return data
-    })
-    boards.value = data
-    store.userBoards = boards.value
-    console.log('WATCHER', store.userBoards)
-  },
-  { immediate: true },
-)
+const { data, refresh } = await useDB('fetchAllBoards')
+console.log('data', data)
 store.userBoards = data
-store.userBoards = boards.value
+watch(
+  () => store.userBoards,
+  (newVal, oldVal) => {
+    console.log('newVal', newVal)
+    console.log('oldVal', oldVal)
+    store.userBoards = newVal
+  },
+)
 
 onUnmounted(() => {
   // client.removeChannel(realtimeChannel)
