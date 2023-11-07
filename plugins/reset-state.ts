@@ -9,7 +9,9 @@ export default defineNuxtPlugin(() => {
       const store = useMainStore()
       const db = useDBStore()
       if (to) {
-        store.$reset()
+        if (from.fullPath !== '/') {
+          store.$reset()
+        }
         if (to.fullPath !== '/' && to.fullPath !== '/confirm') {
           await db.setActiveBoard(to.params.id as string)
         }

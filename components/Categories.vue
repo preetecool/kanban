@@ -46,7 +46,7 @@ const categories = ref(store.categoriesByBoard)
 const dragOverCount = ref({})
 
 try {
-  if (store.activeBoard.category.length !== 0) {
+  if (store.activeBoard.category) {
     store.activeBoard.category.forEach((category: Category) => {
       const id = category.id
       store.categoriesByBoard[id] = {

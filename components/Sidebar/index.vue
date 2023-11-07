@@ -27,13 +27,12 @@ watch(
   async () => {
     await useAsyncData('board', async () => {
       const { data, refresh } = await useDB('fetchAllBoards')
-      boards.value = data
-      refreshBoards = refresh
+      useDBRefresh(refresh, 'board')
       return data
     })
-    store.userBoards = data
+    boards.value = data
     store.userBoards = boards.value
-    useDBRefresh(refreshBoards, 'board')
+    console.log('WATCHER', store.userBoards)
   },
   { immediate: true },
 )

@@ -29,6 +29,7 @@
 
 <script setup lang="ts">
 import { useMainStore } from '@/store/main'
+
 const store = useMainStore()
 const props = defineProps({
   boards: {
