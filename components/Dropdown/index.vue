@@ -13,7 +13,7 @@
       :class="{ 'menu-list__mobilemenu': view === 'mobilemenu', 'menu-list__editmenu': view !== 'mobilemnu' }"
     >
       <ul class="menu-list__menu bodyL">
-        <div class="menu-list__item">
+        <div>
           <slot name="menu-items"> </slot>
         </div>
       </ul>
@@ -44,15 +44,14 @@ const props = defineProps({
   position: relative;
   border-radius: 8px;
 }
-
 .menu-list {
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-
   box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
-
+  border-radius: 8px;
   z-index: 1;
+
   &__editmenu {
     position: absolute;
     top: 15px;

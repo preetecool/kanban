@@ -56,9 +56,7 @@ async function handleDelete() {
     } catch (e) {
       console.error('failed to delete board')
     } finally {
-      console.log('BEFORE', store.userBoards)
       store.userBoards = store.userBoards.filter(board => board.id !== id)
-      console.log('AFTER', store.userBoards)
       store.closeModal()
       navigateTo('/')
     }
