@@ -31,6 +31,13 @@
     color: map-get($theme-map, subtask-completed);
   }
 }
+@mixin hover-color($theme-map) {
+  .item {
+    &:hover {
+      background-color: map-get($theme-map, secondary-hover);
+    }
+  }
+}
 
 @mixin task-card-theme($theme-map) {
   @include apply-theme('.task-card, .sidebar, .new-col', map-get($theme-map, task-card-bg));
@@ -67,5 +74,6 @@
   @include modal-theme($theme-map);
   @include body-bg-theme($theme-map);
   @include subtask-completed-theme($theme-map);
+  @include hover-color($theme-map);
   background-color: map-get($theme-map, bg-color);
 }

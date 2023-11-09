@@ -3,6 +3,7 @@
 $light-theme: (
   primary: colors.$purple,
   primary-hover: colors.$purplehover,
+  secondary-hover: colors.$purplehover,
   bg-color: colors.$white,
   button-second: rgba(99, 95, 199, 0.1),
   text-color: colors.$black,
@@ -17,6 +18,7 @@ $light-theme: (
 $dark-theme: (
   primary: colors.$purple,
   primary-hover: colors.$purplehoverdark,
+  secondary-hover: colors.$lightgrey,
   bg-color: colors.$verydarkgrey,
   button-second: colors.$white,
   text-color: colors.$white,

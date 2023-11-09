@@ -1,7 +1,4 @@
 <template>
-  <!-- <div class="logo pl-2r">
-    <img :src="`/img/logo-${logo}.svg`" />
-  </div> -->
   <div class="header-container">
     <div class="header">
       <span class="headingXL heading">{{ store.activeBoard.title }}</span>

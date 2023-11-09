@@ -22,20 +22,18 @@ let realtimeChannel: RealtimeChannel
 const boards = ref([])
 
 const { data, refresh } = await useDB('fetchAllBoards')
-console.log('data', data)
+
 store.userBoards = data
 watch(
   () => store.userBoards,
   (newVal, oldVal) => {
-    console.log('newVal', newVal)
-    console.log('oldVal', oldVal)
     store.userBoards = newVal
   },
 )
 
-onUnmounted(() => {
-  // client.removeChannel(realtimeChannel)
-})
+// onUnmounted(() => {
+//   // client.removeChannel(realtimeChannel)
+// })
 </script>
 
 <style scoped lang="scss">
