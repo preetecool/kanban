@@ -27,7 +27,7 @@ The Kanban Task Management App is designed to help users manage their tasks usin
 
 ## 3. API Endpoints
 
-Altough we can query Supabase directly from the front-end, we will use a back-end server to handle the API requests. This will allow us to add additional logic and security measures in the future. It also helped me practice building APIs.
+Although it's possible to interact with Supabase directly from the client-side, we've opted to route our API requests through a server-side intermediary. This approach not only paves the way for implementing further logic and security layers down the line, but it has also served as a valuable exercise in API construction for me.
 
 ### 3.1 Boards
 
