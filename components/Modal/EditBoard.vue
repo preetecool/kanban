@@ -71,10 +71,12 @@ watch(boardName, async () => {
   }
 })
 function removeColumn(index: number) {
+  delete store.categoriesByBoard[store.activeBoard.category[index].id]
   if (store.activeBoard.category[index].id) {
     db.deleteCategory(store.activeBoard.category[index].id)
   }
   store.activeBoard.category.splice(index, 1)
+
   return store.activeBoard.category
 }
 
@@ -109,13 +111,19 @@ async function updateboard() {
         id: uuid.v4(),
       })
     })
+    catObjs.forEach(category => {
+      store.categoriesByBoard[category.id] = {
+        ...category,
+        task: [],
+      }
+    })
     const { data: newCategories, refresh: refreshCategories } = await useAsyncData('updatedCategories', async () => {
       const route = useRoute()
       const data = await db.postCategory(boardId.value, catObjs)
       return data
     })
   }
-  store.inputItems = []
+
   store.closeModal()
 }
 </script>

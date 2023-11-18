@@ -62,7 +62,7 @@ export const useDBStore = defineStore('db', {
         title: pair.title,
         id: uuid.v4(),
       }))
-      console.log('POST CAT CATEGORIES', categories)
+
       await $fetch('/api/category/post', {
         method: 'POST',
         body: {

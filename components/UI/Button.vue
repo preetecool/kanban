@@ -32,9 +32,6 @@ const classes = computed(() => {
 <style lang="scss" scoped>
 .button {
   width: 100%;
-  // max-width: 255px;
-  // flex: 1;
-  // display: flex;
   background-color: colors.$purple;
   color: colors.$white;
   text-align: center;

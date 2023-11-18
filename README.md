@@ -2,7 +2,7 @@
 
 ## 1. Introduction
 
-The Kanban Task Management App is designed to help users manage their tasks using the Kanban methodology. Users can create boards, categories within those boards, tasks within categories, and subtasks within tasks. The system also incorporates third-party authentication for user management.
+The Kanban Task Management App is designed to help users manage their tasks using the Kanban methodology. Users can create boards, categories within those boards, tasks within categories, and subtasks within tasks. Users can drag and drop tasks from one category to the other. The system also incorporates third-party authentication for user management.
 
 ## 2. Architecture Overview
 
@@ -19,8 +19,7 @@ The Kanban Task Management App is designed to help users manage their tasks usin
 
 ### 2.3 Data Flow
 
-1. User logs in via third-party providers (Google) or OTP (link for login session sent to
-   email address).
+1. User logs in via third-party providers (Google) or OTP (link for login session sent to email address).
 2. User creates a board.
 3. Within a board, the user can create multiple categories.
 4. Within a category, the user can create tasks.
@@ -28,29 +27,31 @@ The Kanban Task Management App is designed to help users manage their tasks usin
 
 ## 3. API Endpoints
 
+Altough we can query Supabase directly from the front-end, we will use a back-end server to handle the API requests. This will allow us to add additional logic and security measures in the future. It also helped me practice building APIs.
+
 ### 3.1 Boards
 
-- **GET** `/api/boards/[id]`: Fetches a specific board by ID.
-- **GET** `/api/all`: Fetches all boards.
-- **POST** `/api/boards/new`: Creates a new board.
-- **PUT** `/api/boards/[id]/update`: Updates a specific board by ID.
-- **DELETE** `/api/boards/[id]/delete`: Deletes a specific board by ID.
+- **GET** `/api/boards/get/[id]`: Fetches a specific board by ID.
+- **GET** `/api/boards/get/all`: Fetches all boards.
+- **POST** `/api/boards/post/`: Creates a new board.
+- **PUT** `/api/boards/update/[id]`: Updates a specific board by ID.
+- **DELETE** `/api/boards/delete/[id]`: Deletes a specific board by ID.
 
 ### 3.2 Category
 
-- **GET** `/api/category/[id]`: Fetches a specific category by ID.
-- **GET** `/api/category/[id]/tasks`: Fetches all tasks by category ID.
+- **GET** `/api/category/get/[id]`: Fetches a specific category by ID.
+- **GET** `/api/category/get/[id]/tasks`: Fetches all tasks by category ID.
 - **POST** `/api/category/post/`: Creates a new category.
-- **PUT** `/api/category/[id]/update`: Updates a specific category by ID.
-- **DELETE** `/api/category/[id]/delete`: Deletes a specific category by ID.
+- **PUT** `/api/category/update/[id]`: Updates a specific category by ID.
+- **DELETE** `/api/category/delete/[id]`: Deletes a specific category by ID.
 
 ### 3.3 Tasks
 
-- **GET** `/api/task/[id]`: Fetches a specific task by ID.
-- **GET** `/api/task/[id]/subtasks`: Fetches all subtasks by task ID.
-- **POST** `/api/task/new`: Creates a new task.
-- **PATCH** `/api/task/[id]/update`: Updates a specific task by ID.
-- **DELETE** `/api/task/[id]/delete`: Deletes a specific task by ID.
+- **GET** `/api/task/get/[id]`: Fetches a specific task by ID.
+- **GET** `/api/task/get/[id]/subtasks`: Fetches all subtasks by task ID.
+- **POST** `/api/task/get/`: Creates a new task.
+- **PATCH** `/api/task/update/[id]`: Updates a specific task by ID.
+- **DELETE** `/api/task/delete/[id]`: Deletes a specific task by ID.
 
 ### 3.4 Subtask
 
@@ -104,19 +105,15 @@ The Kanban Task Management App is designed to help users manage their tasks usin
 
 ## 5. High-Level Overview
 
-The Kanban Task Management app provides users with a way to visualize and manage their tasks using the Kanban methodology. The app is built on the Nuxt 3 framework for both
-front-end and back-end.
+The Kanban Task Management app provides users with a way to visualize and manage their tasks using the Kanban methodology. The app is built on the Nuxt 3 framework for both front-end and back-end.
 
-The app's core functionality revolves around the creation and management of boards. Each board can contain multiple categories, with each category housing multiple tasks. Tasks
-can further have subtasks. All these entities have CRUD operations associated with them, available through RESTful APIs.
+The app's core functionality revolves around the creation and management of boards. Each board can contain multiple categories, with each category housing multiple tasks. Tasks can further have subtasks. All these entities have CRUD operations associated with them, available through RESTful APIs.
 
-The data is stored in a PostgreSQL database managed by Supabase. Supabase also handles authentication, allowing users to sign in with third-party providers such as Google and
-GitHub.
+The data is stored in a PostgreSQL database managed by Supabase. Supabase also handles authentication, allowing users to sign in with third-party providers such as Google andGitHub.
 
 Users first need to authenticate, after which they can create and manage their boards and the associated entities. The design of the application, including the UI/UX components, is sourced from assets provided by front-end-mentor.com.
 
-In terms of scalability and future enhancements, the app can incorporate more third-party providers for authentication and can also expand its feature set to include features like
-task priority, notifications, collaborations, etc.
+In terms of scalability and future enhancements, the app can incorporate more third-party providers for authentication and can also expand its feature set to include features like task priority, notifications, collaborations, etc.
 
 ---
 

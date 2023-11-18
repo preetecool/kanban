@@ -43,6 +43,7 @@ const deleteText = computed(() => {
 })
 
 async function handleDelete() {
+  const id = store.activeBoard.id
   if (store.deleteView === 'task') {
     try {
       await db.deleteTask(store.selectedTask.id)
@@ -51,13 +52,12 @@ async function handleDelete() {
     }
   } else if (store.deleteView === 'board') {
     try {
-      const id = store.activeBoard.id
       await db.deleteBoard(id)
-      store.closeModal()
     } catch (e) {
       console.error('failed to delete board')
     } finally {
       store.userBoards = store.userBoards.filter(board => board.id !== id)
+      store.closeModal()
       navigateTo('/')
     }
   }

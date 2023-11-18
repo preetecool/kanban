@@ -34,7 +34,7 @@
       />
 
       <div
-        v-if="route.path === '/' || store.activeBoard.category.length === 0"
+        v-if="route.path === '/'"
         class="body"
       >
         <div
