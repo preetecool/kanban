@@ -48,5 +48,10 @@ export const useMainStore = defineStore('main', {
       }
       this.modal['closeModal'] = false
     },
+    setTheme(theme: boolean) {
+      if (theme && theme !== null) {
+        return (this.theme = 'dark')
+      } else return (this.theme = 'light')
+    },
   },
 })

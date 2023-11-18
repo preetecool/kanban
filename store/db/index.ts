@@ -171,5 +171,14 @@ export const useDBStore = defineStore('db', {
     async deleteSubtask(id: Subtask['id']) {
       await $fetch(`/api/subtask/delete/${id}`)
     },
+    async updateTheme(isDark: boolean) {
+      await $fetch('/api/profile/update', {
+        method: 'PATCH',
+        body: {
+          dark_theme: isDark,
+        },
+      })
+      console.log('updated')
+    },
   },
 })

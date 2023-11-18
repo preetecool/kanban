@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { useMainStore } from '@/store/main'
+
 import { Database } from '~~/types/database.types'
 import { Board } from '~~/types/app.types'
 
@@ -12,7 +13,7 @@ watch(
   async () => {
     if (user.value) {
       const { data } = await useAsyncData('user', async () => {
-        return supabase.from('profiles').select('email').eq('id', user.value.id).single()
+        return supabase.from('profiles').select('email, dark_theme').eq('id', user.value.id).single()
       })
       try {
         if (data) {
@@ -22,7 +23,9 @@ watch(
               email: user.value.email,
               updated_at: new Date(),
             }
-
+            if (data?.value?.data?.dark_theme) {
+              store.setTheme(true)
+            } else store.setTheme(false)
             const { error } = await supabase.from('profiles').upsert(updates, {
               returning: 'minimal',
             })

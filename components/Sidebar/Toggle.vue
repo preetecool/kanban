@@ -34,17 +34,21 @@
 
 <script setup lang="ts">
 import { useMainStore } from '@/store/main'
+import { useDBStore } from '@/store/db'
 const store = useMainStore()
+const db = useDBStore()
 const isLight = ref(true)
-function toggleTheme() {
+async function toggleTheme() {
   if (isLight.value) {
     localStorage.setItem('theme', 'dark')
     isLight.value = false
     store.theme = 'dark'
+    await db.updateTheme(true)
   } else {
     localStorage.setItem('theme', 'light')
     isLight.value = true
     store.theme = 'light'
+    await db.updateTheme(false)
   }
 }
 onMounted(() => {

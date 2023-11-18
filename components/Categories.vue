@@ -25,6 +25,7 @@
           />
         </div>
       </div>
+
       <div
         class="new-col"
         @click="store.toggleModal('editBoard')"
@@ -92,12 +93,19 @@ function dragLeave(id: Category['id']) {
 </script>
 
 <style lang="scss" scoped>
+.container {
+  @media screen and (min-width: 720px) {
+    margin-left: 24px;
+  }
+}
+
 .columns {
   display: flex;
   flex-grow: 1;
   overflow: auto;
   min-height: 50vh;
   margin-top: 29.89px;
+  gap: 24px;
 }
 .column-title {
   padding: 24px;
@@ -106,7 +114,7 @@ function dragLeave(id: Category['id']) {
   flex-shrink: 0;
   height: 100%;
   width: 280px;
-  padding: 24px;
+  padding: 24px 0;
   margin-top: 1px;
   border-radius: 6px;
   &__drag-enter {
@@ -119,7 +127,7 @@ function dragLeave(id: Category['id']) {
   max-width: 280px;
   height: calc(100vh - 7rem - 24px);
   max-height: 100vh;
-  margin-top: 24px;
+  margin-top: 72px;
   border-radius: 6px;
   display: flex;
   justify-content: center;
