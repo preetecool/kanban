@@ -56,9 +56,9 @@ Altough we can query Supabase directly from the front-end, we will use a back-en
 ### 3.4 Subtask
 
 - **GET** `/api/subtask/[id]`: Fetches a specific subtask by ID.
-- **POST** `/api/subtask/new`: Creates a new subtask.
-- **PATCH** `/api/subtask/[id]/update`: Updates a specific subtask by ID.
-- **DELETE** `/api/subtask/[id]/delete`: Deletes a specific subtask by ID.
+- **POST** `/api/subtask/post`: Creates a new subtask.
+- **PATCH** `/api/subtask/update/[id]`: Updates a specific subtask by ID.
+- **DELETE** `/api/subtask/delete/[id]`: Deletes a specific subtask by ID.
 
 ## 4. Data Schema
 
