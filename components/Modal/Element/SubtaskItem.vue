@@ -16,10 +16,12 @@
     </label>
   </div>
 </template>
+a
 
 <script setup lang="ts">
 import { ref } from 'vue'
 import { useDBStore } from '@/store/db'
+import { useMainStore } from '@/store/main'
 const props = defineProps({
   subtask: {
     type: Object,
@@ -32,12 +34,17 @@ const props = defineProps({
 })
 
 const db = useDBStore()
+const store = useMainStore()
 const taskCompleted: Ref<boolean> = ref(props.subtask.completed)
 const subtaskId: string = props.subtask.id
 async function updateSubtask() {
   taskCompleted.value = !taskCompleted.value
   try {
     await db.updateSubtask(subtaskId, taskCompleted.value)
+    let subtaskToUpdate = store.categoriesByBoard[store.selectedTask.category].task[0].subtask.filter(
+      subtask => subtaskId === subtask.id,
+    )
+    subtaskToUpdate[0].completed = taskCompleted.value
   } catch (e) {
     console.error(e)
     taskCompleted.value = !taskCompleted.value

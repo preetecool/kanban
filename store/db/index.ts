@@ -88,7 +88,7 @@ export const useDBStore = defineStore('db', {
 
       this.isLoadingData = true
       try {
-        const task = await $fetch(`/api/task/${id}/`)
+        const task = await $fetch(`/api/task/get/${id}/`)
         store.selectedTask = task as Task
       } catch (err) {
         console.error('Error fetching task by Id', err)

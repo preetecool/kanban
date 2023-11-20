@@ -6,6 +6,7 @@
       @click="store.toggleModal('viewTask', task.id)"
     >
       <span class="headingM"> {{ task.title }}</span>
+      <span class="bodyM light-text">{{ calculateSubtasks }}</span>
     </div>
   </div>
 </template>
@@ -25,6 +26,11 @@ const props = defineProps({
     default: true,
   },
 })
+const calculateSubtasks = computed(() => {
+  const numSubtasks = props.task.subtask.length
+  const numSubtasksCompleted = props.task.subtask.filter(subtask => subtask.completed).length
+  return `${numSubtasksCompleted} of ${numSubtasks} subtasks`
+})
 </script>
 
 <style lang="scss" scoped>
@@ -33,6 +39,9 @@ const props = defineProps({
   cursor: pointer;
 }
 .task-card {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
   padding: 23px 16px;
   border-radius: 8px;
   box-shadow: rgba(0, 0, 0, 0.05) 0px 1px 4px;

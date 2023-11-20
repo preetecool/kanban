@@ -15,14 +15,14 @@
     </template>
 
     <template #subtasks>
-      <span class="bodyM light-text">Subtasks({{ ' 0 of 3' }})</span>
+      <span class="bodyM light-text">Subtasks({{ calculateSubtasks }})</span>
       <div
         v-for="subtask in subtasks"
         :key="subtask.id"
       >
         <ModalElementSubtaskItem
           :subtask="subtask"
-          :task-id="taskId"
+          :taskId="taskId"
         />
       </div>
     </template>
@@ -43,6 +43,14 @@ const db = useDBStore()
 const task: Task = store.selectedTask
 const taskId = ref(task ? task.id : '')
 const subtasks: Subtask[] = db.setSubtasksForTask()
+
+const calculateSubtasks = computed(() => {
+  const numSubtasks = store.categoriesByBoard[store.selectedTask.category].task[0].subtask.length
+  const numSubtasksCompleted = store.categoriesByBoard[store.selectedTask.category].task[0].subtask.filter(
+    subtask => subtask.completed,
+  ).length
+  return `${numSubtasksCompleted} of ${numSubtasks} subtasks`
+})
 </script>
 <style lang="scss" scpoped>
 .task-heading {
