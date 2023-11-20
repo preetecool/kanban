@@ -102,6 +102,7 @@ Altough we can query Supabase directly from the front-end, we will use a back-en
 - `email`: text
 - `full_name`: text
 - `avatar_url`: text
+- - `dark_theme`: boolean
 
 ## 5. High-Level Overview
 
