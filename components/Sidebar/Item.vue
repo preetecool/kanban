@@ -1,6 +1,6 @@
 <template>
   <li>
-    <div class="item pl-2r">
+    <div class="board-item pl-2r">
       <div class="item-wrap">
         <slot name="icon-label"></slot>
       </div>
@@ -10,7 +10,7 @@
 
 <script setup lang="ts"></script>
 <style scoped lang="scss">
-.item {
+.board-item {
   margin-top: 1px;
   display: flex;
   height: 3rem;

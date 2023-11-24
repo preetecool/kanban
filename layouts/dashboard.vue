@@ -174,6 +174,7 @@ span {
   }
   &__columns-grid {
     overflow: auto;
+    scrollbar-width: none; /* Firefox */
     // display: flex;
   }
 }

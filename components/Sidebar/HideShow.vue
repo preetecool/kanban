@@ -17,11 +17,11 @@
   <div
     v-if="!store.isSideBarVisible"
     class="show-sidebar"
+    @click="toggleSidebarDisplay"
   >
     <Icon
       icon="show-sidebar"
       class="icon"
-      @click="toggleSidebarDisplay"
     />
   </div>
 </template>

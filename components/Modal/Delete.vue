@@ -42,26 +42,36 @@ const deleteText = computed(() => {
   }
 })
 
-async function handleDelete() {
-  const id = store.activeBoard.id
-  if (store.deleteView === 'task') {
-    try {
-      await db.deleteTask(store.selectedTask.id)
-    } catch (error) {
-      console.error('failed to delete task')
-    }
-  } else if (store.deleteView === 'board') {
-    try {
-      await db.deleteBoard(id)
-    } catch (e) {
-      console.error('failed to delete board')
-    } finally {
-      store.userBoards = store.userBoards.filter(board => board.id !== id)
-      store.closeModal()
-      navigateTo('/')
-    }
+async function deleteTask() {
+  try {
+    await db.deleteTask(store.selectedTask.id)
+  } catch (error) {
+    console.error('failed to delete task')
+  } finally {
+    store.closeModal()
   }
 }
+
+async function deleteBoard() {
+  const id = store.activeBoard.id
+  try {
+    await db.deleteBoard(id)
+  } catch (e) {
+    console.error('failed to delete board')
+  } finally {
+    store.userBoards = store.userBoards.filter(board => board.id !== id)
+    store.closeModal()
+    navigateTo('/')
+  }
+}
+function handleDelete() {
+  if (store.deleteView === 'task') {
+    deleteTask()
+  } else if (store.deleteView === 'board') {
+    deleteBoard()
+  }
+}
+
 const madLibs = computed(() => {
   const type = store.deleteView
   let item

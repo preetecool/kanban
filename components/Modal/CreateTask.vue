@@ -83,7 +83,15 @@ const tasksByCategoryByBoard: Ref<CategoriesByBoard> = ref(store.categoriesByBoa
 async function sendData() {
   try {
     const data = await db.createTask(taskId, categories[selected.value].id, params, taskName.value, description.value)
-    store.categoriesByBoard[categories[selected.value].id].task.push(data)
+    const task: Task = {
+      id: taskId,
+      title: taskName.value,
+      description: description.value,
+      category: categories[selected.value].id,
+      subtask: store.inputItems,
+    }
+    store.categoriesByBoard[data.category].task.push(task)
+    console.log('ADDED', store.categoriesByBoard[data.category].task)
   } catch (error) {
     console.error('Error Creating Task:', error)
     throw new Error()

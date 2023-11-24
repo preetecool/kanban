@@ -2,8 +2,8 @@
   <div class="container">
     <div class="columns">
       <div
-        v-for="(column, index) in categories"
-        :key="index"
+        v-for="(column, index) in store.categoriesByBoard"
+        :key="column.id"
         @drop="dragDrop($event, column.id)"
         @dragover.prevent
         @dragenter="() => dragEnter(column.id)"
@@ -43,8 +43,13 @@ import { useDBStore } from '@/store/db'
 
 const store = useMainStore()
 const db = useDBStore()
-const categories = ref(store.categoriesByBoard)
 const dragOverCount = ref({})
+watch(
+  () => store.categoriesByBoard,
+  () => {
+    dragOverCount.value = {}
+  },
+)
 
 try {
   if (store.activeBoard.category) {
@@ -66,14 +71,14 @@ function dragStart(event: DragEvent, task: Task) {
 function dragDrop(event: DragEvent, columnId: Category['id']) {
   const start_column = store.selectedTask.category
 
-  const task_arr = categories.value[start_column].task
+  const task_arr = store.categoriesByBoard[start_column].task
   for (let i = 0; i < task_arr.length; ++i) {
     if (task_arr[i].id === store.selectedTask.id) {
       task_arr.splice(i, 1)
     }
     store.selectedTask.category = columnId
   }
-  categories.value[columnId].task.push(store.selectedTask)
+  store.categoriesByBoard[columnId].task.push(store.selectedTask)
   const taskId = store.selectedTask.id
   db.updateTask(taskId, columnId)
   store.selectedTask = null
@@ -106,6 +111,7 @@ function dragLeave(id: Category['id']) {
   min-height: 50vh;
   margin-top: 29.89px;
   gap: 24px;
+  scrollbar-width: none; /* Firefox */
 }
 .column-title {
   padding: 24px;
