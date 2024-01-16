@@ -27,7 +27,7 @@ The Kanban Task Management App is designed to help users manage their tasks usin
 
 ## 3. API Endpoints
 
-Altough we can query Supabase directly from the front-end, we will use a back-end server to handle the API requests. This will allow us to add additional logic and security measures in the future. It also helped me practice building APIs.
+Although we can query Supabase directly from the front end, we will use a back-end server to handle the API requests. This will allow us to add additional logic and security measures in the future. It also helped me practice building APIs.
 
 ### 3.1 Boards
 
@@ -102,20 +102,10 @@ Altough we can query Supabase directly from the front-end, we will use a back-en
 - `email`: text
 - `full_name`: text
 - `avatar_url`: text
-- - `dark_theme`: boolean
+- `dark_theme`: boolean
 
-## 5. High-Level Overview
-
-The Kanban Task Management app provides users with a way to visualize and manage their tasks using the Kanban methodology. The app is built on the Nuxt 3 framework for both front-end and back-end.
-
-The app's core functionality revolves around the creation and management of boards. Each board can contain multiple categories, with each category housing multiple tasks. Tasks can further have subtasks. All these entities have CRUD operations associated with them, available through RESTful APIs.
-
-The data is stored in a PostgreSQL database managed by Supabase. Supabase also handles authentication, allowing users to sign in with third-party providers such as Google andGitHub.
-
-Users first need to authenticate, after which they can create and manage their boards and the associated entities. The design of the application, including the UI/UX components, is sourced from assets provided by front-end-mentor.com.
-
-In terms of scalability and future enhancements, the app can incorporate more third-party providers for authentication and can also expand its feature set to include features like task priority, notifications, collaborations, etc.
+In terms of future enhancements, the app can incorporate more third-party providers for authentication and can also expand its feature set to include features like task priority, notifications, collaborations, etc.
 
 ---
 
-This document provides a high-level design of the Kanban Task Management App. Further details, such as error handling, scalability considerations, security measures, etc., would need to be addressed in a more detailed system design or technical specification document.
+This document provides a high-level design of the Kanban Task Management App. Further details, such as error handling, scalability considerations, security measures, etc., must be addressed in a more detailed system design or technical specification document.
