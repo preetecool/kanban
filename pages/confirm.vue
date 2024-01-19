@@ -36,6 +36,15 @@ watch(
         alert(error.message)
       } finally {
         const boards: Board[] = await $fetch('/api/boards/get/all')
+        const profile = await $fetch(`/api/profile/get/`)
+
+        if (profile.body[0].dark_theme) {
+          store.setTheme(true)
+          localStorage.setItem('theme', 'dark')
+        } else {
+          store.setTheme(false)
+          localStorage.setItem('theme', 'light')
+        }
 
         if (boards.length) {
           const firstBoard = boards[0].id

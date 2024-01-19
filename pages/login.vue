@@ -2,7 +2,7 @@
   <div class="container">
     <div class="login">
       <h2 class="headingXL">Sign in to your account</h2>
-      <AuthOTP />
+      <!-- <AuthOTP /> -->
       <AuthGoogle />
     </div>
   </div>

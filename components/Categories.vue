@@ -138,6 +138,7 @@ function dragLeave(id: Category['id']) {
   display: flex;
   justify-content: center;
   align-items: center;
+
   &:hover {
     span {
       color: colors.$purplehover;

@@ -1,4 +1,4 @@
-@use 'variables.scss' as variables;
+@use 'variables' as variables;
 @use 'colors' as colors;
 
 @mixin theme-color($theme-map, $color-name) {
@@ -31,6 +31,7 @@
     color: map-get($theme-map, subtask-completed);
   }
 }
+
 @mixin hover-color($theme-map) {
   .item {
     &:hover {

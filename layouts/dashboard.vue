@@ -40,6 +40,7 @@
         <div
           v-if="route.path !== '/'"
           class="body__new-column"
+          :class="{ __light: store.theme === 'light' }"
         >
           <p class="light-text text">Add a column to get started.</p>
           <UIButton
@@ -93,7 +94,7 @@ onBeforeUnmount(() => {
   window.removeEventListener('resize', handleResize)
 })
 
-onMounted(() => {
+onMounted(async () => {
   setTimeout(() => {
     if (window.innerWidth < 500) {
       store.isMobileView = true
@@ -166,6 +167,9 @@ span {
     .button {
       max-width: 250px;
     }
+    &__light {
+      background-color: colors.$lightgrey;
+    }
     @media screen and (max-width: 600px) {
       // display: flex;
       justify-content: center;
@@ -175,7 +179,9 @@ span {
   &__columns-grid {
     overflow: auto;
     scrollbar-width: none; /* Firefox */
-    // display: flex;
   }
+}
+.light-bg {
+  background-color: colors.$lightgrey;
 }
 </style>

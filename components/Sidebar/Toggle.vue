@@ -38,16 +38,20 @@ import { useDBStore } from '@/store/db'
 const store = useMainStore()
 const db = useDBStore()
 const isLight = ref(true)
+
 async function toggleTheme() {
-  if (isLight.value) {
+  const theme = localStorage.getItem('theme')
+  if (theme === 'light') {
     localStorage.setItem('theme', 'dark')
     isLight.value = false
     store.theme = 'dark'
+    store.setTheme(true)
     await db.updateTheme(true)
   } else {
     localStorage.setItem('theme', 'light')
     isLight.value = true
     store.theme = 'light'
+    store.setTheme(false)
     await db.updateTheme(false)
   }
 }
