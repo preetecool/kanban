@@ -82,7 +82,11 @@ function removeColumn(id: number) {
 }
 
 const AddButtonLabel = computed(() => {
-  return store.modal.editTask ? 'Add New Subtask' : 'Add New Column'
+  if (store.modal.editTask || store.modal.newTask) {
+    return 'Add New Subtask'
+  } else {
+    return 'Add New Column'
+  }
 })
 
 const hasStatus = computed(() => {

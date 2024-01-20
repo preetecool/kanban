@@ -16,7 +16,7 @@
 
     <template #form-content-input>
       <span class="bodyM light-text">Column</span>
-      <ModalList />
+      <!-- <ModalList /> -->
     </template>
 
     <template #submit-button>
@@ -29,24 +29,28 @@
 </template>
 
 <script lang="ts" setup>
-import { ref } from 'vue'
+import { useRouter } from 'vue-router'
 import { useMainStore } from '@/store/main'
 import { uuid } from 'vue-uuid'
+import { useDBStore } from '@/store/db'
+import { callWithNuxt } from '#app/nuxt'
 
 const store = useMainStore()
+const db = useDBStore()
+const router = useRouter()
 const boardName = ref('')
 const generateId = () => uuid.v4()
 
 async function sendData() {
   const boardId = generateId()
   try {
+    const app = useNuxtApp()
     await sendBoardData(boardId)
     await sendCategoryData(boardId)
     store.closeModal()
+    return callWithNuxt(app, () => navigateTo(`/board/${boardId}`))
   } catch (error) {
     console.error('An error occurred while sending data:', error)
-  } finally {
-    navigateTo(`/board/${boardId}`)
   }
 }
 
@@ -62,10 +66,12 @@ async function sendCategoryData(boardId: string) {
     title: item.title,
   }))
   await useDB('postCategory', boardId, categories)
-  store.userBoards.push({
-    id: boardId,
-    title: boardName.value,
-    category: categories,
-  })
+  if (process.client) {
+    store.userBoards.push({
+      id: boardId,
+      title: boardName.value,
+      category: categories,
+    })
+  }
 }
 </script>

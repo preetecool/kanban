@@ -3,10 +3,9 @@ import { useDBStore } from '@/store/db'
 export const useMainStore = defineStore('main', {
   state: () => {
     return {
-      theme: localStorage.getItem('theme'),
+      theme: process.client ? localStorage.getItem('theme') : 'light',
       isSideBarVisible: true,
       isMobileView: true,
-
       modal: {
         newBoard: false,
         editBoard: false,

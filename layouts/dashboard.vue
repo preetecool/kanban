@@ -81,13 +81,12 @@ const db = useDBStore()
 const route = useRoute()
 const logo = computed(() => (store.theme === 'light' ? 'dark' : 'light'))
 
-const width = ref(window.innerWidth)
-watch(width, () => {})
+const width = ref(process.client ? window.innerWidth : 0)
 
+const handleResize = () => {
+  width.value = window.innerWidth
+}
 onMounted(() => {
-  const handleResize = () => {
-    width.value = window.innerWidth
-  }
   window.addEventListener('resize', handleResize)
 })
 onBeforeUnmount(() => {
@@ -112,7 +111,7 @@ span {
 .main-grid {
   height: 100vh;
   position: relative;
-  // background-color: colors.$lightgrey;
+
   display: grid;
   grid-template-columns: 300px 1fr;
   grid-template-rows: 6rem 1fr;

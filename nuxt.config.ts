@@ -1,6 +1,6 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
-  devtools: { enabled: true },
+  devtools: { enabled: false },
   css: ['@/assets/scss/global.scss'],
   ssr: false,
   runtimeConfig: {
@@ -11,9 +11,6 @@ export default defineNuxtConfig({
   vite: {
     css: {
       preprocessorOptions: {
-        // scss: {
-        //     includePaths: ["./assets/scss"],
-        // },
         scss: {
           additionalData: `
                   @use "@/assets/scss/reset.scss";

@@ -11,24 +11,28 @@ export const useDBStore = defineStore('db', {
       return ''
     },
     async postBoard(boardId: string, title: string) {
-      await $fetch('/api/boards/post', {
+      const data = await $fetch('/api/boards/post', {
         method: 'POST',
         body: {
           id: boardId,
           title: title,
         },
       })
+      if (data) {
+        console.log('NEXT ROUTE')
+        navigateTo('/board/' + boardId)
+      }
     },
     async setActiveBoard(params: string) {
       const store = useMainStore()
       this.isLoadingData = true
       try {
         const data = await $fetch(`/api/boards/get/${params}`)
-        store.activeBoard = data
+        if (data) {
+          store.activeBoard = data
+        }
       } catch (error) {
         console.error('Error fetching board by Id', error)
-      } finally {
-        this.isLoadingData = false
       }
     },
     async fetchAllBoards() {
@@ -56,20 +60,21 @@ export const useDBStore = defineStore('db', {
         navigateTo('/')
       }
     },
-    async postCategory(boardId: string, catObjs: [][]) {
-      const categories = catObjs.map((pair: []) => ({
+    async postCategory(boardId: string, catObjs: {}[]) {
+      const categories = catObjs.map((pair: {}) => ({
         board: boardId,
         title: pair.title,
         id: uuid.v4(),
       }))
-
-      await $fetch('/api/category/post', {
-        method: 'POST',
-        body: {
-          board: boardId,
-          categories: categories,
-        },
-      })
+      if (categories) {
+        await $fetch('/api/category/post', {
+          method: 'POST',
+          body: {
+            board: boardId,
+            categories: categories,
+          },
+        })
+      }
     },
     async updateCategory(id: Category['id'], title: Category['title']) {
       await $fetch(`/api/category/update/${id}`, {
@@ -100,7 +105,8 @@ export const useDBStore = defineStore('db', {
       this.isLoadingData = true
       try {
         const data = await $fetch(`/api/category/${boardId}`)
-        return data as Category[]
+        data as Category[]
+        // store.categoriesByBoard = data
       } catch (error) {
         return console.error('Error fetching categories by board', error)
       } finally {

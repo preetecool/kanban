@@ -79,6 +79,7 @@ function dragDrop(event: DragEvent, columnId: Category['id']) {
     store.selectedTask.category = columnId
   }
   store.categoriesByBoard[columnId].task.push(store.selectedTask)
+  
   const taskId = store.selectedTask.id
   db.updateTask(taskId, columnId)
   store.selectedTask = null

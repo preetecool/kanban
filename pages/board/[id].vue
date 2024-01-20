@@ -1,11 +1,13 @@
 <template>
-  <Categories />
+  <NuxtLayout
+    :key="route.fullPath"
+    name="dashboard"
+  >
+    <Categories />
+  </NuxtLayout>
 </template>
 
 <script setup lang="ts">
-definePageMeta({
-  layout: 'dashboard',
-})
+import { useMainStore } from '@/store/main'
+const route = useRoute()
 </script>
-
-<style lang="scss" scoped></style>
