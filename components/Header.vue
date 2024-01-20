@@ -6,6 +6,7 @@
       <div class="settings">
         <div class="actions">
           <UIButton
+            v-if="route.path.includes('board')"
             label="+ Add New Task"
             @click="store.toggleModal('newTask')"
           />
@@ -41,10 +42,8 @@ const params = route.params.id
   max-height: 6rem;
   height: 100%;
   width: 100%;
-  /* max-width: 1140px; */
   flex-grow: 1;
   gap: 24px;
-  /* padding-right: 24px; */
 }
 
 .heading {
