@@ -29,26 +29,39 @@
 </template>
 
 <script lang="ts" setup>
-import { useRouter } from 'vue-router'
+import { Category } from '~~/types/app.types'
 import { useMainStore } from '@/store/main'
 import { uuid } from 'vue-uuid'
-import { useDBStore } from '@/store/db'
 import { callWithNuxt } from '#app/nuxt'
+import { useDBStore } from '@/store/db'
+import Id from 'server/api/boards/delete/[id]'
 
+const supabase = useSupabaseClient()
 const store = useMainStore()
 const db = useDBStore()
-const router = useRouter()
+
 const boardName = ref('')
 const generateId = () => uuid.v4()
-
 async function sendData() {
+  if (!boardName.value.trim()) {
+    alert('Board name is required')
+    return
+  }
+
   const boardId = generateId()
+  const app = useNuxtApp()
   try {
-    const app = useNuxtApp()
     await sendBoardData(boardId)
-    await sendCategoryData(boardId)
+
+    if (store.inputItems && store.inputItems.length > 0) {
+      await sendCategoryData(boardId)
+    } else {
+      console.error('No categories to add')
+    }
+
     store.closeModal()
-    return callWithNuxt(app, () => navigateTo(`/board/${boardId}`))
+
+    callWithNuxt(app, () => navigateTo(`/board/${boardId}`))
   } catch (error) {
     console.error('An error occurred while sending data:', error)
   }
@@ -62,16 +75,27 @@ async function sendBoardData(boardId: string) {
 }
 
 async function sendCategoryData(boardId: string) {
-  const categories = store.inputItems.map(item => ({
-    title: item.title,
-  }))
-  await useDB('postCategory', boardId, categories)
-  if (process.client) {
-    store.userBoards.push({
-      id: boardId,
-      title: boardName.value,
-      category: categories,
+  if (store.inputItems) {
+    let catObjs: { title: string; id: string; board: string }[] = []
+    store.inputItems.forEach((category: Category) => {
+      catObjs.push({
+        title: category.title,
+        id: generateId(),
+        board: boardId,
+      })
     })
+    catObjs.forEach(category => {
+      store.categoriesByBoard[category.id] = {
+        ...category,
+        task: [],
+      }
+    })
+    console.log('catObjs:', catObjs)
+    if (store.inputItems.length > 0) {
+      await useDB('postCategory', boardId, catObjs)
+    } else {
+      throw new Error('No categories to send')
+    }
   }
 }
 </script>

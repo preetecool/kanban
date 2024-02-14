@@ -5,7 +5,7 @@
   >
     <IconMain />
     <!-- <Modal v-if="store.modal === true" /> -->
-    <ModalBoard v-if="store.modal['newBoard'] === true" />
+    <ModalCreateBoard v-if="store.modal['newBoard'] === true" />
     <ModalEditBoard v-if="store.modal['editBoard'] === true && !db.isLoadingData" />
     <ModalCreateTask v-if="store.modal['newTask'] === true" />
     <ModalViewTask v-if="store.modal['viewTask'] === true && !db.isLoadingData" />

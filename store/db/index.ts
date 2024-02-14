@@ -61,19 +61,24 @@ export const useDBStore = defineStore('db', {
       }
     },
     async postCategory(boardId: string, catObjs: {}[]) {
+      const store = useMainStore()
       const categories = catObjs.map((pair: {}) => ({
         board: boardId,
         title: pair.title,
         id: uuid.v4(),
       }))
       if (categories) {
-        await $fetch('/api/category/post', {
-          method: 'POST',
-          body: {
-            board: boardId,
-            categories: categories,
-          },
-        })
+        try {
+          await $fetch('/api/category/post', {
+            method: 'POST',
+            body: {
+              board: boardId,
+              categories: categories,
+            },
+          })
+        } catch (error) {
+          console.error('Failed to post category', error)
+        }
       }
     },
     async updateCategory(id: Category['id'], title: Category['title']) {
