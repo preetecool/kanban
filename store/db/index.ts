@@ -18,10 +18,6 @@ export const useDBStore = defineStore('db', {
           title: title,
         },
       })
-      if (data) {
-        console.log('NEXT ROUTE')
-        navigateTo('/board/' + boardId)
-      }
     },
     async setActiveBoard(params: string) {
       const store = useMainStore()

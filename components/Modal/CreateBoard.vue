@@ -33,12 +33,8 @@ import { Category } from '~~/types/app.types'
 import { useMainStore } from '@/store/main'
 import { uuid } from 'vue-uuid'
 import { callWithNuxt } from '#app/nuxt'
-import { useDBStore } from '@/store/db'
-import Id from 'server/api/boards/delete/[id]'
 
-const supabase = useSupabaseClient()
 const store = useMainStore()
-const db = useDBStore()
 
 const boardName = ref('')
 const generateId = () => uuid.v4()
@@ -90,7 +86,6 @@ async function sendCategoryData(boardId: string) {
         task: [],
       }
     })
-    console.log('catObjs:', catObjs)
     if (store.inputItems.length > 0) {
       await useDB('postCategory', boardId, catObjs)
     } else {
