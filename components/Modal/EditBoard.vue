@@ -95,7 +95,18 @@ async function submitCategoryUpdate(id: string, title: string) {
   await db.updateCategory(id, title)
 }
 
+
+const hasEmptyColumn = store.activeBoard.category.some(category => {
+  return category.title.trim().length === 0
+})
+
 async function updateboard() {
+
+  if(hasEmptyColumn){
+    alert('All columns must have a name.')
+    return
+  }
+
   if (boardNameisChanged.value === true) {
     const { data: updatedBoard } = await useAsyncData('updatedBoard', async () => {
       const data = await db.updateBoard(boardId.value, boardName.value)

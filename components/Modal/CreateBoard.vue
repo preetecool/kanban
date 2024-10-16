@@ -38,6 +38,9 @@ const store = useMainStore()
 
 const boardName = ref('')
 const generateId = () => uuid.v4()
+
+
+
 async function sendData() {
   if (!boardName.value.trim()) {
     alert('Board name is required')
@@ -73,7 +76,10 @@ async function sendBoardData(boardId: string) {
 async function sendCategoryData(boardId: string) {
   if (store.inputItems) {
     let catObjs: { title: string; id: string; board: string }[] = []
-    store.inputItems.forEach((category: Category) => {
+    store.inputItems.forEach((category: Category, index) => {
+      if(category.title == ''){
+        category.title = `${'Category Title ' + (index + 1).toString()}`
+      }
       catObjs.push({
         title: category.title,
         id: generateId(),
